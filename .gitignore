@@ -9,6 +9,8 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
+/[Uu]serSettings/
+/UserSettings/EditorUserSettings.asset
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -58,3 +60,19 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# VS config file
+.vsconfig
+
+# VS Code settings file
+/.vscode
+
+# Colorful plugin
+/[Aa]ssets/Colorful/
+/[Aa]ssets/Colorful.meta
+
+# TMPro plugin
+/[Aa]ssets/TextMesh Pro/
+/[Aa]ssets/TextMesh Pro.meta
+
+# Mac
+.DS_Store
