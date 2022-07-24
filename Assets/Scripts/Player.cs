@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField]
+    GameObject InkBulletPrefab;
+
+    [SerializeField]
+    GameObject Muzzle;
+
+    Vector2 projectileMovementVector = new Vector2(10f, 0);
     Vector2 movementVector = new Vector2(0, 0);
-    float gravity = -20f;
     float minX = -5f;
     float maxX = 5f;
     float minY = -5f;
@@ -42,6 +48,9 @@ public class Player : MonoBehaviour
                 movementVector.y = moveSpeed * -1f;
             GetComponent<Rigidbody2D>().velocity = movementVector;
 
+            if (Input.GetKeyDown(KeyCode.Space))
+                ShootInk();
+
             if (transform.localPosition.x > maxX)
             {
                 Vector2 boundedPos = new Vector2 (maxX, transform.localPosition.y);
@@ -63,5 +72,11 @@ public class Player : MonoBehaviour
                 transform.localPosition = boundedPos;
             }
         }
+    }
+
+    void ShootInk()
+    {
+        GameObject projectileGameObject = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity);
+        projectileGameObject.GetComponent<Rigidbody2D>().velocity = projectileMovementVector;
     }
 }
