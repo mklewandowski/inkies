@@ -12,6 +12,8 @@ public class Globals
 
     public enum GameState {
         TitleScreen,
+        Starting,
+        IntroDialog,
         Ready,
         Playing,
         ShowScore,
