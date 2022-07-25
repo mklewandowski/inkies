@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 954198675655058847}
   - component: {fileID: 954198675655058846}
   - component: {fileID: 954198675655058845}
-  - component: {fileID: 1061523967308372409}
   m_Layer: 0
   m_Name: EnemyFish
   m_TagString: Untagged
@@ -76,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 366cdd61fd6815d4286d9f32891e65d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -148,22 +147,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.7333465, y: 2.3174953}
   m_EdgeRadius: 0
---- !u!114 &1061523967308372409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954198675655058818}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0977f327a3dd9143883d0deb57dd3b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topY: 0
-  bottomY: 0
-  offsetY: 1
-  moveSpeedMin: 1
-  moveSpeedMax: 1
-  moveSpeed: 2
-  bounceOn: 0
