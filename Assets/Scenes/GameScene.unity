@@ -1364,6 +1364,7 @@ Transform:
   - {fileID: 258181627}
   - {fileID: 1111631023}
   - {fileID: 296987647}
+  - {fileID: 892767860}
   - {fileID: 1081738962}
   - {fileID: 878249309}
   m_Father: {fileID: 0}
@@ -2580,7 +2581,7 @@ Transform:
   m_Children:
   - {fileID: 1220546273}
   m_Father: {fileID: 382124783}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &878249310
 SpriteRenderer:
@@ -2696,6 +2697,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.0783005, y: 3.9558768}
   m_EdgeRadius: 0
+--- !u!1 &892767859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 892767860}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &892767860
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892767859}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 382124783}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &903363301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3359,7 +3391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1081738962
 Transform:
   m_ObjectHideFlags: 0
@@ -3382,7 +3414,7 @@ Transform:
   - {fileID: 903363302}
   - {fileID: 528413150}
   m_Father: {fileID: 382124783}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1087817438
 GameObject:
@@ -4705,6 +4737,10 @@ MonoBehaviour:
   HUDPlayAgain: {fileID: 2033987279}
   HUDDialogBox: {fileID: 1520216865}
   HUDDialogBoxText: {fileID: 230742094}
+  DiverPrefab: {fileID: 1958008840846150010, guid: b30fbde050c8d004180126ea296b0691, type: 3}
+  FishPrefab: {fileID: 954198675655058818, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
+  MolluskPrefab: {fileID: 5613334171290355452, guid: e1c24a9338df1ae469c999ad3f03d1db, type: 3}
+  EnemyContainer: {fileID: 892767859}
 --- !u!114 &1310353877
 MonoBehaviour:
   m_ObjectHideFlags: 0
