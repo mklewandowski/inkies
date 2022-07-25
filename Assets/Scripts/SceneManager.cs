@@ -36,6 +36,10 @@ public class SceneManager : MonoBehaviour
 
     [SerializeField]
     GameObject HUDScore;
+    [SerializeField]
+    GameObject HUDGameOver;
+    [SerializeField]
+    GameObject HUDPlayAgain;
 
     [SerializeField]
     GameObject HUDDialogBox;
@@ -149,7 +153,7 @@ public class SceneManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Globals.CurrentGameState == Globals.GameState.Playing)
+        if (Globals.CurrentGameState == Globals.GameState.Playing || Globals.CurrentGameState == Globals.GameState.ShowScore)
         {
             Vector2 blockMovement = new Vector2 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x, 0);
             for (int i = 0; i < Blocks.Length; i++)
@@ -179,11 +183,6 @@ public class SceneManager : MonoBehaviour
     {
         Globals.CurrentScore = Globals.CurrentScore + points;
         HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
-    }
-
-    public void ShowDialog()
-    {
-
     }
 
     public void AdvanceDialog()
@@ -216,5 +215,21 @@ public class SceneManager : MonoBehaviour
             Globals.BestScore = Globals.CurrentScore;
             Globals.SaveIntToPlayerPrefs(Globals.BestScorePlayerPrefsKey, Globals.BestScore);
         }
+        Globals.ScrollSpeed = new Vector3(0, 0, 0);
+        Globals.CurrentGameState = Globals.GameState.ShowScore;
+        HUDGameOver.GetComponent<MoveNormal>().MoveDown();
+        HUDPlayAgain.GetComponent<MoveNormal>().MoveUp();
+    }
+
+    public void RestartGame()
+    {
+        audioManager.PlayStartSound();
+        Player.GetComponent<Player>().Reset();
+        Globals.CurrentGameState = Globals.GameState.Playing;
+        Globals.ScrollSpeed = new Vector3(Globals.minSpeed, 0, 0);
+        HUDGameOver.GetComponent<MoveNormal>().MoveUp();
+        HUDPlayAgain.GetComponent<MoveNormal>().MoveDown();
+        Globals.CurrentScore = 0;
+        HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
     }
 }

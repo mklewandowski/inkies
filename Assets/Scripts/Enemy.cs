@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Globals.CurrentGameState == Globals.GameState.Playing)
+        if (Globals.CurrentGameState == Globals.GameState.Playing || Globals.CurrentGameState == Globals.GameState.ShowScore)
         {
             float extraXmovement = 0f;
             if (enemyType == EnemyType.Fish)
@@ -74,7 +74,8 @@ public class Enemy : MonoBehaviour
         InkBullet bullet = collider.gameObject.GetComponent<InkBullet>();
         if (player != null && Globals.CurrentGameState == Globals.GameState.Playing && isActive)
         {
-            // WTD add death sound
+            audioManager.PlayGameOver();
+
             this.GetComponent<Collider2D>().enabled = false;
 
             isActive = false;

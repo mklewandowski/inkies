@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject BulletContainer;
 
+    Vector2 initialPos = new Vector2(-5f, -1f);
     Vector2 projectileMovementVector = new Vector2(10f, 0);
     Vector2 movementVector = new Vector2(0, 0);
     float minX = -5f;
@@ -86,6 +87,23 @@ public class Player : MonoBehaviour
                 transform.localPosition = boundedPos;
             }
         }
+        else if (Globals.CurrentGameState == Globals.GameState.ShowScore)
+        {
+            movementVector = new Vector2 (0, -15f);
+            GetComponent<Rigidbody2D>().velocity = movementVector;
+        }
+    }
+
+    public void Reset()
+    {
+        Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>(true);
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Destroy(enemies[i].gameObject);
+        }
+
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        this.transform.localPosition = initialPos;
     }
 
     void ShootInk()
