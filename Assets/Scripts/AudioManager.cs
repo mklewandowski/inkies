@@ -8,6 +8,10 @@ public class AudioManager : MonoBehaviour
     AudioClip MenuSound;
     [SerializeField]
     AudioClip StartSound;
+    [SerializeField]
+    AudioClip EnemyZappedSound;
+    [SerializeField]
+    AudioClip ShootSound;
 
     void Awake()
     {
@@ -39,6 +43,18 @@ public class AudioManager : MonoBehaviour
     {
         if (Globals.AudioOn)
             audioSource.PlayOneShot(StartSound, 1f);
+    }
+
+    public void PlayEnemyZappedSound()
+    {
+        if (Globals.AudioOn)
+            audioSource.PlayOneShot(EnemyZappedSound, 1f);
+    }
+
+    public void PlayShootSound()
+    {
+        if (Globals.AudioOn)
+            audioSource.PlayOneShot(ShootSound, 1f);
     }
 
 }

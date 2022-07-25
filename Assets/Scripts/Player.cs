@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    AudioManager audioManager;
+    SceneManager sceneManager;
+
     [SerializeField]
     GameObject InkBulletPrefab;
 
@@ -22,10 +25,10 @@ public class Player : MonoBehaviour
     bool moveDown;
     float moveSpeed = 6f;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-
+        audioManager = GameObject.Find("SceneManager").GetComponent<AudioManager>();
+        sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
     }
 
     // Update is called once per frame
@@ -76,6 +79,7 @@ public class Player : MonoBehaviour
 
     void ShootInk()
     {
+        audioManager.PlayShootSound();
         GameObject projectileGameObject = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity);
         projectileGameObject.GetComponent<Rigidbody2D>().velocity = projectileMovementVector;
     }
