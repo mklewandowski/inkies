@@ -20,8 +20,8 @@ public class Player : MonoBehaviour
     Vector2 movementVector = new Vector2(0, 0);
     float minX = -5f;
     float maxX = 5f;
-    float minY = -5f;
-    float maxY = 5f;
+    float minY = -3.4f;
+    float maxY = 4f;
     bool moveLeft;
     bool moveRight;
     bool moveUp;
@@ -32,6 +32,14 @@ public class Player : MonoBehaviour
     {
         audioManager = GameObject.Find("SceneManager").GetComponent<AudioManager>();
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
+
+        float aspect = (float)Screen.width / Screen.height;
+        float worldHeight = Camera.main.orthographicSize * 2;
+        float worldWidth = worldHeight * aspect;
+
+        minX = -1f * worldWidth / 2f;
+        maxX = worldWidth / 2f;
+        Debug.Log(worldWidth);
     }
 
     // Update is called once per frame

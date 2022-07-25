@@ -14,6 +14,9 @@ public class SceneManager : MonoBehaviour
     GameObject Level;
 
     [SerializeField]
+    GameObject[] Blocks;
+
+    [SerializeField]
     GameObject HUDWipeLeft;
     [SerializeField]
     GameObject HUDWipeRight;
@@ -116,12 +119,36 @@ public class SceneManager : MonoBehaviour
 
     void UpdatePlaying()
     {
-
+        float blockMinX = -12f;
+        for (int i = 0; i < Blocks.Length; i++)
+        {
+            if (Blocks[i].transform.localPosition.x < blockMinX)
+            {
+                int abutIndex = i == 0 ? Blocks.Length - 1 : i - 1;
+                Blocks[i].transform.localPosition = new Vector3(
+                        Blocks[abutIndex].transform.localPosition.x + 1.7f,
+                        Blocks[i].transform.localPosition.y,
+                        Blocks[i].transform.localPosition.z
+                    );
+            }
+        }
     }
 
     void UpdateShowScore()
     {
 
+    }
+
+    void FixedUpdate()
+    {
+        if (Globals.CurrentGameState == Globals.GameState.Playing)
+        {
+            Vector2 blockMovement = new Vector2 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x, 0);
+            for (int i = 0; i < Blocks.Length; i++)
+            {
+                Blocks[i].GetComponent<Rigidbody2D>().velocity = blockMovement;
+            }
+        }
     }
 
     public void StartGameIntro()

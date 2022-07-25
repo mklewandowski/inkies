@@ -38,10 +38,15 @@ public class Enemy : MonoBehaviour
     {
         if (Globals.CurrentGameState == Globals.GameState.Playing)
         {
-            Vector3 movement = new Vector3 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x, 0, 0);
+            float movementExtra = 0f;
+            if (enemyType == EnemyType.Fish)
+                movementExtra = 2f;
+            else if (enemyType == EnemyType.Mollusk)
+                movementExtra = 1f;
+            Vector2 movement = new Vector2 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x + movementExtra * Globals.ScrollDirection.x, 0);
             if (!isAlive)
             {
-                movement = new Vector3 (0, -15f, 0);
+                movement = new Vector2 (0, -15f);
             }
             this.GetComponent<Rigidbody2D>().velocity = movement;
         }
