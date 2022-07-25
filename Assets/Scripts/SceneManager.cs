@@ -147,6 +147,8 @@ public class SceneManager : MonoBehaviour
 
     public void AdvanceDialog()
     {
+        audioManager.PlayMenuSound();
+
         dialogNum++;
         if (dialogNum >= dialog.Length)
         {
