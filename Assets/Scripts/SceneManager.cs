@@ -163,5 +163,11 @@ public class SceneManager : MonoBehaviour
     {
         Player.SetActive(true);
         Globals.CurrentGameState = Globals.GameState.Playing;
+        Globals.ScrollSpeed = new Vector3(Globals.minSpeed, 0, 0);
+    }
+
+    public void GameOver()
+    {
+
     }
 }

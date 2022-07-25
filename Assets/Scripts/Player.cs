@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject Muzzle;
 
+    [SerializeField]
+    GameObject BulletContainer;
+
     Vector2 projectileMovementVector = new Vector2(10f, 0);
     Vector2 movementVector = new Vector2(0, 0);
     float minX = -5f;
@@ -80,7 +83,7 @@ public class Player : MonoBehaviour
     void ShootInk()
     {
         audioManager.PlayShootSound();
-        GameObject projectileGameObject = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity);
+        GameObject projectileGameObject = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
         projectileGameObject.GetComponent<Rigidbody2D>().velocity = projectileMovementVector;
     }
 }

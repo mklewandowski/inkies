@@ -7,7 +7,12 @@ public class Enemy : MonoBehaviour
     AudioManager audioManager;
     SceneManager sceneManager;
 
-     bool isActive = true;
+    bool isActive = true;
+
+    bool isAlive = true;
+
+    float minX = -20f;
+    float minY = -20f;
 
     public enum EnemyType {
         Fish,
@@ -23,16 +28,23 @@ public class Enemy : MonoBehaviour
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        if (this.transform.position.x <= minX || this.transform.position.y <= minY)
+            Destroy(this.gameObject);
+    }
 
+    void FixedUpdate()
+    {
+        if (Globals.CurrentGameState == Globals.GameState.Playing)
+        {
+            Vector3 movement = new Vector3 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x, 0, 0);
+            if (!isAlive)
+            {
+                movement = new Vector3 (0, -15f, 0);
+            }
+            this.GetComponent<Rigidbody2D>().velocity = movement;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -41,17 +53,24 @@ public class Enemy : MonoBehaviour
         InkBullet bullet = collider.gameObject.GetComponent<InkBullet>();
         if (player != null && Globals.CurrentGameState == Globals.GameState.Playing && isActive)
         {
+            // WTD add death sound
+            this.GetComponent<Collider2D>().enabled = false;
+
             isActive = false;
 
-            // kill player
+            sceneManager.GameOver();
         }
         else if (bullet != null && Globals.CurrentGameState == Globals.GameState.Playing && isActive)
         {
             audioManager.PlayEnemyZappedSound();
 
-            isActive = false;
+            this.GetComponent<Collider2D>().enabled = false;
 
-            Destroy(this.gameObject);
+            this.GetComponent<SpriteRenderer>().color = Color.black;
+
+            isActive = false;
+            isAlive = false;
+
             Destroy(collider.gameObject);
         }
     }
