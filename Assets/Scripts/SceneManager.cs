@@ -35,6 +35,9 @@ public class SceneManager : MonoBehaviour
     GameObject HUDStart;
 
     [SerializeField]
+    GameObject HUDScore;
+
+    [SerializeField]
     GameObject HUDDialogBox;
     [SerializeField]
     TextMeshProUGUI HUDDialogBoxText;
@@ -48,6 +51,7 @@ public class SceneManager : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         audioManager = this.GetComponent<AudioManager>();
+        Globals.BestScore = Globals.LoadIntFromPlayerPrefs(Globals.BestScorePlayerPrefsKey);
     }
 
     // Update is called once per frame
@@ -93,6 +97,10 @@ public class SceneManager : MonoBehaviour
                 HUDStart.SetActive(false);
 
                 Level.SetActive(true);
+
+                Globals.CurrentScore = 0;
+                HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
+                HUDScore.SetActive(true);
 
                 HUDWipeLeft.GetComponent<MoveNormal>().MoveLeft();
                 HUDWipeRight.GetComponent<MoveNormal>().MoveRight();
@@ -167,6 +175,12 @@ public class SceneManager : MonoBehaviour
         Globals.CurrentGameState = Globals.GameState.Starting;
     }
 
+    public void IncrementScore(int points)
+    {
+        Globals.CurrentScore = Globals.CurrentScore + points;
+        HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
+    }
+
     public void ShowDialog()
     {
 
@@ -197,6 +211,10 @@ public class SceneManager : MonoBehaviour
 
     public void GameOver()
     {
-
+        if (Globals.CurrentScore > Globals.BestScore)
+        {
+            Globals.BestScore = Globals.CurrentScore;
+            Globals.SaveIntToPlayerPrefs(Globals.BestScorePlayerPrefsKey, Globals.BestScore);
+        }
     }
 }

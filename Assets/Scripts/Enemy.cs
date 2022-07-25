@@ -22,10 +22,17 @@ public class Enemy : MonoBehaviour
     }
     public EnemyType enemyType = EnemyType.Fish;
 
+    int points = 100;
+
     void Awake()
     {
         audioManager = GameObject.Find("SceneManager").GetComponent<AudioManager>();
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
+
+        if (enemyType == EnemyType.GunMollusk)
+            points = 200;
+        else if (enemyType == EnemyType.Diver)
+            points = 200;
     }
 
     void Update()
@@ -86,6 +93,8 @@ public class Enemy : MonoBehaviour
             isAlive = false;
 
             Destroy(collider.gameObject);
+
+            sceneManager.IncrementScore(points);
         }
     }
 

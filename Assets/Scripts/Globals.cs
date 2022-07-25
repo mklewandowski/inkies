@@ -21,6 +21,12 @@ public class Globals
     }
     public static GameState CurrentGameState = GameState.TitleScreen;
 
+    // keep track of scoring
+    public static int BestScore = 0;
+    public static int CurrentScore = 0;
+
+    public const string BestScorePlayerPrefsKey = "BestScore";
+
     // audio and music
     public static bool AudioOn;
     public static bool MusicOn;
