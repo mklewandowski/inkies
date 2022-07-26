@@ -32,7 +32,9 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject HUDPlayer;
     [SerializeField]
-    GameObject HUDStart;
+    GameObject HUDStartButton;
+    [SerializeField]
+    GameObject HUDOptionsButton;
 
     [SerializeField]
     GameObject HUDScore;
@@ -44,6 +46,15 @@ public class SceneManager : MonoBehaviour
     TextMeshProUGUI HUDScoreText;
     [SerializeField]
     TextMeshProUGUI HUDBestScoreText;
+    [SerializeField]
+    GameObject HUDOptions;
+    [SerializeField]
+    TextMeshProUGUI HUDAudio;
+    [SerializeField]
+    TextMeshProUGUI HUDMusic;
+    [SerializeField]
+    TextMeshProUGUI HUDControls;
+    bool showOptions = false;
 
     [SerializeField]
     GameObject HUDDialogBox;
@@ -71,6 +82,21 @@ public class SceneManager : MonoBehaviour
         Application.targetFrameRate = 60;
         audioManager = this.GetComponent<AudioManager>();
         Globals.BestScore = Globals.LoadIntFromPlayerPrefs(Globals.BestScorePlayerPrefsKey);
+
+        AudioSource audioSource;
+        audioSource = this.GetComponent<AudioSource>();
+        int audioOn = Globals.LoadIntFromPlayerPrefs(Globals.AudioPlayerPrefsKey, 1);
+        int musicOn = Globals.LoadIntFromPlayerPrefs(Globals.MusicPlayerPrefsKey, 1);
+        int controlsOn = Globals.LoadIntFromPlayerPrefs(Globals.ControlsPlayerPrefsKey, 1);
+        Globals.AudioOn = audioOn == 1 ? true : false;
+        Globals.MusicOn = musicOn == 1 ? true : false;
+        Globals.ControlsOn = controlsOn == 1 ? true : false;
+        if (Globals.MusicOn)
+            audioSource.Play();
+
+        HUDMusic.text = Globals.MusicOn ? "Music: ON" : "Music: OFF";
+        HUDAudio.text = Globals.AudioOn ? "Audio: ON" : "Audio: OFF";
+        HUDControls.text = Globals.ControlsOn ? "Controls: ON" : "Controls: OFF";
     }
 
     // Update is called once per frame
@@ -100,7 +126,8 @@ public class SceneManager : MonoBehaviour
                 HUDPaper.SetActive(false);
                 HUDTitle.SetActive(false);
                 HUDPlayer.SetActive(false);
-                HUDStart.SetActive(false);
+                HUDStartButton.SetActive(false);
+                HUDOptionsButton.SetActive(false);
 
                 Level.SetActive(true);
 
@@ -336,5 +363,43 @@ public class SceneManager : MonoBehaviour
         spawnTimer = 4f;
         spawnInterval = 0;
         HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
+    }
+
+    public void ToggleOptions()
+    {
+        showOptions = !showOptions;
+        audioManager.PlayMenuSound();
+        if (showOptions)
+            HUDOptions.GetComponent<MoveNormal>().MoveUp();
+        else
+            HUDOptions.GetComponent<MoveNormal>().MoveDown();
+    }
+
+    public void ToggleMusic()
+    {
+        Globals.MusicOn = !Globals.MusicOn;
+        audioManager.PlayMenuSound();
+        if (Globals.MusicOn)
+            audioManager.StartMusic();
+        else
+            audioManager.StopMusic();
+        HUDMusic.text = Globals.MusicOn ? "Music: ON" : "Music: OFF";
+        Globals.SaveIntToPlayerPrefs(Globals.MusicPlayerPrefsKey, Globals.MusicOn ? 1 : 0);
+    }
+
+    public void ToggleAudio()
+    {
+        Globals.AudioOn = !Globals.AudioOn;
+        audioManager.PlayMenuSound();
+        HUDAudio.text = Globals.AudioOn ? "Audio: ON" : "Audio: OFF";
+        Globals.SaveIntToPlayerPrefs(Globals.AudioPlayerPrefsKey, Globals.AudioOn ? 1 : 0);
+    }
+
+    public void ToggleControls()
+    {
+        Globals.ControlsOn = !Globals.ControlsOn;
+        audioManager.PlayMenuSound();
+        HUDControls.text = Globals.ControlsOn ? "Controls: ON" : "Controls: OFF";
+        Globals.SaveIntToPlayerPrefs(Globals.ControlsPlayerPrefsKey, Globals.ControlsOn ? 1 : 0);
     }
 }

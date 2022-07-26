@@ -34,6 +34,10 @@ public class Globals
     public const string AudioPlayerPrefsKey = "Audio";
     public const string MusicPlayerPrefsKey = "Music";
 
+    public static bool ControlsOn;
+
+    public const string ControlsPlayerPrefsKey = "Controls";
+
     public static void SaveIntToPlayerPrefs(string key, int val)
     {
         PlayerPrefs.SetInt(key, val);
