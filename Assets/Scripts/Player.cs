@@ -27,6 +27,10 @@ public class Player : MonoBehaviour
     bool moveRight;
     bool moveUp;
     bool moveDown;
+    bool moveLeftButton;
+    bool moveRightButton;
+    bool moveUpButton;
+    bool moveDownButton;
     float moveSpeed = 6f;
 
     void Awake()
@@ -48,10 +52,10 @@ public class Player : MonoBehaviour
     {
         if (Globals.CurrentGameState == Globals.GameState.Playing)
         {
-            moveLeft = Input.GetKey(KeyCode.LeftArrow);
-            moveRight = Input.GetKey(KeyCode.RightArrow);
-            moveUp = Input.GetKey(KeyCode.UpArrow);
-            moveDown = Input.GetKey(KeyCode.DownArrow);
+            moveLeft = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || moveLeftButton;
+            moveRight = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || moveRightButton;
+            moveUp = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || moveUpButton;
+            moveDown = Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || moveDownButton;
             movementVector = new Vector2(0, 0);
             if (moveLeft)
                 movementVector.x = moveSpeed * -1f;
@@ -106,10 +110,46 @@ public class Player : MonoBehaviour
         this.transform.localPosition = initialPos;
     }
 
-    void ShootInk()
+    public void ShootInk()
     {
-        audioManager.PlayShootSound();
-        GameObject projectileGameObject = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
-        projectileGameObject.GetComponent<Rigidbody2D>().velocity = projectileMovementVector;
+        if (Globals.CurrentGameState == Globals.GameState.Playing)
+        {
+            audioManager.PlayShootSound();
+            GameObject projectileGameObject = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
+            projectileGameObject.GetComponent<Rigidbody2D>().velocity = projectileMovementVector;
+        }
+    }
+
+    public void MoveUpButtonDown()
+    {
+        moveUpButton = true;
+    }
+    public void MoveLeftButtonDown()
+    {
+        moveLeftButton = true;
+    }
+    public void MoveDownButtonDown()
+    {
+        moveDownButton = true;
+    }
+    public void MoveRightButtonDown()
+    {
+        moveRightButton = true;
+    }
+    public void MoveUpButtonUp()
+    {
+        moveUpButton = false;
+    }
+    public void MoveLeftButtonUp()
+    {
+        moveLeftButton = false;
+    }
+    public void MoveDownButtonUp()
+    {
+        moveDownButton = false;
+    }
+    public void MoveRightButtonUp()
+    {
+        moveRightButton = false;
     }
 }

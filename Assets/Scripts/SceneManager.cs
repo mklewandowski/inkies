@@ -11,6 +11,8 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject Player;
     [SerializeField]
+    GameObject Controls;
+    [SerializeField]
     GameObject Level;
 
     [SerializeField]
@@ -87,7 +89,7 @@ public class SceneManager : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
         int audioOn = Globals.LoadIntFromPlayerPrefs(Globals.AudioPlayerPrefsKey, 1);
         int musicOn = Globals.LoadIntFromPlayerPrefs(Globals.MusicPlayerPrefsKey, 1);
-        int controlsOn = Globals.LoadIntFromPlayerPrefs(Globals.ControlsPlayerPrefsKey, 1);
+        int controlsOn = Globals.LoadIntFromPlayerPrefs(Globals.ControlsPlayerPrefsKey, 0);
         Globals.AudioOn = audioOn == 1 ? true : false;
         Globals.MusicOn = musicOn == 1 ? true : false;
         Globals.ControlsOn = controlsOn == 1 ? true : false;
@@ -302,6 +304,7 @@ public class SceneManager : MonoBehaviour
         HUDWipeRight.GetComponent<MoveNormal>().MoveLeft();
         HUDWipeTop.GetComponent<MoveNormal>().MoveDown();
         HUDWipeBottom.GetComponent<MoveNormal>().MoveUp();
+        HUDOptions.GetComponent<MoveNormal>().MoveDown();
 
         wipeTimer = wipeTimerMax;
         Globals.CurrentGameState = Globals.GameState.Starting;
@@ -332,6 +335,7 @@ public class SceneManager : MonoBehaviour
     public void StartGame()
     {
         Player.SetActive(true);
+        Controls.SetActive(Globals.ControlsOn);
         Globals.CurrentGameState = Globals.GameState.Playing;
         Globals.ScrollSpeed = new Vector3(Globals.minSpeed, 0, 0);
     }
