@@ -40,6 +40,10 @@ public class SceneManager : MonoBehaviour
     GameObject HUDGameOver;
     [SerializeField]
     GameObject HUDPlayAgain;
+    [SerializeField]
+    TextMeshProUGUI HUDScoreText;
+    [SerializeField]
+    TextMeshProUGUI HUDBestScoreText;
 
     [SerializeField]
     GameObject HUDDialogBox;
@@ -312,6 +316,8 @@ public class SceneManager : MonoBehaviour
             Globals.BestScore = Globals.CurrentScore;
             Globals.SaveIntToPlayerPrefs(Globals.BestScorePlayerPrefsKey, Globals.BestScore);
         }
+        HUDScoreText.text = "Score: " + Globals.CurrentScore;
+        HUDBestScoreText.text = "Top Score: " + Globals.BestScore;
         Globals.ScrollSpeed = new Vector3(0, 0, 0);
         Globals.CurrentGameState = Globals.GameState.ShowScore;
         HUDGameOver.GetComponent<MoveNormal>().MoveDown();
