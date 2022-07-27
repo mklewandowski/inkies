@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     float minX = -20f;
     float minY = -20f;
 
-    float shootTimer = 1f;
+    float shootTimer = .5f;
     float shootTimerMax = 2f;
 
     float screenRightEdge = 15f;
@@ -96,7 +96,7 @@ public class Enemy : MonoBehaviour
             if (shootTimer <= 0)
             {
                 ShootBullet();
-                shootTimer = shootTimerMax;
+                shootTimer = Mathf.Max(.5f, shootTimerMax - (Globals.ScrollSpeed.x - 1f) / 2f);
             }
         }
     }
@@ -105,10 +105,11 @@ public class Enemy : MonoBehaviour
     {
         if (Globals.CurrentGameState == Globals.GameState.Playing)
         {
+            float baseSpeed = Globals.ScrollSpeed.x * Globals.ScrollDirection.x;
             GameObject bulletGameObject = (GameObject)Instantiate(BulletPrefab, Muzzle.transform.position, Quaternion.identity, bulletContainer.transform);
             bulletGameObject.GetComponent<Rigidbody2D>().velocity = enemyType == EnemyType.GunFish
-                ? new Vector2(-7f, 0)
-                : new Vector2(-5f, 5f);
+                ? new Vector2(baseSpeed - 6f, 0)
+                : new Vector2(baseSpeed - 4f, baseSpeed * -1f + 4f);
         }
     }
 
@@ -117,8 +118,9 @@ public class Enemy : MonoBehaviour
         if (Globals.CurrentGameState == Globals.GameState.Playing || Globals.CurrentGameState == Globals.GameState.ShowScore)
         {
             float extraYmovement = 0f;
+            float baseSpeed = Globals.ScrollSpeed.x * Globals.ScrollDirection.x;
             if (enemyType == EnemyType.Diver && this.transform.localPosition.x < 8f)
-                extraYmovement = -2f;
+                extraYmovement = baseSpeed - 1f;
 
             Vector2 movement = new Vector2 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x + extraXmovement * Globals.ScrollDirection.x, 0 + extraYmovement);
 
