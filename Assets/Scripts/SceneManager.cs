@@ -321,7 +321,7 @@ public class SceneManager : MonoBehaviour
         float extraXmovement = 2f;
         for (int x = 0; x < waves[spawnInterval].Enemies.Length; x++)
         {
-            if (x > 0 && x % 5 == 0)
+            if (x > 0 && x % numInCol == 0)
                 xPosition = xPosition + xPositionDelta;
             Enemy.EnemyType type = waves[spawnInterval].Enemies[x];
             if (type != Enemy.EnemyType.None)
@@ -335,7 +335,7 @@ public class SceneManager : MonoBehaviour
                     enemyPrefab = GunMolluskPrefab;
                 else if (type == Enemy.EnemyType.GunFish)
                     enemyPrefab = GunFishPrefab;
-                GameObject enemyGO = (GameObject)Instantiate(enemyPrefab, new Vector3(xPosition, yPositions[x % 5], 0), Quaternion.identity, EnemyContainer.transform);
+                GameObject enemyGO = (GameObject)Instantiate(enemyPrefab, new Vector3(xPosition, yPositions[x % numInCol], 0), Quaternion.identity, EnemyContainer.transform);
                 if (type == Enemy.EnemyType.Diver || type == Enemy.EnemyType.Mollusk ||  type == Enemy.EnemyType.GunMollusk)
                     extraXmovement = 1f;
             }
