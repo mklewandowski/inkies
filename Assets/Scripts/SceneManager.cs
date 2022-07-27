@@ -37,6 +37,8 @@ public class SceneManager : MonoBehaviour
     GameObject HUDStartButton;
     [SerializeField]
     GameObject HUDOptionsButton;
+    [SerializeField]
+    GameObject HUDAboutButton;
 
     [SerializeField]
     GameObject HUDScore;
@@ -58,7 +60,10 @@ public class SceneManager : MonoBehaviour
     TextMeshProUGUI HUDControls;
     [SerializeField]
     TextMeshProUGUI HUDEasyMode;
+    [SerializeField]
+    GameObject HUDAboutText;
     bool showOptions = false;
+    bool showAbout = false;
 
     [SerializeField]
     GameObject HUDDialogBox;
@@ -109,7 +114,7 @@ public class SceneManager : MonoBehaviour
 
         HUDMusic.text = Globals.MusicOn ? "Music: ON" : "Music: OFF";
         HUDAudio.text = Globals.AudioOn ? "Audio: ON" : "Audio: OFF";
-        HUDControls.text = Globals.ControlsOn ? "Controls: ON" : "Controls: OFF";
+        HUDControls.text = Globals.ControlsOn ? "D-pad: ON" : "D-pad: OFF";
        HUDEasyMode.text = Globals.EasyMode ? "Mode: EASY" : "Mode: NORMAL";
 
         waves.Add(new EnemyWave(new Enemy.EnemyType[]{
@@ -253,6 +258,7 @@ public class SceneManager : MonoBehaviour
                 HUDPlayer.SetActive(false);
                 HUDStartButton.SetActive(false);
                 HUDOptionsButton.SetActive(false);
+                HUDAboutButton.SetActive(false);
 
                 Level.SetActive(true);
 
@@ -363,6 +369,7 @@ public class SceneManager : MonoBehaviour
         HUDWipeTop.GetComponent<MoveNormal>().MoveDown();
         HUDWipeBottom.GetComponent<MoveNormal>().MoveUp();
         HUDOptions.GetComponent<MoveNormal>().MoveDown();
+        HUDAboutText.GetComponent<MoveNormal>().MoveDown();
 
         wipeTimer = wipeTimerMax;
         Globals.CurrentGameState = Globals.GameState.Starting;
@@ -438,6 +445,16 @@ public class SceneManager : MonoBehaviour
             HUDOptions.GetComponent<MoveNormal>().MoveDown();
     }
 
+    public void ToggleAbout()
+    {
+        showAbout = !showAbout;
+        audioManager.PlayMenuSound();
+        if (showAbout)
+            HUDAboutText.GetComponent<MoveNormal>().MoveUp();
+        else
+            HUDAboutText.GetComponent<MoveNormal>().MoveDown();
+    }
+
     public void ToggleMusic()
     {
         Globals.MusicOn = !Globals.MusicOn;
@@ -462,7 +479,7 @@ public class SceneManager : MonoBehaviour
     {
         Globals.ControlsOn = !Globals.ControlsOn;
         audioManager.PlayMenuSound();
-        HUDControls.text = Globals.ControlsOn ? "Controls: ON" : "Controls: OFF";
+        HUDControls.text = Globals.ControlsOn ? "D-pad: ON" : "D-pad: OFF";
         Globals.SaveIntToPlayerPrefs(Globals.ControlsPlayerPrefsKey, Globals.ControlsOn ? 1 : 0);
     }
 
