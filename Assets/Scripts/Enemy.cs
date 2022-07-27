@@ -31,9 +31,14 @@ public class Enemy : MonoBehaviour
         Diver,
         Mollusk,
         GunMollusk,
-        GunFish
+        GunFish,
+        None
     }
     public EnemyType enemyType = EnemyType.Fish;
+
+    public bool isLastInWave;
+
+    public float extraXmovement = 0f;
 
     int points = 100;
 
@@ -54,12 +59,36 @@ public class Enemy : MonoBehaviour
             points = 200;
         else if (enemyType == EnemyType.GunFish)
             points = 200;
+
+        if (enemyType == EnemyType.Fish)
+            extraXmovement = 2f;
+        else if (enemyType == EnemyType.GunFish)
+            extraXmovement = 2f;
+        else if (enemyType == EnemyType.GunMollusk)
+            extraXmovement = 1f;
+        else if (enemyType == EnemyType.Mollusk)
+            extraXmovement = 1f;
+        else if (enemyType == EnemyType.Diver)
+            extraXmovement = 1f;
+        else if (enemyType == EnemyType.None)
+            extraXmovement = 1f;
+    }
+
+    public void SetExtraXMovement(float val)
+    {
+        extraXmovement = val;
     }
 
     void Update()
     {
         if (this.transform.position.x <= minX || this.transform.position.y <= minY)
             Destroy(this.gameObject);
+
+        if (isLastInWave && this.transform.position.x <= 0)
+        {
+            isLastInWave = false;
+            sceneManager.SpawnWave();
+        }
 
         if ((enemyType == EnemyType.GunMollusk || enemyType == EnemyType.GunFish) && this.transform.position.x <= screenRightEdge && isActive)
         {
@@ -87,18 +116,6 @@ public class Enemy : MonoBehaviour
     {
         if (Globals.CurrentGameState == Globals.GameState.Playing || Globals.CurrentGameState == Globals.GameState.ShowScore)
         {
-            float extraXmovement = 0f;
-            if (enemyType == EnemyType.Fish)
-                extraXmovement = 2f;
-            else if (enemyType == EnemyType.GunFish)
-                extraXmovement = 2f;
-            else if (enemyType == EnemyType.GunMollusk)
-                extraXmovement = 1f;
-            else if (enemyType == EnemyType.Mollusk)
-                extraXmovement = 1f;
-            else if (enemyType == EnemyType.Diver)
-                extraXmovement = 1f;
-
             float extraYmovement = 0f;
             if (enemyType == EnemyType.Diver && this.transform.localPosition.x < 8f)
                 extraYmovement = -2f;

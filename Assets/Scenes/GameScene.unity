@@ -554,11 +554,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 954198675655058819, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.46
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 954198675655058819, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 954198675655058819, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1157,7 +1157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5613334171290355451, guid: e1c24a9338df1ae469c999ad3f03d1db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 28.149998
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5613334171290355451, guid: e1c24a9338df1ae469c999ad3f03d1db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1673,7 +1673,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &382124783
 Transform:
   m_ObjectHideFlags: 0
@@ -1818,11 +1818,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 954198675655058819, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.739998
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 954198675655058819, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 954198675655058819, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2426,7 +2426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5613334171290355451, guid: e1c24a9338df1ae469c999ad3f03d1db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 34.35
+      value: 6.200001
       objectReference: {fileID: 0}
     - target: {fileID: 5613334171290355451, guid: e1c24a9338df1ae469c999ad3f03d1db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3070,7 +3070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingUpEndPos: {x: 0, y: 1000}
-  movingDownEndPos: {x: 0, y: 350}
+  movingDownEndPos: {x: 0, y: 280}
   movingLeftEndPos: {x: 0, y: 0}
   movingRightEndPos: {x: 0, y: 0}
   movingUpVelocity: 1500
@@ -5674,11 +5674,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 954198675655058819, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.71
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 954198675655058819, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.47
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 954198675655058819, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6565,6 +6565,7 @@ MonoBehaviour:
   MolluskPrefab: {fileID: 5613334171290355452, guid: e1c24a9338df1ae469c999ad3f03d1db, type: 3}
   GunMolluskPrefab: {fileID: 6889261372065049383, guid: 57b767a2205882a4893746f7cd87eee7, type: 3}
   GunFishPrefab: {fileID: 954198675655058818, guid: 89b454036db34a244afe765890887193, type: 3}
+  WaveEndPrefab: {fileID: 954198675655058818, guid: 0995cc44783341c4ebc5626688783d5c, type: 3}
   EnemyContainer: {fileID: 892767859}
 --- !u!114 &1310353877
 MonoBehaviour:
@@ -7808,7 +7809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5613334171290355451, guid: e1c24a9338df1ae469c999ad3f03d1db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 31.04
+      value: 2.8900032
       objectReference: {fileID: 0}
     - target: {fileID: 5613334171290355451, guid: e1c24a9338df1ae469c999ad3f03d1db, type: 3}
       propertyPath: m_LocalPosition.y
