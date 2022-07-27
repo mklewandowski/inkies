@@ -160,19 +160,25 @@ public class Player : MonoBehaviour
 
     private void OnMouseDown()
     {
-        mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
-        ShootInk();
-        inkCoolDownTimer = inkCoolDownTimerMax;
+        if (Globals.CurrentGameState == Globals.GameState.Playing)
+        {
+            mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
+            ShootInk();
+            inkCoolDownTimer = inkCoolDownTimerMax;
+        }
     }
 
     private void OnMouseDrag()
     {
-        transform.position = GetMouseWorldPosition() + mousePositionOffset;
-        KeepInBounds();
-        if (inkCoolDownTimer == 0)
+        if (Globals.CurrentGameState == Globals.GameState.Playing)
         {
-            ShootInk();
-            inkCoolDownTimer = inkCoolDownTimerMax;
+            transform.position = GetMouseWorldPosition() + mousePositionOffset;
+            KeepInBounds();
+            if (inkCoolDownTimer == 0)
+            {
+                ShootInk();
+                inkCoolDownTimer = inkCoolDownTimerMax;
+            }
         }
     }
 
