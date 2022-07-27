@@ -27,3 +27,6 @@ Use the following steps to run locally:
 - 2D images created and edited using [Paint.NET](https://www.getpaint.net/)
 
 ## Credits
+Mobile and mouse dragging adapted from these tutorials:
+https://www.youtube.com/watch?v=yalbvB84kCg
+https://www.youtube.com/watch?v=ST7BAqV-1ow

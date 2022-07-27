@@ -33,6 +33,15 @@ public class Player : MonoBehaviour
     bool moveDownButton;
     float moveSpeed = 6f;
 
+    Vector3 mousePositionOffset;
+
+    Vector3 touchPosition;
+    Vector3 direction;
+    private Rigidbody2D playerRigidbody;
+
+    float inkCoolDownTimer = 0f;
+    float inkCoolDownTimerMax = .25f;
+
     void Awake()
     {
         audioManager = GameObject.Find("SceneManager").GetComponent<AudioManager>();
@@ -45,6 +54,21 @@ public class Player : MonoBehaviour
         minX = -1f * worldWidth / 2f;
         maxX = worldWidth / 2f;
         Debug.Log(worldWidth);
+
+        playerRigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    public void Reset()
+    {
+        Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>(true);
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Destroy(enemies[i].gameObject);
+        }
+
+        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        this.transform.localPosition = initialPos;
+        this.GetComponent<Collider2D>().enabled = true;
     }
 
     // Update is called once per frame
@@ -65,31 +89,38 @@ public class Player : MonoBehaviour
                 movementVector.y = moveSpeed;
             else if (moveDown)
                 movementVector.y = moveSpeed * -1f;
-            GetComponent<Rigidbody2D>().velocity = movementVector;
+            playerRigidbody.velocity = movementVector;
+
+            if (inkCoolDownTimer > 0)
+            {
+                inkCoolDownTimer -= Time.deltaTime;
+                if (inkCoolDownTimer <= 0)
+                    inkCoolDownTimer = 0;
+            }
+
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                touchPosition.z = 0f;
+                direction = (touchPosition - transform.position);
+                playerRigidbody.velocity = new Vector2(direction.x, direction.y) * moveSpeed;
+                if (touch.phase == TouchPhase.Ended)
+                {
+                    playerRigidbody.velocity = Vector2.zero;
+                }
+                if (inkCoolDownTimer == 0)
+                {
+                    ShootInk();
+                    inkCoolDownTimer = inkCoolDownTimerMax;
+                }
+            }
+
+            KeepInBounds();
 
             if (Input.GetKeyDown(KeyCode.Space))
                 ShootInk();
 
-            if (transform.localPosition.x > maxX)
-            {
-                Vector2 boundedPos = new Vector2 (maxX, transform.localPosition.y);
-                transform.localPosition = boundedPos;
-            }
-            if (transform.localPosition.x < minX)
-            {
-                Vector2 boundedPos = new Vector2 (minX, transform.localPosition.y);
-                transform.localPosition = boundedPos;
-            }
-            if (transform.localPosition.y > maxY)
-            {
-                Vector2 boundedPos = new Vector2 (transform.localPosition.x, maxY);
-                transform.localPosition = boundedPos;
-            }
-            if (transform.localPosition.y < minY)
-            {
-                Vector2 boundedPos = new Vector2 (transform.localPosition.x, minY);
-                transform.localPosition = boundedPos;
-            }
         }
         else if (Globals.CurrentGameState == Globals.GameState.ShowScore)
         {
@@ -98,17 +129,51 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Reset()
+    private void KeepInBounds()
     {
-        Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>(true);
-        for (int i = 0; i < enemies.Length; i++)
+        if (transform.localPosition.x > maxX)
         {
-            Destroy(enemies[i].gameObject);
+            Vector2 boundedPos = new Vector2 (maxX, transform.localPosition.y);
+            transform.localPosition = boundedPos;
         }
+        if (transform.localPosition.x < minX)
+        {
+            Vector2 boundedPos = new Vector2 (minX, transform.localPosition.y);
+            transform.localPosition = boundedPos;
+        }
+        if (transform.localPosition.y > maxY)
+        {
+            Vector2 boundedPos = new Vector2 (transform.localPosition.x, maxY);
+            transform.localPosition = boundedPos;
+        }
+        if (transform.localPosition.y < minY)
+        {
+            Vector2 boundedPos = new Vector2 (transform.localPosition.x, minY);
+            transform.localPosition = boundedPos;
+        }
+    }
 
-        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-        this.transform.localPosition = initialPos;
-        this.GetComponent<Collider2D>().enabled = true;
+    private Vector3 GetMouseWorldPosition()
+    {
+        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    private void OnMouseDown()
+    {
+        mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
+        ShootInk();
+        inkCoolDownTimer = inkCoolDownTimerMax;
+    }
+
+    private void OnMouseDrag()
+    {
+        transform.position = GetMouseWorldPosition() + mousePositionOffset;
+        KeepInBounds();
+        if (inkCoolDownTimer == 0)
+        {
+            ShootInk();
+            inkCoolDownTimer = inkCoolDownTimerMax;
+        }
     }
 
     public void ShootInk()

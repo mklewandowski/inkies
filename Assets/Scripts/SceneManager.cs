@@ -321,7 +321,7 @@ public class SceneManager : MonoBehaviour
         float extraXmovement = 2f;
         for (int x = 0; x < waves[spawnInterval].Enemies.Length; x++)
         {
-            if (x > 0 && x % numInCol == 0)
+            if (x > 0 && (x % numInCol) == 0)
                 xPosition = xPosition + xPositionDelta;
             Enemy.EnemyType type = waves[spawnInterval].Enemies[x];
             if (type != Enemy.EnemyType.None)
