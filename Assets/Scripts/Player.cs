@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
                     inkCoolDownTimer = 0;
             }
 
-            if (Input.touchCount > 0)
+            if (Input.touchCount > 0 && !Globals.ControlsOn)
             {
                 Touch touch = Input.GetTouch(0);
                 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Globals.CurrentGameState == Globals.GameState.Playing)
+        if (Globals.CurrentGameState == Globals.GameState.Playing && !Globals.ControlsOn)
         {
             mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
             ShootInk();
@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (Globals.CurrentGameState == Globals.GameState.Playing)
+        if (Globals.CurrentGameState == Globals.GameState.Playing && !Globals.ControlsOn)
         {
             transform.position = GetMouseWorldPosition() + mousePositionOffset;
             KeepInBounds();
