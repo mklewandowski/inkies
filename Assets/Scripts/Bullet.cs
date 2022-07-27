@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.transform.position.x >= screenRightEdge || this.transform.position.x <= screenLeftEdge)
+        if (this.transform.position.x >= (screenRightEdge - 1f) || this.transform.position.x <= screenLeftEdge)
             Destroy(this.gameObject);
     }
 }
