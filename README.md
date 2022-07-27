@@ -1,6 +1,11 @@
 # Inkies
 Inkies is an underwater action game featuring design and art by my 7-year-old cousin.
 
+## Gameplay
+Use the arrow or WASD keys to move. Press space to shoot. On mobile, use the virtual d-pad to move and shoot or drag to move and shoot. Avoid nasties and get a high score.
+
+![Inkies gameplay](https://github.com/mklewandowski/inkies/blob/main/Assets/Images/inkies-gameplay.gif?raw=true)
+
 ## Supported Platforms
 Inkies is designed for use on multiple platforms including:
 - iOS
