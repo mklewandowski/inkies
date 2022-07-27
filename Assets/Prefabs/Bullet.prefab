@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6536128467790883326}
   - component: {fileID: 9095902359078524695}
   - component: {fileID: 2142376963137960879}
-  - component: {fileID: 1497566529975767040}
+  - component: {fileID: 1417845169298726968}
   m_Layer: 0
-  m_Name: InkBullet
+  m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: aa7fdd3654b1a79478d12ba17f6bc580, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8e53698d407b2e3469b8b557db498881, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -121,20 +121,20 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0056223273, y: -0.0014643669}
+  m_Offset: {x: 0.0074220896, y: 0.0021351129}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.92, y: 0.39}
+    oldSize: {x: 0.37, y: 0.39}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4894933, y: 0.20632505}
+  m_Size: {x: 0.23752847, y: 0.21352401}
   m_EdgeRadius: 0
---- !u!114 &1497566529975767040
+--- !u!114 &1417845169298726968
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,3 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 848428068ea87f54fa7fd70b6f1a0383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyBullet: 1

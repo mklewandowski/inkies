@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     GameObject BulletContainer;
 
     Vector2 initialPos = new Vector2(-5f, -1f);
-    Vector2 projectileMovementVector = new Vector2(10f, 0);
+    Vector2 bulletMovementVector = new Vector2(10f, 0);
     Vector2 movementVector = new Vector2(0, 0);
     float minX = -5f;
     float maxX = 5f;
@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
         else if (Globals.CurrentGameState == Globals.GameState.ShowScore)
         {
             movementVector = new Vector2 (0, -15f);
-            GetComponent<Rigidbody2D>().velocity = movementVector;
+            this.GetComponent<Rigidbody2D>().velocity = movementVector;
         }
     }
 
@@ -106,8 +106,9 @@ public class Player : MonoBehaviour
             Destroy(enemies[i].gameObject);
         }
 
-        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         this.transform.localPosition = initialPos;
+        this.GetComponent<Collider2D>().enabled = true;
     }
 
     public void ShootInk()
@@ -115,8 +116,8 @@ public class Player : MonoBehaviour
         if (Globals.CurrentGameState == Globals.GameState.Playing)
         {
             audioManager.PlayShootSound();
-            GameObject projectileGameObject = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
-            projectileGameObject.GetComponent<Rigidbody2D>().velocity = projectileMovementVector;
+            GameObject bulletGameObject = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
+            bulletGameObject.GetComponent<Rigidbody2D>().velocity = bulletMovementVector;
         }
     }
 
@@ -151,5 +152,29 @@ public class Player : MonoBehaviour
     public void MoveRightButtonUp()
     {
         moveRightButton = false;
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        Bullet bullet = collider.gameObject.GetComponent<Bullet>();
+        Enemy enemy = collider.gameObject.GetComponent<Enemy>();
+        if (bullet != null && bullet.GetComponent<Bullet>().enemyBullet && Globals.CurrentGameState == Globals.GameState.Playing)
+        {
+            audioManager.PlayGameOver();
+
+            Destroy(collider.gameObject);
+
+            this.GetComponent<Collider2D>().enabled = false;
+
+            sceneManager.GameOver();
+        }
+        else if (enemy != null && Globals.CurrentGameState == Globals.GameState.Playing)
+        {
+            audioManager.PlayGameOver();
+
+            this.GetComponent<Collider2D>().enabled = false;
+
+            sceneManager.GameOver();
+        }
     }
 }

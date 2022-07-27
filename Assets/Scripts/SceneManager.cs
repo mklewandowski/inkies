@@ -75,6 +75,10 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject MolluskPrefab;
     [SerializeField]
+    GameObject GunMolluskPrefab;
+    [SerializeField]
+    GameObject GunFishPrefab;
+    [SerializeField]
     GameObject EnemyContainer;
     int spawnInterval = 0;
     float spawnTimer = 2f;
@@ -184,17 +188,17 @@ public class SceneManager : MonoBehaviour
                 if (spawnInterval == 0)
                 {
                     // spawn 3 fish
-                    GameObject enemyGO1 = (GameObject)Instantiate(FishPrefab, new Vector3(16f, Random.Range(-3f, 3f), 0), Quaternion.identity, EnemyContainer.transform);
-                    GameObject enemyGO2 = (GameObject)Instantiate(FishPrefab, new Vector3(19f, Random.Range(-3f, 3f), 0), Quaternion.identity, EnemyContainer.transform);
-                    GameObject enemyGO3 = (GameObject)Instantiate(FishPrefab, new Vector3(22f, Random.Range(-3f, 3f), 0), Quaternion.identity, EnemyContainer.transform);
+                    GameObject enemyGO1 = (GameObject)Instantiate(GunFishPrefab, new Vector3(16f, Random.Range(-3f, 3f), 0), Quaternion.identity, EnemyContainer.transform);
+                    GameObject enemyGO2 = (GameObject)Instantiate(GunFishPrefab, new Vector3(19f, Random.Range(-3f, 3f), 0), Quaternion.identity, EnemyContainer.transform);
+                    GameObject enemyGO3 = (GameObject)Instantiate(GunFishPrefab, new Vector3(22f, Random.Range(-3f, 3f), 0), Quaternion.identity, EnemyContainer.transform);
                     spawnTimer = 5f;
                 }
                 else if (spawnInterval == 1)
                 {
                     // spawn 3 mollusk
-                    GameObject enemyGO1 = (GameObject)Instantiate(MolluskPrefab, new Vector3(16f, -3.6f, 0), Quaternion.identity, EnemyContainer.transform);
-                    GameObject enemyGO2 = (GameObject)Instantiate(MolluskPrefab, new Vector3(19f, -3.6f, 0), Quaternion.identity, EnemyContainer.transform);
-                    GameObject enemyGO3 = (GameObject)Instantiate(MolluskPrefab, new Vector3(22f, -3.6f, 0), Quaternion.identity, EnemyContainer.transform);
+                    GameObject enemyGO1 = (GameObject)Instantiate(GunMolluskPrefab, new Vector3(16f, -3.6f, 0), Quaternion.identity, EnemyContainer.transform);
+                    GameObject enemyGO2 = (GameObject)Instantiate(GunMolluskPrefab, new Vector3(19f, -3.6f, 0), Quaternion.identity, EnemyContainer.transform);
+                    GameObject enemyGO3 = (GameObject)Instantiate(GunMolluskPrefab, new Vector3(22f, -3.6f, 0), Quaternion.identity, EnemyContainer.transform);
                     spawnTimer = 7f;
                 }
                 else if (spawnInterval == 2)

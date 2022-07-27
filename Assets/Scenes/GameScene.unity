@@ -6563,6 +6563,8 @@ MonoBehaviour:
   DiverPrefab: {fileID: 1958008840846150010, guid: b30fbde050c8d004180126ea296b0691, type: 3}
   FishPrefab: {fileID: 954198675655058818, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
   MolluskPrefab: {fileID: 5613334171290355452, guid: e1c24a9338df1ae469c999ad3f03d1db, type: 3}
+  GunMolluskPrefab: {fileID: 6889261372065049383, guid: 57b767a2205882a4893746f7cd87eee7, type: 3}
+  GunFishPrefab: {fileID: 954198675655058818, guid: 89b454036db34a244afe765890887193, type: 3}
   EnemyContainer: {fileID: 892767859}
 --- !u!114 &1310353877
 MonoBehaviour:

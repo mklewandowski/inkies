@@ -7,6 +7,13 @@ public class Enemy : MonoBehaviour
     AudioManager audioManager;
     SceneManager sceneManager;
 
+    [SerializeField]
+    GameObject Muzzle;
+
+    [SerializeField]
+    GameObject BulletPrefab;
+    GameObject bulletContainer;
+
     bool isActive = true;
 
     bool isAlive = true;
@@ -14,11 +21,17 @@ public class Enemy : MonoBehaviour
     float minX = -20f;
     float minY = -20f;
 
+    float shootTimer = 1f;
+    float shootTimerMax = 2f;
+
+    float screenRightEdge = 15f;
+
     public enum EnemyType {
         Fish,
         Diver,
         Mollusk,
-        GunMollusk
+        GunMollusk,
+        GunFish
     }
     public EnemyType enemyType = EnemyType.Fish;
 
@@ -26,6 +39,12 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
+        float aspect = (float)Screen.width / Screen.height;
+        float worldHeight = Camera.main.orthographicSize * 2;
+        float worldWidth = worldHeight * aspect;
+        screenRightEdge = worldWidth / 2f;
+
+        bulletContainer = GameObject.Find("Bullets");
         audioManager = GameObject.Find("SceneManager").GetComponent<AudioManager>();
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
 
@@ -33,12 +52,35 @@ public class Enemy : MonoBehaviour
             points = 200;
         else if (enemyType == EnemyType.Diver)
             points = 200;
+        else if (enemyType == EnemyType.GunFish)
+            points = 200;
     }
 
     void Update()
     {
         if (this.transform.position.x <= minX || this.transform.position.y <= minY)
             Destroy(this.gameObject);
+
+        if ((enemyType == EnemyType.GunMollusk || enemyType == EnemyType.GunFish) && this.transform.position.x <= screenRightEdge && isActive)
+        {
+            shootTimer -= Time.deltaTime;
+            if (shootTimer <= 0)
+            {
+                ShootBullet();
+                shootTimer = shootTimerMax;
+            }
+        }
+    }
+
+    public void ShootBullet()
+    {
+        if (Globals.CurrentGameState == Globals.GameState.Playing)
+        {
+            GameObject bulletGameObject = (GameObject)Instantiate(BulletPrefab, Muzzle.transform.position, Quaternion.identity, bulletContainer.transform);
+            bulletGameObject.GetComponent<Rigidbody2D>().velocity = enemyType == EnemyType.GunFish
+                ? new Vector2(-7f, 0)
+                : new Vector2(-5f, 5f);
+        }
     }
 
     void FixedUpdate()
@@ -48,6 +90,10 @@ public class Enemy : MonoBehaviour
             float extraXmovement = 0f;
             if (enemyType == EnemyType.Fish)
                 extraXmovement = 2f;
+            else if (enemyType == EnemyType.GunFish)
+                extraXmovement = 2f;
+            else if (enemyType == EnemyType.GunMollusk)
+                extraXmovement = 1f;
             else if (enemyType == EnemyType.Mollusk)
                 extraXmovement = 1f;
             else if (enemyType == EnemyType.Diver)
@@ -70,19 +116,8 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Player player = collider.gameObject.GetComponent<Player>();
-        InkBullet bullet = collider.gameObject.GetComponent<InkBullet>();
-        if (player != null && Globals.CurrentGameState == Globals.GameState.Playing && isActive)
-        {
-            audioManager.PlayGameOver();
-
-            this.GetComponent<Collider2D>().enabled = false;
-
-            isActive = false;
-
-            sceneManager.GameOver();
-        }
-        else if (bullet != null && Globals.CurrentGameState == Globals.GameState.Playing && isActive)
+        Bullet bullet = collider.gameObject.GetComponent<Bullet>();
+        if (bullet != null && !bullet.GetComponent<Bullet>().enemyBullet && Globals.CurrentGameState == Globals.GameState.Playing && isActive)
         {
             audioManager.PlayEnemyZappedSound();
 
