@@ -7413,7 +7413,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 230}
+  m_AnchoredPosition: {x: 0, y: 270}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1331220061
@@ -7436,8 +7436,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Use keyboard (arrows or WASD and space) to move and shoot. On mobile use
-    virtual D-pad or drag to move and shoot. Destroy nasties and get the high score!
+  m_text: Use the keyboard (arrows or WASD and space) to move and shoot ink. On mobile
+    use the virtual D-pad or drag to move and shoot ink. Avoid nasties and get the
+    high score!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 68de78c284e3dc84d869abee762a841c, type: 2}
   m_sharedMaterial: {fileID: -2437247837966632581, guid: 68de78c284e3dc84d869abee762a841c, type: 2}
