@@ -38,6 +38,10 @@ public class Globals
 
     public const string ControlsPlayerPrefsKey = "Controls";
 
+    public static bool EasyMode;
+
+    public const string EasyModePlayerPrefsKey = "EasyMode";
+
     public static void SaveIntToPlayerPrefs(string key, int val)
     {
         PlayerPrefs.SetInt(key, val);

@@ -56,6 +56,8 @@ public class SceneManager : MonoBehaviour
     TextMeshProUGUI HUDMusic;
     [SerializeField]
     TextMeshProUGUI HUDControls;
+    [SerializeField]
+    TextMeshProUGUI HUDEasyMode;
     bool showOptions = false;
 
     [SerializeField]
@@ -97,15 +99,18 @@ public class SceneManager : MonoBehaviour
         int audioOn = Globals.LoadIntFromPlayerPrefs(Globals.AudioPlayerPrefsKey, 1);
         int musicOn = Globals.LoadIntFromPlayerPrefs(Globals.MusicPlayerPrefsKey, 1);
         int controlsOn = Globals.LoadIntFromPlayerPrefs(Globals.ControlsPlayerPrefsKey, 0);
+        int easyMode = Globals.LoadIntFromPlayerPrefs(Globals.EasyModePlayerPrefsKey, 1);
         Globals.AudioOn = audioOn == 1 ? true : false;
         Globals.MusicOn = musicOn == 1 ? true : false;
         Globals.ControlsOn = controlsOn == 1 ? true : false;
+        Globals.EasyMode = easyMode == 1 ? true : false;
         if (Globals.MusicOn)
             audioSource.Play();
 
         HUDMusic.text = Globals.MusicOn ? "Music: ON" : "Music: OFF";
         HUDAudio.text = Globals.AudioOn ? "Audio: ON" : "Audio: OFF";
         HUDControls.text = Globals.ControlsOn ? "Controls: ON" : "Controls: OFF";
+       HUDEasyMode.text = Globals.EasyMode ? "Mode: EASY" : "Mode: NORMAL";
 
         waves.Add(new EnemyWave(new Enemy.EnemyType[]{
             Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None
@@ -390,7 +395,7 @@ public class SceneManager : MonoBehaviour
         Player.SetActive(true);
         Controls.SetActive(Globals.ControlsOn);
         Globals.CurrentGameState = Globals.GameState.Playing;
-        Globals.ScrollSpeed = new Vector3(Globals.minSpeed, 0, 0);
+        Globals.ScrollSpeed = new Vector3(Globals.EasyMode ? Globals.minSpeed : Globals.minSpeed + 2f, 0, 0);
         SpawnWave();
     }
 
@@ -414,7 +419,7 @@ public class SceneManager : MonoBehaviour
         audioManager.PlayStartSound();
         Player.GetComponent<Player>().Reset();
         Globals.CurrentGameState = Globals.GameState.Playing;
-        Globals.ScrollSpeed = new Vector3(Globals.minSpeed, 0, 0);
+        Globals.ScrollSpeed = new Vector3(Globals.EasyMode ? Globals.minSpeed : Globals.minSpeed + 2f, 0, 0);
         HUDGameOver.GetComponent<MoveNormal>().MoveUp();
         HUDPlayAgain.GetComponent<MoveNormal>().MoveDown();
         Globals.CurrentScore = 0;
@@ -459,5 +464,13 @@ public class SceneManager : MonoBehaviour
         audioManager.PlayMenuSound();
         HUDControls.text = Globals.ControlsOn ? "Controls: ON" : "Controls: OFF";
         Globals.SaveIntToPlayerPrefs(Globals.ControlsPlayerPrefsKey, Globals.ControlsOn ? 1 : 0);
+    }
+
+    public void ToggleDifficulty()
+    {
+        Globals.EasyMode = !Globals.EasyMode;
+        audioManager.PlayMenuSound();
+        HUDEasyMode.text = Globals.EasyMode ? "Mode: EASY" : "Mode: NORMAL";
+        Globals.SaveIntToPlayerPrefs(Globals.EasyModePlayerPrefsKey, Globals.EasyMode ? 1 : 0);
     }
 }
