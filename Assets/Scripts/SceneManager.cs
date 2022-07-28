@@ -232,7 +232,11 @@ public class SceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Globals.CurrentGameState == Globals.GameState.Starting)
+        if (Globals.CurrentGameState == Globals.GameState.TitleScreen)
+        {
+            UpdateTitle();
+        }
+        else if (Globals.CurrentGameState == Globals.GameState.Starting)
         {
             UpdateStarting();
         }
@@ -262,6 +266,9 @@ public class SceneManager : MonoBehaviour
 
                 Level.SetActive(true);
 
+                dialogNum = 0;
+                HUDDialogBoxText.text = dialog[dialogNum];
+
                 Globals.CurrentScore = 0;
                 HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
                 HUDScore.SetActive(true);
@@ -273,6 +280,33 @@ public class SceneManager : MonoBehaviour
 
                 wipeTimer = wipeTimerMax;
                 Globals.CurrentGameState = Globals.GameState.IntroDialog;
+            }
+        }
+    }
+
+    void UpdateTitle()
+    {
+        if (wipeTimer > 0)
+        {
+            wipeTimer -= Time.deltaTime;
+            if (wipeTimer <= 0)
+            {
+                HUDPaper.SetActive(true);
+                HUDTitle.SetActive(true);
+                HUDPlayer.SetActive(true);
+                HUDStartButton.SetActive(true);
+                HUDOptionsButton.SetActive(true);
+                HUDAboutButton.SetActive(true);
+
+                Level.SetActive(false);
+                HUDScore.SetActive(false);
+                Player.SetActive(false);
+                Controls.SetActive(false);
+
+                HUDWipeLeft.GetComponent<MoveNormal>().MoveLeft();
+                HUDWipeRight.GetComponent<MoveNormal>().MoveRight();
+                HUDWipeTop.GetComponent<MoveNormal>().MoveUp();
+                HUDWipeBottom.GetComponent<MoveNormal>().MoveDown();
             }
         }
     }
@@ -364,6 +398,8 @@ public class SceneManager : MonoBehaviour
 
         audioManager.PlayStartSound();
 
+        Player.GetComponent<Player>().Reset();
+
         HUDWipeLeft.GetComponent<MoveNormal>().MoveRight();
         HUDWipeRight.GetComponent<MoveNormal>().MoveLeft();
         HUDWipeTop.GetComponent<MoveNormal>().MoveDown();
@@ -373,6 +409,20 @@ public class SceneManager : MonoBehaviour
 
         wipeTimer = wipeTimerMax;
         Globals.CurrentGameState = Globals.GameState.Starting;
+    }
+
+    public void ReturnHome()
+    {
+        audioManager.PlayMenuSound();
+
+        HUDWipeLeft.GetComponent<MoveNormal>().MoveRight();
+        HUDWipeRight.GetComponent<MoveNormal>().MoveLeft();
+        HUDWipeTop.GetComponent<MoveNormal>().MoveDown();
+        HUDWipeBottom.GetComponent<MoveNormal>().MoveUp();
+        HUDGameOver.GetComponent<MoveNormal>().MoveUp();
+        HUDPlayAgain.GetComponent<MoveNormal>().MoveDown();
+        wipeTimer = wipeTimerMax;
+        Globals.CurrentGameState = Globals.GameState.TitleScreen;
     }
 
     public void IncrementScore(int points)
@@ -399,10 +449,12 @@ public class SceneManager : MonoBehaviour
 
     public void StartGame()
     {
+        Player.GetComponent<Player>().Reset();
         Player.SetActive(true);
         Controls.SetActive(Globals.ControlsOn);
         Globals.CurrentGameState = Globals.GameState.Playing;
         Globals.ScrollSpeed = new Vector3(Globals.EasyMode ? Globals.minSpeed : Globals.minSpeed + 2f, 0, 0);
+        spawnInterval = 0;
         SpawnWave();
     }
 
