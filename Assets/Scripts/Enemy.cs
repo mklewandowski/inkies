@@ -21,6 +21,10 @@ public class Enemy : MonoBehaviour
     float minX = -20f;
     float minY = -20f;
 
+    float maxYMovementPos = 0f;
+    float minYMovementPos = 0f;
+    float movementYDir = 1f;
+
     float shootTimer = .5f;
     float shootTimerMax = 2f;
 
@@ -53,25 +57,37 @@ public class Enemy : MonoBehaviour
         audioManager = GameObject.Find("SceneManager").GetComponent<AudioManager>();
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
 
-        if (enemyType == EnemyType.GunMollusk)
-            points = 200;
-        else if (enemyType == EnemyType.Diver)
-            points = 200;
-        else if (enemyType == EnemyType.GunFish)
-            points = 200;
-
         if (enemyType == EnemyType.Fish)
+        {
             extraXmovement = 2f;
+            maxYMovementPos = this.transform.position.y + .5f;
+            minYMovementPos = this.transform.position.y - .5f;
+        }
         else if (enemyType == EnemyType.GunFish)
+        {
+            points = 200;
             extraXmovement = 2f;
+            maxYMovementPos = this.transform.position.y + .5f;
+            minYMovementPos = this.transform.position.y - .5f;
+        }
         else if (enemyType == EnemyType.GunMollusk)
+        {
+            points = 200;
             extraXmovement = 1f;
+        }
         else if (enemyType == EnemyType.Mollusk)
+        {
             extraXmovement = 1f;
+        }
         else if (enemyType == EnemyType.Diver)
+        {
+            points = 200;
             extraXmovement = 1f;
+        }
         else if (enemyType == EnemyType.None)
+        {
             extraXmovement = 1f;
+        }
     }
 
     public void SetExtraXMovement(float val)
@@ -121,8 +137,17 @@ public class Enemy : MonoBehaviour
             float baseSpeed = Globals.ScrollSpeed.x * Globals.ScrollDirection.x;
             if (enemyType == EnemyType.Diver && this.transform.localPosition.x < 8f)
                 extraYmovement = baseSpeed - 1f;
+            else if ((enemyType == EnemyType.Fish || enemyType == EnemyType.GunFish) && isAlive)
+            {
+                if (this.transform.position.y >= maxYMovementPos)
+                    movementYDir = 1f;
+                else if (this.transform.position.y <= minYMovementPos)
+                    movementYDir = -1f;
+                extraYmovement = baseSpeed * movementYDir * .5f;
+            }
 
-            Vector2 movement = new Vector2 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x + extraXmovement * Globals.ScrollDirection.x, 0 + extraYmovement);
+
+            Vector2 movement = new Vector2 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x + extraXmovement * Globals.ScrollDirection.x, extraYmovement);
 
             if (!isAlive)
             {
