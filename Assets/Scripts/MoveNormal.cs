@@ -71,7 +71,7 @@ public class MoveNormal : MonoBehaviour
 
     public bool IsMoving()
     {
-        return currentMoveState == MoveState.None;
+        return currentMoveState != MoveState.None;
     }
 
     public void MoveUp()
