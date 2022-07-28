@@ -369,7 +369,7 @@ public class SceneManager : MonoBehaviour
                     enemyPrefab = GunMolluskPrefab;
                 else if (type == Enemy.EnemyType.GunFish)
                     enemyPrefab = GunFishPrefab;
-                GameObject enemyGO = (GameObject)Instantiate(enemyPrefab, new Vector3(xPosition, yPositions[x % numInCol], 0), Quaternion.identity, EnemyContainer.transform);
+                GameObject enemyGO = (GameObject)Instantiate(enemyPrefab, new Vector3(xPosition, yPositions[x % numInCol], 0), enemyPrefab.transform.rotation, EnemyContainer.transform);
                 if (type == Enemy.EnemyType.Diver || type == Enemy.EnemyType.Mollusk ||  type == Enemy.EnemyType.GunMollusk)
                     extraXmovement = 1f;
             }

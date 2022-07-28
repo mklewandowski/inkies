@@ -103,6 +103,8 @@ MonoBehaviour:
   Muzzle: {fileID: 8612832618094853000}
   BulletPrefab: {fileID: 3423652173057975466, guid: edee4961c967fb542a6e891ca17d2cfb, type: 3}
   enemyType: 3
+  isLastInWave: 0
+  extraXmovement: 0
 --- !u!50 &6889261372065049387
 Rigidbody2D:
   serializedVersion: 4
@@ -137,7 +139,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.23369837, y: 0.06058812}
+  m_Offset: {x: 0.23369825, y: 0.0009460449}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -148,7 +150,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.1317625, y: 3.668738}
+  m_Size: {x: 3.68871, y: 3.5494537}
   m_EdgeRadius: 0
 --- !u!1 &8612832618094853000
 GameObject:

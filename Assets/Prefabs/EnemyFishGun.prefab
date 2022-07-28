@@ -103,6 +103,8 @@ MonoBehaviour:
   Muzzle: {fileID: 6185259416520869459}
   BulletPrefab: {fileID: 3423652173057975466, guid: edee4961c967fb542a6e891ca17d2cfb, type: 3}
   enemyType: 4
+  isLastInWave: 0
+  extraXmovement: 0
 --- !u!50 &954198675655058846
 Rigidbody2D:
   serializedVersion: 4
