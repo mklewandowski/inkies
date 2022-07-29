@@ -72,7 +72,14 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI HUDDialogBoxText;
     int dialogNum = 0;
-    string[] dialog = {"What a beautiful day in Swim City!", "I'll go to the store and get some Seaweed Cereal.", "I hope I don't run into any nasties!"};
+    string[] sallyDialog = {"SALLY: What a beautiful day in Swim City!", "SALLY: I have to meet Tom at Seaweed Burger.", "SALLY: I hope I don't run into any nasties!"};
+    string[] tomDialog = {"TOM: What a beautiful day in Swim City!", "TOM: I have to meet Sally at Seaweed Burger.", "TOM: I hope I don't run into any nasties!"};
+    [SerializeField]
+    Sprite SallySprite;
+    [SerializeField]
+    Sprite TomSprite;
+    [SerializeField]
+    GameObject HUDDialogPlayer;
 
     float wipeTimer = 0f;
     float wipeTimerMax = .8f;
@@ -269,7 +276,6 @@ public class SceneManager : MonoBehaviour
                 Level.SetActive(true);
 
                 dialogNum = 0;
-                HUDDialogBoxText.text = dialog[dialogNum];
 
                 Globals.CurrentScore = 0;
                 HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
@@ -438,14 +444,16 @@ public class SceneManager : MonoBehaviour
         audioManager.PlayMenuSound();
 
         dialogNum++;
-        if (dialogNum >= dialog.Length)
+        if (dialogNum >= sallyDialog.Length)
         {
             HUDDialogBox.GetComponent<MoveNormal>().MoveUp();
             StartGame();
         }
         else
         {
-            HUDDialogBoxText.text = dialog[dialogNum];
+            HUDDialogBoxText.text = Globals.CurrentPlayerType == Globals.PlayerTypes.Sally
+                ? sallyDialog[dialogNum]
+                : tomDialog[dialogNum];
         }
     }
 
@@ -547,15 +555,38 @@ public class SceneManager : MonoBehaviour
 
     public void SelectSally()
     {
+        audioManager.PlayMenuSound();
+
         Globals.CurrentPlayerType = Globals.PlayerTypes.Sally;
-        HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
-        HUDCharacterSelect.GetComponent<MoveNormal>().MoveUp();
+
+        UpdateAfterCharacterSelect();
     }
 
     public void SelectTom()
     {
+        audioManager.PlayMenuSound();
+
         Globals.CurrentPlayerType = Globals.PlayerTypes.Tom;
+
+        UpdateAfterCharacterSelect();
+    }
+
+    void UpdateAfterCharacterSelect()
+    {
         HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
         HUDCharacterSelect.GetComponent<MoveNormal>().MoveUp();
+
+        HUDDialogBoxText.text = Globals.CurrentPlayerType == Globals.PlayerTypes.Sally
+            ? sallyDialog[dialogNum]
+            : tomDialog[dialogNum];
+
+        if (Globals.CurrentPlayerType == Globals.PlayerTypes.Sally)
+        {
+            HUDDialogPlayer.GetComponent<Image>().sprite = SallySprite;
+        }
+        else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Tom)
+        {
+            HUDDialogPlayer.GetComponent<Image>().sprite = TomSprite;
+        }
     }
 }

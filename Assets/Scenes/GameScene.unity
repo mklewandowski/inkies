@@ -7370,6 +7370,9 @@ MonoBehaviour:
   HUDCharacterSelect: {fileID: 841657944}
   HUDDialogBox: {fileID: 1520216865}
   HUDDialogBoxText: {fileID: 230742094}
+  SallySprite: {fileID: 21300000, guid: df81ad39b16f6c944a66adcb9f6d6461, type: 3}
+  TomSprite: {fileID: 21300000, guid: b9825571a49a83845b71d533829e32eb, type: 3}
+  HUDDialogPlayer: {fileID: 702122391}
   DiverPrefab: {fileID: 1958008840846150010, guid: b30fbde050c8d004180126ea296b0691, type: 3}
   FishPrefab: {fileID: 954198675655058818, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
   MolluskPrefab: {fileID: 5613334171290355452, guid: e1c24a9338df1ae469c999ad3f03d1db, type: 3}
