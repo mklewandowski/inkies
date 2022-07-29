@@ -4104,6 +4104,8 @@ MonoBehaviour:
   InkBulletPrefab: {fileID: 3423652173057975466, guid: f1c29369776d3fc4cb80ae0603a18483, type: 3}
   Muzzle: {fileID: 1220546271}
   BulletContainer: {fileID: 296987646}
+  SallySprite: {fileID: 21300000, guid: 4df03dff98dd4774a8a85f52086b5630, type: 3}
+  TomSprite: {fileID: 21300000, guid: 314372f975c5d8b468f6072f61038fcd, type: 3}
 --- !u!50 &878249312
 Rigidbody2D:
   serializedVersion: 4
