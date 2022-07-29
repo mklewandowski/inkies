@@ -66,6 +66,8 @@ public class SceneManager : MonoBehaviour
     bool showAbout = false;
 
     [SerializeField]
+    GameObject HUDCharacterSelect;
+    [SerializeField]
     GameObject HUDDialogBox;
     [SerializeField]
     TextMeshProUGUI HUDDialogBoxText;
@@ -318,7 +320,7 @@ public class SceneManager : MonoBehaviour
             wipeTimer -= Time.deltaTime;
             if (wipeTimer <= 0)
             {
-                HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
+                HUDCharacterSelect.GetComponent<MoveNormal>().MoveDown();
             }
         }
     }
@@ -541,5 +543,19 @@ public class SceneManager : MonoBehaviour
         audioManager.PlayMenuSound();
         HUDEasyMode.text = Globals.EasyMode ? "Mode: EASY" : "Mode: NORMAL";
         Globals.SaveIntToPlayerPrefs(Globals.EasyModePlayerPrefsKey, Globals.EasyMode ? 1 : 0);
+    }
+
+    public void SelectSally()
+    {
+        Globals.CurrentPlayerType = Globals.PlayerTypes.Sally;
+        HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
+        HUDCharacterSelect.GetComponent<MoveNormal>().MoveUp();
+    }
+
+    public void SelectTom()
+    {
+        Globals.CurrentPlayerType = Globals.PlayerTypes.Tom;
+        HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
+        HUDCharacterSelect.GetComponent<MoveNormal>().MoveUp();
     }
 }
