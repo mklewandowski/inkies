@@ -17,9 +17,7 @@ public class Player : MonoBehaviour
     GameObject BulletContainer;
 
     [SerializeField]
-    Sprite SallySprite;
-    [SerializeField]
-    Sprite TomSprite;
+    Sprite[] PlayerSprites;
 
     Vector2 initialPos = new Vector2(-5f, -1f);
     Vector2 bulletMovementVector = new Vector2(10f, 0);
@@ -65,14 +63,7 @@ public class Player : MonoBehaviour
 
     public void Reset()
     {
-        if (Globals.CurrentPlayerType == Globals.PlayerTypes.Sally)
-        {
-            this.GetComponent<SpriteRenderer>().sprite = SallySprite;
-        }
-        else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Tom)
-        {
-            this.GetComponent<SpriteRenderer>().sprite = TomSprite;
-        }
+        this.GetComponent<SpriteRenderer>().sprite =  PlayerSprites[(int)Globals.CurrentPlayerType];
         Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>(true);
         for (int i = 0; i < enemies.Length; i++)
         {

@@ -23,7 +23,12 @@ public class Globals
 
     public enum PlayerTypes {
         Sally,
-        Tom
+        Tom,
+        Ruth,
+        Stan,
+        Gen,
+        Mario,
+        Luigi
     }
     public static PlayerTypes CurrentPlayerType = PlayerTypes.Sally;
 
@@ -56,6 +61,26 @@ public class Globals
     {
         int val = PlayerPrefs.GetInt(key, defaultVal);
         return val;
+    }
+
+    public static string GetPlayerName()
+    {
+        if (CurrentPlayerType == PlayerTypes.Sally)
+            return "SALLY";
+        else if (CurrentPlayerType == PlayerTypes.Tom)
+            return "TOM";
+        else if (CurrentPlayerType == PlayerTypes.Ruth)
+            return "RUTH";
+        else if (CurrentPlayerType == PlayerTypes.Stan)
+            return "STAN";
+        else if (CurrentPlayerType == PlayerTypes.Gen)
+            return "GEN";
+        else if (CurrentPlayerType == PlayerTypes.Mario)
+            return "MARIO";
+        else if (CurrentPlayerType == PlayerTypes.Luigi)
+            return "LUIGI";
+        else
+            return "SALLY";
     }
 
 }
