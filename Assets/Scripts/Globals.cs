@@ -38,6 +38,11 @@ public class Globals
 
     public const string BestScorePlayerPrefsKey = "BestScore";
 
+    // keep track of coins
+    public static int Coins = 0;
+
+    public const string CoinsPlayerPrefsKey = "Coins";
+
     // audio and music
     public static bool AudioOn;
     public static bool MusicOn;

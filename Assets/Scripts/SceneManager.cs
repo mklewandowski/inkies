@@ -43,6 +43,8 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject HUDScore;
     [SerializeField]
+    TextMeshProUGUI HUDCoinsText;
+    [SerializeField]
     GameObject HUDGameOver;
     [SerializeField]
     GameObject HUDPlayAgain;
@@ -105,6 +107,9 @@ public class SceneManager : MonoBehaviour
         audioManager = this.GetComponent<AudioManager>();
         Globals.BestScore = Globals.LoadIntFromPlayerPrefs(Globals.BestScorePlayerPrefsKey);
 
+        Globals.Coins = Globals.LoadIntFromPlayerPrefs(Globals.CoinsPlayerPrefsKey);
+        UpdateCoins();
+
         AudioSource audioSource;
         audioSource = this.GetComponent<AudioSource>();
         int audioOn = Globals.LoadIntFromPlayerPrefs(Globals.AudioPlayerPrefsKey, 1);
@@ -121,7 +126,7 @@ public class SceneManager : MonoBehaviour
         HUDMusic.text = Globals.MusicOn ? "Music: ON" : "Music: OFF";
         HUDAudio.text = Globals.AudioOn ? "Audio: ON" : "Audio: OFF";
         HUDControls.text = Globals.ControlsOn ? "D-pad: ON" : "D-pad: OFF";
-       HUDEasyMode.text = Globals.EasyMode ? "Mode: EASY" : "Mode: NORMAL";
+        HUDEasyMode.text = Globals.EasyMode ? "Mode: EASY" : "Mode: NORMAL";
 
         waves.Add(new EnemyWave(new Enemy.EnemyType[]{
             Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None
@@ -396,6 +401,17 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    public void GetCoin()
+    {
+        Globals.Coins++;
+        HUDCoinsText.text = Globals.Coins.ToString();
+    }
+
+    public void UpdateCoins()
+    {
+        HUDCoinsText.text = Globals.Coins.ToString();
+    }
+
     public void StartGameIntro()
     {
         if (Globals.CurrentGameState != Globals.GameState.TitleScreen && Globals.CurrentGameState != Globals.GameState.Restart)
@@ -465,6 +481,7 @@ public class SceneManager : MonoBehaviour
 
     public void GameOver()
     {
+        Globals.SaveIntToPlayerPrefs(Globals.CoinsPlayerPrefsKey, Globals.Coins);
         if (Globals.CurrentScore > Globals.BestScore)
         {
             Globals.BestScore = Globals.CurrentScore;

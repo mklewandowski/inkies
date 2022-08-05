@@ -14,6 +14,8 @@ public class AudioManager : MonoBehaviour
     AudioClip ShootSound;
     [SerializeField]
     AudioClip GameOver;
+    [SerializeField]
+    AudioClip CoinSound;
 
     void Awake()
     {
@@ -63,6 +65,12 @@ public class AudioManager : MonoBehaviour
     {
         if (Globals.AudioOn)
             audioSource.PlayOneShot(GameOver, 1f);
+    }
+
+    public void PlayCoinSound()
+    {
+        if (Globals.AudioOn)
+            audioSource.PlayOneShot(CoinSound, 1f);
     }
 
 }
