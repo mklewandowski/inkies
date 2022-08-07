@@ -27,6 +27,7 @@ public class Globals
         Ruth,
         Stan,
         Gen,
+        Scrooge,
         Mario,
         Luigi
     }
@@ -80,6 +81,8 @@ public class Globals
             return "STAN";
         else if (CurrentPlayerType == PlayerTypes.Gen)
             return "GEN";
+        else if (CurrentPlayerType == PlayerTypes.Scrooge)
+            return "SCROOGE";
         else if (CurrentPlayerType == PlayerTypes.Mario)
             return "MARIO";
         else if (CurrentPlayerType == PlayerTypes.Luigi)
