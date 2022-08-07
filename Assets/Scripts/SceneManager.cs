@@ -101,6 +101,11 @@ public class SceneManager : MonoBehaviour
     //EnemyWave[] waves;
     List<EnemyWave> waves = new List<EnemyWave>();
 
+    [SerializeField]
+    GameObject CoinContainer;
+    [SerializeField]
+    GameObject CoinPrefab;
+
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -386,6 +391,24 @@ public class SceneManager : MonoBehaviour
         }
         GameObject waveEnd = (GameObject)Instantiate(WaveEndPrefab, new Vector3(xPosition + 1f, 0, 0), Quaternion.identity, EnemyContainer.transform);
         waveEnd.GetComponent<Enemy>().SetExtraXMovement(extraXmovement);
+
+        // coins
+        float[] coinYPositions = {5.5f, 1.9f, -.4f, -2};
+        int coinCols = (int)(waves[spawnInterval].Enemies.Length / numInCol) + 2;
+        xPosition = 12f;
+        for (int x = 0; x < coinCols; x++)
+        {
+            for (int y = 0; y < coinYPositions.Length; y++)
+            {
+                float rand = Random.Range(0f, 100f);
+                if (rand < 10f)
+                {
+                    GameObject coinGO = (GameObject)Instantiate(CoinPrefab, new Vector3(xPosition, coinYPositions[y], 0), Quaternion.identity, CoinContainer.transform);
+                }
+            }
+            xPosition = xPosition + xPositionDelta;
+        }
+
         spawnInterval++;
     }
 

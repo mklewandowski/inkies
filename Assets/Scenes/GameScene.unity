@@ -258,6 +258,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500482}
   m_CullTransparentMesh: 1
+--- !u!1 &9786681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9786682}
+  m_Layer: 0
+  m_Name: Coins
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9786682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9786681}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 382124783}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &78907752
 GameObject:
   m_ObjectHideFlags: 0
@@ -2228,6 +2259,7 @@ Transform:
   - {fileID: 1111631023}
   - {fileID: 296987647}
   - {fileID: 892767860}
+  - {fileID: 9786682}
   - {fileID: 1081738962}
   - {fileID: 878249309}
   m_Father: {fileID: 0}
@@ -4950,7 +4982,7 @@ Transform:
   m_Children:
   - {fileID: 1220546273}
   m_Father: {fileID: 382124783}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &878249310
 SpriteRenderer:
@@ -5792,7 +5824,7 @@ Transform:
   - {fileID: 903363302}
   - {fileID: 528413150}
   m_Father: {fileID: 382124783}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1087817438
 GameObject:
@@ -8285,6 +8317,8 @@ MonoBehaviour:
   GunFishPrefab: {fileID: 954198675655058818, guid: 89b454036db34a244afe765890887193, type: 3}
   WaveEndPrefab: {fileID: 954198675655058818, guid: 0995cc44783341c4ebc5626688783d5c, type: 3}
   EnemyContainer: {fileID: 892767859}
+  CoinContainer: {fileID: 9786681}
+  CoinPrefab: {fileID: 5752374331842902725, guid: 9c40bf08a36b3f241b7ae18652f07889, type: 3}
 --- !u!114 &1310353877
 MonoBehaviour:
   m_ObjectHideFlags: 0
