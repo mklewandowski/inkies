@@ -106,6 +106,9 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject CoinPrefab;
 
+    [SerializeField]
+    GameObject PowerUpPrefab;
+
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -391,6 +394,12 @@ public class SceneManager : MonoBehaviour
         }
         GameObject waveEnd = (GameObject)Instantiate(WaveEndPrefab, new Vector3(xPosition + 1f, 0, 0), Quaternion.identity, EnemyContainer.transform);
         waveEnd.GetComponent<Enemy>().SetExtraXMovement(extraXmovement);
+
+        // powerup
+        if ((spawnInterval - 1) % 3 == 0)
+        {
+            GameObject powerupGO = (GameObject)Instantiate(PowerUpPrefab, new Vector3(xPosition + 2f, Random.Range(0, 5f), 0), Quaternion.identity, CoinContainer.transform);
+        }
 
         // coins
         float[] coinYPositions = {5.5f, 1.9f, -.4f, -2};

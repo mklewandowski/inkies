@@ -1567,7 +1567,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258181626}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 2.2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8319,6 +8319,7 @@ MonoBehaviour:
   EnemyContainer: {fileID: 892767859}
   CoinContainer: {fileID: 9786681}
   CoinPrefab: {fileID: 5752374331842902725, guid: 9c40bf08a36b3f241b7ae18652f07889, type: 3}
+  PowerUpPrefab: {fileID: 5752374331842902725, guid: d1ca0672a8213ec4f9a74a3f834ae91e, type: 3}
 --- !u!114 &1310353877
 MonoBehaviour:
   m_ObjectHideFlags: 0
