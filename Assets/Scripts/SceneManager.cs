@@ -430,6 +430,12 @@ public class SceneManager : MonoBehaviour
         HUDCoinsText.text = Globals.Coins.ToString();
     }
 
+    public void GetPowerUp()
+    {
+        // invincible, super shot, disguise
+
+    }
+
     public void UpdateCoins()
     {
         HUDCoinsText.text = Globals.Coins.ToString();

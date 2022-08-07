@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class PowerUp : MonoBehaviour
 {
     AudioManager audioManager;
     SceneManager sceneManager;
@@ -39,8 +39,8 @@ public class Coin : MonoBehaviour
         {
             isActive = false;
 
-            audioManager.PlayCoinSound();
-            sceneManager.GetCoin();
+            audioManager.PlayPowerUpSound();
+            sceneManager.GetPowerUp();
 
             Destroy(this.gameObject);
         }

@@ -8337,6 +8337,7 @@ MonoBehaviour:
   ShootSound: {fileID: 8300000, guid: 0dfa2cce045b5e649979b02d30536e21, type: 3}
   GameOver: {fileID: 8300000, guid: 9d3dcdde4c392cf4eba11615b9c45272, type: 3}
   CoinSound: {fileID: 8300000, guid: fddf2a4c3a4a43a4b81f7d1e5a716340, type: 3}
+  PowerUpSound: {fileID: 8300000, guid: 138ad064888a35045a77a231404fe2fa, type: 3}
 --- !u!82 &1310353878
 AudioSource:
   m_ObjectHideFlags: 0
