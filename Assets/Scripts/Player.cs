@@ -75,11 +75,6 @@ public class Player : MonoBehaviour
     public void Reset()
     {
         PlayerSprite.GetComponent<SpriteRenderer>().sprite =  PlayerSprites[(int)Globals.CurrentPlayerType];
-        Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>(true);
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            Destroy(enemies[i].gameObject);
-        }
 
         this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         this.transform.localPosition = initialPos;

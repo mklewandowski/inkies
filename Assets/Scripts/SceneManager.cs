@@ -484,6 +484,25 @@ public class SceneManager : MonoBehaviour
         HUDCoinsText.text = Globals.Coins.ToString();
     }
 
+    public void RemoveOldLevelContent()
+    {
+        Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>(true);
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Destroy(enemies[i].gameObject);
+        }
+        Coin[] coins = GameObject.FindObjectsOfType<Coin>(true);
+        for (int i = 0; i < coins.Length; i++)
+        {
+            Destroy(coins[i].gameObject);
+        }
+        PowerUp[] pups = GameObject.FindObjectsOfType<PowerUp>(true);
+        for (int i = 0; i < pups.Length; i++)
+        {
+            Destroy(pups[i].gameObject);
+        }
+    }
+
     public void StartGameIntro()
     {
         if (Globals.CurrentGameState != Globals.GameState.TitleScreen && Globals.CurrentGameState != Globals.GameState.Restart)
@@ -492,6 +511,7 @@ public class SceneManager : MonoBehaviour
         audioManager.PlayStartSound();
 
         Player.GetComponent<Player>().Reset();
+        RemoveOldLevelContent();
 
         HUDWipeLeft.GetComponent<MoveNormal>().MoveRight();
         HUDWipeRight.GetComponent<MoveNormal>().MoveLeft();
@@ -543,6 +563,7 @@ public class SceneManager : MonoBehaviour
     public void StartGame()
     {
         Player.GetComponent<Player>().Reset();
+        RemoveOldLevelContent();
         Player.SetActive(true);
         Controls.SetActive(Globals.ControlsOn);
         Globals.CurrentGameState = Globals.GameState.Playing;
@@ -571,6 +592,7 @@ public class SceneManager : MonoBehaviour
     {
         audioManager.PlayStartSound();
         Player.GetComponent<Player>().Reset();
+        RemoveOldLevelContent();
         Globals.CurrentGameState = Globals.GameState.Playing;
         Globals.ScrollSpeed = new Vector3(Globals.EasyMode ? Globals.minSpeed : Globals.minSpeed + 2f, 0, 0);
         HUDGameOver.GetComponent<MoveNormal>().MoveUp();
