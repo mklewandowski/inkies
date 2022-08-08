@@ -24,10 +24,10 @@ public class Globals
     public enum PlayerTypes {
         Sally,
         Tom,
-        Ruth,
+        Welley,
         Stan,
         Gen,
-        Scrooge,
+        Jerry,
         Mario,
         Luigi
     }
@@ -75,14 +75,14 @@ public class Globals
             return "SALLY";
         else if (CurrentPlayerType == PlayerTypes.Tom)
             return "TOM";
-        else if (CurrentPlayerType == PlayerTypes.Ruth)
-            return "RUTH";
+        else if (CurrentPlayerType == PlayerTypes.Welley)
+            return "WELLEY";
         else if (CurrentPlayerType == PlayerTypes.Stan)
             return "STAN";
         else if (CurrentPlayerType == PlayerTypes.Gen)
             return "GEN";
-        else if (CurrentPlayerType == PlayerTypes.Scrooge)
-            return "SCROOGE";
+        else if (CurrentPlayerType == PlayerTypes.Jerry)
+            return "JERRY";
         else if (CurrentPlayerType == PlayerTypes.Mario)
             return "MARIO";
         else if (CurrentPlayerType == PlayerTypes.Luigi)
