@@ -146,3 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a075753591c0240b3509c3854183e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerupType: 1
+  InvincibleSprite: {fileID: 21300000, guid: 68d27c4027cd6f2409ec2a8741093e86, type: 3}
+  SuperInkSprite: {fileID: 21300000, guid: 86a306aa943c9a347b776cfa9aefa310, type: 3}
+  DisguiseSprite: {fileID: 21300000, guid: 9c5b7ddd203cfdb42a6f3f0b7fff0689, type: 3}

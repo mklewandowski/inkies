@@ -422,6 +422,7 @@ public class SceneManager : MonoBehaviour
         if ((spawnInterval - 1) % 3 == 0)
         {
             GameObject powerupGO = (GameObject)Instantiate(PowerUpPrefab, new Vector3(xPosition + 2f, Random.Range(0, 5f), 0), Quaternion.identity, CoinContainer.transform);
+            powerupGO.GetComponent<PowerUp>().SetType((PowerUp.PowerupType)Random.Range(0, 3));
         }
 
         // coins

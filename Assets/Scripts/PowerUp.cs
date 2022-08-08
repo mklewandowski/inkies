@@ -16,6 +16,13 @@ public class PowerUp : MonoBehaviour
     bool isActive = true;
     float minX = -20f;
 
+    [SerializeField]
+    Sprite InvincibleSprite;
+    [SerializeField]
+    Sprite SuperInkSprite;
+    [SerializeField]
+    Sprite DisguiseSprite;
+
     void Awake()
     {
         audioManager = GameObject.Find("SceneManager").GetComponent<AudioManager>();
@@ -27,6 +34,23 @@ public class PowerUp : MonoBehaviour
         if (Globals.CurrentGameState == Globals.GameState.Restart || this.transform.position.x < minX)
         {
             Destroy(this.gameObject);
+        }
+    }
+
+    public void SetType(PowerupType type)
+    {
+        powerupType = type;
+        if (powerupType == PowerupType.Invincible)
+        {
+            this.GetComponent<SpriteRenderer>().sprite = InvincibleSprite;
+        }
+        else if (powerupType == PowerupType.SuperInk)
+        {
+            this.GetComponent<SpriteRenderer>().sprite = SuperInkSprite;
+        }
+        else if (powerupType == PowerupType.Disguise)
+        {
+            this.GetComponent<SpriteRenderer>().sprite = DisguiseSprite;
         }
     }
 
