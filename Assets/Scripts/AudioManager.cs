@@ -18,6 +18,10 @@ public class AudioManager : MonoBehaviour
     AudioClip CoinSound;
     [SerializeField]
     AudioClip PowerUpSound;
+    [SerializeField]
+    AudioClip CantBuySound;
+    [SerializeField]
+    AudioClip BuySound;
 
     void Awake()
     {
@@ -79,5 +83,17 @@ public class AudioManager : MonoBehaviour
     {
         if (Globals.AudioOn)
             audioSource.PlayOneShot(PowerUpSound, 1f);
+    }
+
+    public void PlayBuyCharacterSound()
+    {
+        if (Globals.AudioOn)
+            audioSource.PlayOneShot(BuySound, 1f);
+    }
+
+    public void PlayCantBuyCharacterSound()
+    {
+        if (Globals.AudioOn)
+            audioSource.PlayOneShot(CantBuySound, 1f);
     }
 }

@@ -109,10 +109,26 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject PowerUpPrefab;
 
+    [SerializeField]
+    GameObject[] HUDUnlockBanners;
+    [SerializeField]
+    GameObject[] HUDCharacterSelectImages;
+
     void Awake()
     {
         Application.targetFrameRate = 60;
         audioManager = this.GetComponent<AudioManager>();
+
+        Globals.LoadCharacterUnlockStatesFromPlayerPrefs();
+        for (int x = 0; x < HUDUnlockBanners.Length; x++)
+        {
+            if (Globals.CharacterUnlockStates[x] == 1)
+            {
+                HUDUnlockBanners[x].SetActive(false);
+                HUDCharacterSelectImages[x].GetComponent<Image>().color = new Color(1f, 1f, 1f);
+            }
+        }
+
         Globals.BestScore = Globals.LoadIntFromPlayerPrefs(Globals.BestScorePlayerPrefsKey);
 
         Globals.Coins = Globals.LoadIntFromPlayerPrefs(Globals.CoinsPlayerPrefsKey);
@@ -605,16 +621,36 @@ public class SceneManager : MonoBehaviour
 
     public void SelectPlayer(int player)
     {
-        audioManager.PlayMenuSound();
+        if (Globals.CharacterUnlockStates[player] == 1)
+        {
+            audioManager.PlayMenuSound();
 
-        Globals.CurrentPlayerType = (Globals.PlayerTypes)player;
+            Globals.CurrentPlayerType = (Globals.PlayerTypes)player;
 
-        HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
-        HUDCharacterSelect.GetComponent<MoveNormal>().MoveUp();
+            HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
+            HUDCharacterSelect.GetComponent<MoveNormal>().MoveUp();
 
-        HUDDialogBoxText.text = Globals.GetPlayerName() + ": " + dialog[dialogNum];
+            HUDDialogBoxText.text = Globals.GetPlayerName() + ": " + dialog[dialogNum];
 
-        HUDDialogPlayer.GetComponent<Image>().sprite = HUDPlayerSprites[(int)Globals.CurrentPlayerType];
+            HUDDialogPlayer.GetComponent<Image>().sprite = HUDPlayerSprites[(int)Globals.CurrentPlayerType];
+        }
+        else
+        {
+            if (Globals.Coins >= 100)
+            {
+                audioManager.PlayBuyCharacterSound();
+                Globals.Coins = Globals.Coins - 100;
+                Globals.SaveIntToPlayerPrefs(Globals.CoinsPlayerPrefsKey, Globals.Coins);
+                UpdateCoins();
+                Globals.UnlockCharacter(player);
+                HUDUnlockBanners[player].SetActive(false);
+                HUDCharacterSelectImages[player].GetComponent<Image>().color = new Color(1f, 1f, 1f);
+            }
+            else
+            {
+                audioManager.PlayCantBuyCharacterSound();
+            }
+        }
     }
 
 }

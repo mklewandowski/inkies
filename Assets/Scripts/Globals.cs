@@ -59,6 +59,27 @@ public class Globals
 
     public const string EasyModePlayerPrefsKey = "EasyMode";
 
+    public static int MaxCharacters = 40;
+    public static int[] CharacterUnlockStates = new int[MaxCharacters];
+    public const string CharacterUnlockPlayerPrefsKey = "Vehicle";
+
+    public static void LoadCharacterUnlockStatesFromPlayerPrefs()
+    {
+        for (int x = 0; x < MaxCharacters; x++)
+        {
+            int unlock = LoadIntFromPlayerPrefs(CharacterUnlockPlayerPrefsKey + x.ToString());
+            CharacterUnlockStates[x] = unlock;
+        }
+        CharacterUnlockStates[0] = 1;
+        CharacterUnlockStates[1] = 1;
+    }
+
+    public static void UnlockCharacter(int num)
+    {
+        CharacterUnlockStates[num] = 1;
+        SaveIntToPlayerPrefs(CharacterUnlockPlayerPrefsKey + num.ToString(), 1);
+    }
+
     public static void SaveIntToPlayerPrefs(string key, int val)
     {
         PlayerPrefs.SetInt(key, val);
