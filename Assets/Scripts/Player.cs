@@ -45,6 +45,13 @@ public class Player : MonoBehaviour
     float inkCoolDownTimer = 0f;
     float inkCoolDownTimerMax = .25f;
 
+    bool superInk = false;
+    bool invincible = false;
+    bool disguise = false;
+    float superInkTimer = 0f;
+    float invincibleTimer = 0f;
+    float disguiseTimer = 0f;
+
     void Awake()
     {
         audioManager = GameObject.Find("SceneManager").GetComponent<AudioManager>();
@@ -73,6 +80,36 @@ public class Player : MonoBehaviour
         this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         this.transform.localPosition = initialPos;
         this.GetComponent<Collider2D>().enabled = true;
+
+        invincibleTimer = 0;
+        superInkTimer = 0;
+        disguiseTimer = 0;
+    }
+
+    public void GetPowerUp(PowerUp.PowerupType powerupType)
+    {
+        if (powerupType == PowerUp.PowerupType.Invincible)
+        {
+            invincibleTimer = 6f;
+        }
+        else if (powerupType == PowerUp.PowerupType.SuperInk)
+        {
+            superInkTimer = 8f;
+        }
+        else if (powerupType == PowerUp.PowerupType.Disguise)
+        {
+            disguiseTimer = 10f;
+        }
+    }
+
+    public bool IsInvincible()
+    {
+        return invincibleTimer > 0;
+    }
+
+    public bool IsInDisguise()
+    {
+        return disguiseTimer > 0;
     }
 
     // Update is called once per frame
@@ -80,6 +117,8 @@ public class Player : MonoBehaviour
     {
         if (Globals.CurrentGameState == Globals.GameState.Playing)
         {
+            UpdateTimers();
+
             moveLeft = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || moveLeftButton;
             moveRight = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || moveRightButton;
             moveUp = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || moveUpButton;
@@ -130,6 +169,34 @@ public class Player : MonoBehaviour
         {
             movementVector = new Vector2 (0, -15f);
             this.GetComponent<Rigidbody2D>().velocity = movementVector;
+        }
+    }
+
+    private void UpdateTimers()
+    {
+        if (invincibleTimer > 0)
+        {
+            invincibleTimer -= Time.deltaTime;
+            if (invincibleTimer <= 0)
+            {
+                // turn off
+            }
+        }
+        if (superInkTimer > 0)
+        {
+            superInkTimer -= Time.deltaTime;
+            if (superInkTimer <= 0)
+            {
+                // turn off
+            }
+        }
+        if (disguiseTimer > 0)
+        {
+            disguiseTimer -= Time.deltaTime;
+            if (disguiseTimer <= 0)
+            {
+                // turn off
+            }
         }
     }
 
@@ -193,6 +260,14 @@ public class Player : MonoBehaviour
             audioManager.PlayShootSound();
             GameObject bulletGameObject = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
             bulletGameObject.GetComponent<Rigidbody2D>().velocity = bulletMovementVector;
+
+            if (superInkTimer > 0)
+            {
+                GameObject bulletGameObject2 = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
+                bulletGameObject2.GetComponent<Rigidbody2D>().velocity = new Vector2(10f, 4f);
+                GameObject bulletGameObject3 = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
+                bulletGameObject3.GetComponent<Rigidbody2D>().velocity = new Vector2(10f, -4f);
+            }
         }
     }
 
@@ -235,21 +310,35 @@ public class Player : MonoBehaviour
         Enemy enemy = collider.gameObject.GetComponent<Enemy>();
         if (bullet != null && bullet.GetComponent<Bullet>().enemyBullet && Globals.CurrentGameState == Globals.GameState.Playing)
         {
-            audioManager.PlayGameOver();
+            if (IsInvincible())
+            {
+                audioManager.PlayEnemyZappedSound();
+            }
+            else
+            {
+                audioManager.PlayGameOver();
+
+                this.GetComponent<Collider2D>().enabled = false;
+
+                sceneManager.GameOver();
+            }
 
             Destroy(collider.gameObject);
-
-            this.GetComponent<Collider2D>().enabled = false;
-
-            sceneManager.GameOver();
         }
         else if (enemy != null && Globals.CurrentGameState == Globals.GameState.Playing)
         {
-            audioManager.PlayGameOver();
+            if (IsInvincible())
+            {
+                enemy.KillEnemy(collider);
+            }
+            else
+            {
+                audioManager.PlayGameOver();
 
-            this.GetComponent<Collider2D>().enabled = false;
+                this.GetComponent<Collider2D>().enabled = false;
 
-            sceneManager.GameOver();
+                sceneManager.GameOver();
+            }
         }
     }
 }

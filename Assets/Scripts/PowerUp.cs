@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
+    public enum PowerupType {
+        Invincible,
+        SuperInk,
+        Disguise
+    }
+    public PowerupType powerupType = PowerupType.SuperInk;
+
     AudioManager audioManager;
     SceneManager sceneManager;
     bool isActive = true;
@@ -40,7 +47,8 @@ public class PowerUp : MonoBehaviour
             isActive = false;
 
             audioManager.PlayPowerUpSound();
-            sceneManager.GetPowerUp();
+            player.GetPowerUp(powerupType);
+            sceneManager.GetPowerUp(powerupType);
 
             Destroy(this.gameObject);
         }

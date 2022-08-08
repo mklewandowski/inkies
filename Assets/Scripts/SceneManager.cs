@@ -114,6 +114,13 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject[] HUDCharacterSelectImages;
 
+    [SerializeField]
+    GameObject HUDPowerupInk;
+    [SerializeField]
+    GameObject HUDPowerupInvincible;
+    [SerializeField]
+    GameObject HUDPowerupDisguise;
+
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -455,10 +462,20 @@ public class SceneManager : MonoBehaviour
         HUDCoinsText.text = Globals.Coins.ToString();
     }
 
-    public void GetPowerUp()
+    public void GetPowerUp(PowerUp.PowerupType powerupType)
     {
-        // invincible, super shot, disguise
-
+        if (powerupType == PowerUp.PowerupType.Invincible)
+        {
+            HUDPowerupInvincible.GetComponent<HUDPowerUp>().Show();
+        }
+        else if (powerupType == PowerUp.PowerupType.SuperInk)
+        {
+            HUDPowerupInk.GetComponent<HUDPowerUp>().Show();
+        }
+        else if (powerupType == PowerUp.PowerupType.Disguise)
+        {
+            HUDPowerupDisguise.GetComponent<HUDPowerUp>().Show();
+        }
     }
 
     public void UpdateCoins()

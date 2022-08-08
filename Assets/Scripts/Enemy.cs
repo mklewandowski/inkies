@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     AudioManager audioManager;
     SceneManager sceneManager;
+    Player player;
 
     [SerializeField]
     GameObject Muzzle;
@@ -56,6 +57,7 @@ public class Enemy : MonoBehaviour
         bulletContainer = GameObject.Find("Bullets");
         audioManager = GameObject.Find("SceneManager").GetComponent<AudioManager>();
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
+        player = GameObject.Find("Player").GetComponent<Player>();
 
         if (enemyType == EnemyType.Fish)
         {
@@ -119,7 +121,7 @@ public class Enemy : MonoBehaviour
 
     public void ShootBullet()
     {
-        if (Globals.CurrentGameState == Globals.GameState.Playing)
+        if (Globals.CurrentGameState == Globals.GameState.Playing && !player.IsInDisguise())
         {
             float baseSpeed = Globals.ScrollSpeed.x * Globals.ScrollDirection.x;
             GameObject bulletGameObject = (GameObject)Instantiate(BulletPrefab, Muzzle.transform.position, Quaternion.identity, bulletContainer.transform);
@@ -163,19 +165,24 @@ public class Enemy : MonoBehaviour
         Bullet bullet = collider.gameObject.GetComponent<Bullet>();
         if (bullet != null && !bullet.GetComponent<Bullet>().enemyBullet && Globals.CurrentGameState == Globals.GameState.Playing && isActive)
         {
-            audioManager.PlayEnemyZappedSound();
-
-            this.GetComponent<Collider2D>().enabled = false;
-
-            this.GetComponent<SpriteRenderer>().color = Color.black;
-
-            isActive = false;
-            isAlive = false;
-
-            Destroy(collider.gameObject);
-
-            sceneManager.IncrementScore(points);
+            KillEnemy(collider);
         }
+    }
+
+    public void KillEnemy(Collider2D collider)
+    {
+        audioManager.PlayEnemyZappedSound();
+
+        this.GetComponent<Collider2D>().enabled = false;
+
+        this.GetComponent<SpriteRenderer>().color = Color.black;
+
+        isActive = false;
+        isAlive = false;
+
+        Destroy(collider.gameObject);
+
+        sceneManager.IncrementScore(points);
     }
 
 }
