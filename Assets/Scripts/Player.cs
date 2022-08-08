@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     GameObject DisguiseSprite;
     [SerializeField]
     Sprite[] PlayerSprites;
+    [SerializeField]
+    GameObject[] Stars;
 
     Vector2 initialPos = new Vector2(-5f, -1f);
     Vector2 bulletMovementVector = new Vector2(10f, 0);
@@ -49,9 +51,6 @@ public class Player : MonoBehaviour
     float inkCoolDownTimer = 0f;
     float inkCoolDownTimerMax = .25f;
 
-    bool superInk = false;
-    bool invincible = false;
-    bool disguise = false;
     float superInkTimer = 0f;
     float invincibleTimer = 0f;
     float disguiseTimer = 0f;
@@ -80,6 +79,11 @@ public class Player : MonoBehaviour
         this.transform.localPosition = initialPos;
         this.GetComponent<Collider2D>().enabled = true;
 
+        for (int x = 0; x < Stars.Length; x++)
+        {
+            Stars[x].SetActive(false);
+        }
+
         invincibleTimer = 0;
         superInkTimer = 0;
         disguiseTimer = 0;
@@ -98,6 +102,10 @@ public class Player : MonoBehaviour
         if (powerupType == PowerUp.PowerupType.Invincible)
         {
             invincibleTimer = 6f;
+            for (int x = 0; x < Stars.Length; x++)
+            {
+                Stars[x].SetActive(true);
+            }
         }
         else if (powerupType == PowerUp.PowerupType.SuperInk)
         {
@@ -190,16 +198,15 @@ public class Player : MonoBehaviour
             invincibleTimer -= Time.deltaTime;
             if (invincibleTimer <= 0)
             {
-                // turn off
+                for (int x = 0; x < Stars.Length; x++)
+                {
+                    Stars[x].SetActive(false);
+                }
             }
         }
         if (superInkTimer > 0)
         {
             superInkTimer -= Time.deltaTime;
-            if (superInkTimer <= 0)
-            {
-                // turn off
-            }
         }
         if (disguiseTimer > 0)
         {
