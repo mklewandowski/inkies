@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
     GameObject BulletContainer;
 
     [SerializeField]
+    GameObject PlayerSprite;
+    [SerializeField]
+    GameObject DisguiseSprite;
+    [SerializeField]
     Sprite[] PlayerSprites;
 
     Vector2 initialPos = new Vector2(-5f, -1f);
@@ -70,7 +74,7 @@ public class Player : MonoBehaviour
 
     public void Reset()
     {
-        this.GetComponent<SpriteRenderer>().sprite =  PlayerSprites[(int)Globals.CurrentPlayerType];
+        PlayerSprite.GetComponent<SpriteRenderer>().sprite =  PlayerSprites[(int)Globals.CurrentPlayerType];
         Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>(true);
         for (int i = 0; i < enemies.Length; i++)
         {
@@ -84,6 +88,14 @@ public class Player : MonoBehaviour
         invincibleTimer = 0;
         superInkTimer = 0;
         disguiseTimer = 0;
+
+        DisguiseSprite.GetComponent<GrowAndShrink>().StopEffect();
+        DisguiseSprite.GetComponent<ShrinkAndHide>().StopEffect();
+        PlayerSprite.GetComponent<GrowAndShrink>().StopEffect();
+        PlayerSprite.GetComponent<ShrinkAndHide>().StopEffect();
+        DisguiseSprite.SetActive(false);
+        PlayerSprite.transform.localScale = new Vector3(1f, 1f, 1f);
+        PlayerSprite.SetActive(true);
     }
 
     public void GetPowerUp(PowerUp.PowerupType powerupType)
@@ -99,6 +111,10 @@ public class Player : MonoBehaviour
         else if (powerupType == PowerUp.PowerupType.Disguise)
         {
             disguiseTimer = 10f;
+            PlayerSprite.GetComponent<ShrinkAndHide>().StartEffect();
+            DisguiseSprite.transform.localScale = new Vector3(.1f, .1f, .1f);
+            DisguiseSprite.SetActive(true);
+            DisguiseSprite.GetComponent<GrowAndShrink>().StartEffect();
         }
     }
 
@@ -195,7 +211,10 @@ public class Player : MonoBehaviour
             disguiseTimer -= Time.deltaTime;
             if (disguiseTimer <= 0)
             {
-                // turn off
+                DisguiseSprite.GetComponent<ShrinkAndHide>().StartEffect();
+                PlayerSprite.transform.localScale = new Vector3(.1f, .1f, .1f);
+                PlayerSprite.SetActive(true);
+                PlayerSprite.GetComponent<GrowAndShrink>().StartEffect();
             }
         }
     }
