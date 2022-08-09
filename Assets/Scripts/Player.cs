@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
     float superInkTimer = 0f;
     float invincibleTimer = 0f;
     float disguiseTimer = 0f;
+    float flashThreshold = 1.5f;
 
     void Awake()
     {
@@ -93,6 +94,8 @@ public class Player : MonoBehaviour
         PlayerSprite.GetComponent<GrowAndShrink>().StopEffect();
         PlayerSprite.GetComponent<ShrinkAndHide>().StopEffect();
         DisguiseSprite.SetActive(false);
+        PlayerSprite.GetComponent<SpriteRenderer>().color = Color.white;
+        DisguiseSprite.GetComponent<SpriteRenderer>().color = Color.white;
         PlayerSprite.transform.localScale = new Vector3(1f, 1f, 1f);
         PlayerSprite.SetActive(true);
     }
@@ -113,11 +116,14 @@ public class Player : MonoBehaviour
         }
         else if (powerupType == PowerUp.PowerupType.Disguise)
         {
+            if (disguiseTimer <= 0)
+            {
+                PlayerSprite.GetComponent<ShrinkAndHide>().StartEffect();
+                DisguiseSprite.transform.localScale = new Vector3(.1f, .1f, .1f);
+                DisguiseSprite.SetActive(true);
+                DisguiseSprite.GetComponent<GrowAndShrink>().StartEffect();
+            }
             disguiseTimer = 10f;
-            PlayerSprite.GetComponent<ShrinkAndHide>().StartEffect();
-            DisguiseSprite.transform.localScale = new Vector3(.1f, .1f, .1f);
-            DisguiseSprite.SetActive(true);
-            DisguiseSprite.GetComponent<GrowAndShrink>().StartEffect();
         }
     }
 
@@ -202,11 +208,24 @@ public class Player : MonoBehaviour
                 {
                     Stars[x].SetActive(false);
                 }
+                PlayerSprite.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+            else if (invincibleTimer <= flashThreshold)
+            {
+                FlashSprite(invincibleTimer, PlayerSprite);
             }
         }
         if (superInkTimer > 0)
         {
             superInkTimer -= Time.deltaTime;
+            if (superInkTimer <= 0)
+            {
+                PlayerSprite.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+            else if (superInkTimer <= flashThreshold)
+            {
+                FlashSprite(superInkTimer, PlayerSprite);
+            }
         }
         if (disguiseTimer > 0)
         {
@@ -217,8 +236,18 @@ public class Player : MonoBehaviour
                 PlayerSprite.transform.localScale = new Vector3(.1f, .1f, .1f);
                 PlayerSprite.SetActive(true);
                 PlayerSprite.GetComponent<GrowAndShrink>().StartEffect();
+                DisguiseSprite.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+            else if (disguiseTimer <= flashThreshold)
+            {
+                FlashSprite(disguiseTimer, DisguiseSprite);
             }
         }
+    }
+
+    private void FlashSprite(float flashTime, GameObject flashSprite)
+    {
+        flashSprite.GetComponent<SpriteRenderer>().color = (int)(flashTime * 10f) % 2 == 0 ? Color.white : new Color (137f / 255f, 165f / 255f, 118f / 255f);
     }
 
     private void KeepInBounds()
