@@ -471,14 +471,20 @@ public class SceneManager : MonoBehaviour
         if (powerupType == PowerUp.PowerupType.Invincible)
         {
             HUDPowerupInvincible.GetComponent<HUDPowerUp>().Show();
+            HUDPowerupInk.GetComponent<HUDPowerUp>().Hide();
+            HUDPowerupDisguise.GetComponent<HUDPowerUp>().Hide();
         }
         else if (powerupType == PowerUp.PowerupType.SuperInk)
         {
             HUDPowerupInk.GetComponent<HUDPowerUp>().Show();
+            HUDPowerupInvincible.GetComponent<HUDPowerUp>().Hide();
+            HUDPowerupDisguise.GetComponent<HUDPowerUp>().Hide();
         }
         else if (powerupType == PowerUp.PowerupType.Disguise)
         {
             HUDPowerupDisguise.GetComponent<HUDPowerUp>().Show();
+            HUDPowerupInk.GetComponent<HUDPowerUp>().Hide();
+            HUDPowerupInvincible.GetComponent<HUDPowerUp>().Hide();
         }
     }
 
