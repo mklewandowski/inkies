@@ -29,7 +29,8 @@ public class Globals
         Gen,
         Jerry,
         Mario,
-        Luigi
+        Luigi,
+        Zombie
     }
     public static PlayerTypes CurrentPlayerType = PlayerTypes.Sally;
 
@@ -108,6 +109,8 @@ public class Globals
             return "MARIO";
         else if (CurrentPlayerType == PlayerTypes.Luigi)
             return "LUIGI";
+        else if (CurrentPlayerType == PlayerTypes.Zombie)
+            return "MR. BRAINS";
         else
             return "SALLY";
     }
