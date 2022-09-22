@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     AudioClip ShootSound;
     [SerializeField]
-    AudioClip GameOver;
+    AudioClip GameOverSound;
     [SerializeField]
     AudioClip CoinSound;
     [SerializeField]
@@ -22,6 +22,8 @@ public class AudioManager : MonoBehaviour
     AudioClip CantBuySound;
     [SerializeField]
     AudioClip BuySound;
+    [SerializeField]
+    AudioClip LevelCompleteSound;
 
     void Awake()
     {
@@ -70,7 +72,7 @@ public class AudioManager : MonoBehaviour
     public void PlayGameOver()
     {
         if (Globals.AudioOn)
-            audioSource.PlayOneShot(GameOver, 1f);
+            audioSource.PlayOneShot(GameOverSound, 1f);
     }
 
     public void PlayCoinSound()
@@ -95,5 +97,11 @@ public class AudioManager : MonoBehaviour
     {
         if (Globals.AudioOn)
             audioSource.PlayOneShot(CantBuySound, 1f);
+    }
+
+    public void PlayLevelCompleteSound()
+    {
+        if (Globals.AudioOn)
+            audioSource.PlayOneShot(LevelCompleteSound, 1f);
     }
 }

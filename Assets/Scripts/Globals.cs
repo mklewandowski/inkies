@@ -17,7 +17,10 @@ public class Globals
         Ready,
         Playing,
         ShowScore,
-        Restart
+        Restart,
+        LevelComplete,
+        NextLevel,
+        Ending
     }
     public static GameState CurrentGameState = GameState.TitleScreen;
 
@@ -33,6 +36,10 @@ public class Globals
         Zombie
     }
     public static PlayerTypes CurrentPlayerType = PlayerTypes.Sally;
+
+    public static int MaxLevelNum = 3;
+    public static int CurrentLevel = 0;
+    public static int CurrentLives = 3;
 
     // keep track of scoring
     public static int BestScore = 0;

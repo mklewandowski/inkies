@@ -74,11 +74,21 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI HUDDialogBoxText;
     int dialogNum = 0;
-    string[] dialog = {"What a beautiful day in Swim City!", "I have to meet my friends at Seaweed Burger.", "I hope I don't run into any nasties!"};
+    string[] dialog1 = {"What a beautiful day in Swim City!", "I have to meet my friends at Seaweed Burger.", "I hope I don't run into any nasties!"};
+    string[] dialog2 = {"2What a beautiful day in Swim City!", "I have to meet my friends at Seaweed Burger.", "I hope I don't run into any nasties!"};
+    string[] dialog3 = {"3What a beautiful day in Swim City!", "I have to meet my friends at Seaweed Burger.", "I hope I don't run into any nasties!"};
+    string[] dialog4 = {"4What a beautiful day in Swim City!", "I have to meet my friends at Seaweed Burger.", "I hope I don't run into any nasties!"};
     [SerializeField]
     Sprite[] HUDPlayerSprites;
     [SerializeField]
     GameObject HUDDialogPlayer;
+    [SerializeField]
+    GameObject HUDLevelComplete;
+    [SerializeField]
+    GameObject HUDNextLevel;
+
+    float levelCompleteTimer = 0f;
+    float levelCompleteTimerMax = 3f;
 
     float wipeTimer = 0f;
     float wipeTimerMax = .8f;
@@ -96,8 +106,12 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject WaveEndPrefab;
     [SerializeField]
+    GameObject LevelEndPrefab;
+    [SerializeField]
     GameObject EnemyContainer;
     int spawnInterval = 0;
+    int wavesPerLevel = 5;
+    int wavesThisLevel = 0;
     //EnemyWave[] waves;
     List<EnemyWave> waves = new List<EnemyWave>();
 
@@ -269,6 +283,30 @@ public class SceneManager : MonoBehaviour
             Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
             Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk
         }));
+        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk
+        }));
+        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk
+        }));
+        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
+            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk
+        }));
     }
 
     // Update is called once per frame
@@ -289,6 +327,14 @@ public class SceneManager : MonoBehaviour
         else if (Globals.CurrentGameState == Globals.GameState.Playing)
         {
             UpdatePlaying();
+        }
+        else if (Globals.CurrentGameState == Globals.GameState.LevelComplete)
+        {
+            UpdateLevelComplete();
+        }
+        else if (Globals.CurrentGameState == Globals.GameState.NextLevel)
+        {
+            UpdateNextLevel();
         }
     }
 
@@ -366,6 +412,11 @@ public class SceneManager : MonoBehaviour
 
     void UpdatePlaying()
     {
+        MoveBlocks();
+    }
+
+    void MoveBlocks()
+    {
         float blockMinX = -12f;
         for (int i = 0; i < Blocks.Length; i++)
         {
@@ -377,6 +428,55 @@ public class SceneManager : MonoBehaviour
                         Blocks[i].transform.localPosition.y,
                         Blocks[i].transform.localPosition.z
                     );
+            }
+        }
+    }
+
+    private void UpdateLevelComplete()
+    {
+        levelCompleteTimer -= Time.deltaTime;
+        if (levelCompleteTimer <= 0)
+        {
+            if (Globals.CurrentLevel == Globals.MaxLevelNum)
+            {
+                // WTD WTD WTD end game
+            }
+            else
+                HUDNextLevel.GetComponent<MoveNormal>().MoveUp();
+
+            Globals.CurrentGameState = Globals.GameState.NextLevel;
+        }
+        MoveBlocks();
+    }
+
+    private void UpdateNextLevel()
+    {
+        MoveBlocks();
+        if (wipeTimer > 0)
+        {
+            wipeTimer -= Time.deltaTime;
+            if (wipeTimer <= 0)
+            {
+                Globals.CurrentLevel++;
+                wavesThisLevel = 0;
+
+                HUDWipeLeft.GetComponent<MoveNormal>().MoveLeft();
+                HUDWipeRight.GetComponent<MoveNormal>().MoveRight();
+                HUDWipeTop.GetComponent<MoveNormal>().MoveUp();
+                HUDWipeBottom.GetComponent<MoveNormal>().MoveDown();
+
+                Player.SetActive(false);
+
+                dialogNum = 0;
+                string currDialog = dialog1[dialogNum];
+                if (Globals.CurrentLevel == 1)
+                    currDialog = dialog2[dialogNum];
+                else if (Globals.CurrentLevel == 2)
+                    currDialog = dialog3[dialogNum];
+                else if (Globals.CurrentLevel == 3)
+                    currDialog = dialog4[dialogNum];
+                HUDDialogBoxText.text = Globals.GetPlayerName() + ": " + currDialog;
+                HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
             }
         }
     }
@@ -415,8 +515,16 @@ public class SceneManager : MonoBehaviour
                     extraXmovement = 1f;
             }
         }
-        GameObject waveEnd = (GameObject)Instantiate(WaveEndPrefab, new Vector3(xPosition + 1f, 0, 0), Quaternion.identity, EnemyContainer.transform);
-        waveEnd.GetComponent<Enemy>().SetExtraXMovement(extraXmovement);
+        if (wavesThisLevel == (wavesPerLevel - 1))
+        {
+            GameObject levelEnd = (GameObject)Instantiate(LevelEndPrefab, new Vector3(xPosition + 1f, 0, 0), Quaternion.identity, EnemyContainer.transform);
+            levelEnd.GetComponent<Enemy>().SetExtraXMovement(extraXmovement);
+        }
+        else
+        {
+            GameObject waveEnd = (GameObject)Instantiate(WaveEndPrefab, new Vector3(xPosition + 1f, 0, 0), Quaternion.identity, EnemyContainer.transform);
+            waveEnd.GetComponent<Enemy>().SetExtraXMovement(extraXmovement);
+        }
 
         // powerup
         if ((spawnInterval - 1) % 3 == 0)
@@ -446,11 +554,13 @@ public class SceneManager : MonoBehaviour
         }
 
         spawnInterval++;
+        wavesThisLevel++;
     }
 
     void FixedUpdate()
     {
-        if (Globals.CurrentGameState == Globals.GameState.Playing || Globals.CurrentGameState == Globals.GameState.ShowScore)
+        if (Globals.CurrentGameState == Globals.GameState.Playing || Globals.CurrentGameState == Globals.GameState.ShowScore
+            || Globals.CurrentGameState == Globals.GameState.LevelComplete || Globals.CurrentGameState == Globals.GameState.NextLevel)
         {
             Vector2 blockMovement = new Vector2 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x, 0);
             for (int i = 0; i < Blocks.Length; i++)
@@ -558,14 +668,28 @@ public class SceneManager : MonoBehaviour
         audioManager.PlayMenuSound();
 
         dialogNum++;
-        if (dialogNum >= dialog.Length)
+        int dialogLength = dialog1.Length;
+        if (Globals.CurrentLevel == 1)
+            dialogLength = dialog2.Length;
+        else if (Globals.CurrentLevel == 2)
+            dialogLength = dialog3.Length;
+        else if (Globals.CurrentLevel == 3)
+            dialogLength = dialog4.Length;
+        if (dialogNum >= dialogLength)
         {
             HUDDialogBox.GetComponent<MoveNormal>().MoveUp();
             StartGame();
         }
         else
         {
-            HUDDialogBoxText.text = Globals.GetPlayerName() + ": " + dialog[dialogNum];
+            string currDialog = dialog1[dialogNum];
+            if (Globals.CurrentLevel == 1)
+                currDialog = dialog2[dialogNum];
+            else if (Globals.CurrentLevel == 2)
+                currDialog = dialog3[dialogNum];
+            else if (Globals.CurrentLevel == 3)
+                currDialog = dialog4[dialogNum];
+            HUDDialogBoxText.text = Globals.GetPlayerName() + ": " + currDialog;
         }
     }
 
@@ -577,7 +701,8 @@ public class SceneManager : MonoBehaviour
         Controls.SetActive(Globals.ControlsOn);
         Globals.CurrentGameState = Globals.GameState.Playing;
         Globals.ScrollSpeed = new Vector3(Globals.EasyMode ? Globals.minSpeed : Globals.minSpeed + 2f, 0, 0);
-        spawnInterval = 0;
+        if (Globals.CurrentLevel == 0)
+            spawnInterval = 0;
         SpawnWave();
     }
 
@@ -607,9 +732,34 @@ public class SceneManager : MonoBehaviour
         HUDGameOver.GetComponent<MoveNormal>().MoveUp();
         HUDPlayAgain.GetComponent<MoveNormal>().MoveDown();
         Globals.CurrentScore = 0;
+        Globals.CurrentLevel = 0;
+        Globals.CurrentLives = 3;
         spawnInterval = 0;
         SpawnWave();
         HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
+    }
+
+    public void LevelComplete()
+    {
+        audioManager.PlayLevelCompleteSound();
+        HUDLevelComplete.GetComponent<MoveNormal>().MoveDown();
+        levelCompleteTimer = levelCompleteTimerMax;
+        RemoveOldLevelContent();
+        Globals.CurrentGameState = Globals.GameState.LevelComplete;
+
+        // WTD WTD WTD remove powerups
+    }
+
+    public void StartNextLevel()
+    {
+        audioManager.PlayStartSound();
+        HUDLevelComplete.GetComponent<MoveNormal>().MoveUp();
+        HUDNextLevel.GetComponent<MoveNormal>().MoveDown();
+        HUDWipeLeft.GetComponent<MoveNormal>().MoveRight();
+        HUDWipeRight.GetComponent<MoveNormal>().MoveLeft();
+        HUDWipeTop.GetComponent<MoveNormal>().MoveDown();
+        HUDWipeBottom.GetComponent<MoveNormal>().MoveUp();
+        wipeTimer = wipeTimerMax;
     }
 
     public void ToggleOptions()
@@ -679,7 +829,7 @@ public class SceneManager : MonoBehaviour
             HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
             HUDCharacterSelect.GetComponent<MoveNormal>().MoveUp();
 
-            HUDDialogBoxText.text = Globals.GetPlayerName() + ": " + dialog[dialogNum];
+            HUDDialogBoxText.text = Globals.GetPlayerName() + ": " + dialog1[dialogNum];
 
             HUDDialogPlayer.GetComponent<Image>().sprite = HUDPlayerSprites[(int)Globals.CurrentPlayerType];
         }

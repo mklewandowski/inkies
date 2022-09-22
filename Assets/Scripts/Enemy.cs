@@ -43,6 +43,8 @@ public class Enemy : MonoBehaviour
 
     public bool isLastInWave;
 
+    public bool isLastInLevel;
+
     public float extraXmovement = 0f;
 
     int points = 100;
@@ -106,6 +108,12 @@ public class Enemy : MonoBehaviour
         {
             isLastInWave = false;
             sceneManager.SpawnWave();
+        }
+
+        if (isLastInLevel && this.transform.position.x <= 0)
+        {
+            isLastInLevel = false;
+            sceneManager.LevelComplete();
         }
 
         if ((enemyType == EnemyType.GunMollusk || enemyType == EnemyType.GunFish) && this.transform.position.x <= screenRightEdge && isActive)
