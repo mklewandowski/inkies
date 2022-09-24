@@ -110,7 +110,7 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject EnemyContainer;
     int spawnInterval = 0;
-    int wavesPerLevel = 5;
+    int wavesPerLevel = 10;
     int wavesThisLevel = 0;
     //EnemyWave[] waves;
     List<EnemyWave> waves = new List<EnemyWave>();
@@ -173,140 +173,7 @@ public class SceneManager : MonoBehaviour
         HUDControls.text = Globals.ControlsOn ? "D-pad: ON" : "D-pad: OFF";
         HUDEasyMode.text = Globals.EasyMode ? "Mode: EASY" : "Mode: NORMAL";
 
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None,
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None,
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.Diver, Enemy.EnemyType.GunFish, Enemy.EnemyType.GunFish, Enemy.EnemyType.GunFish, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.Diver, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.None, Enemy.EnemyType.GunMollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.GunFish, Enemy.EnemyType.GunFish, Enemy.EnemyType.GunFish, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk
-        }));
-        waves.Add(new EnemyWave(new Enemy.EnemyType[]{
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk,
-            Enemy.EnemyType.None, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Fish, Enemy.EnemyType.Mollusk
-        }));
+        LevelBuilder.BuildLevels(waves);
     }
 
     // Update is called once per frame
@@ -483,6 +350,9 @@ public class SceneManager : MonoBehaviour
 
     public void SpawnWave()
     {
+        if (Globals.CurrentGameState != Globals.GameState.Playing)
+            return;
+
         if (spawnInterval >= waves.Count)
         {
             spawnInterval = 0;
@@ -510,6 +380,10 @@ public class SceneManager : MonoBehaviour
                     enemyPrefab = GunMolluskPrefab;
                 else if (type == Enemy.EnemyType.GunFish)
                     enemyPrefab = GunFishPrefab;
+                else if (type == Enemy.EnemyType.GunFishBounce)
+                    enemyPrefab = GunFishPrefab;
+                else if (type == Enemy.EnemyType.GunFishHard)
+                    enemyPrefab = GunFishPrefab;
                 GameObject enemyGO = (GameObject)Instantiate(enemyPrefab, new Vector3(xPosition, yPositions[x % numInCol], 0), enemyPrefab.transform.rotation, EnemyContainer.transform);
                 if (type == Enemy.EnemyType.Diver || type == Enemy.EnemyType.Mollusk ||  type == Enemy.EnemyType.GunMollusk)
                     extraXmovement = 1f;
@@ -528,18 +402,18 @@ public class SceneManager : MonoBehaviour
         }
 
         // powerup
-        if ((spawnInterval - 1) % 3 == 0)
+        if (spawnInterval > 0 && (spawnInterval - 1) % 3 == 0)
         {
             GameObject powerupGO = (GameObject)Instantiate(PowerUpPrefab, new Vector3(xPosition + 2f, Random.Range(-1f, 4.5f), 0), Quaternion.identity, CoinContainer.transform);
             int maxPowerupRange = 2;
-            if (spawnInterval >= 8)
+            if (spawnInterval >= 15)
                 maxPowerupRange = 3;
             powerupGO.GetComponent<PowerUp>().SetType((PowerUp.PowerupType)Random.Range(0, maxPowerupRange));
         }
 
         // coins
-        float[] coinYPositions = {5.5f, 1.9f, -.4f, -2};
-        int coinCols = (int)(waves[spawnInterval].Enemies.Length / numInCol) + 2;
+        float[] coinYPositions = {4f, 2f, 0f, -2f};
+        int coinCols = (int)(waves[spawnInterval].Enemies.Length / numInCol) + 1;
         xPosition = 12f;
         for (int x = 0; x < coinCols; x++)
         {
@@ -703,7 +577,10 @@ public class SceneManager : MonoBehaviour
         Globals.CurrentGameState = Globals.GameState.Playing;
         Globals.ScrollSpeed = new Vector3(Globals.EasyMode ? Globals.minSpeed : Globals.minSpeed + 2f, 0, 0);
         if (Globals.CurrentLevel == 0)
+        {
             spawnInterval = 0;
+            wavesThisLevel = 0;
+        }
         SpawnWave();
     }
 
@@ -736,6 +613,7 @@ public class SceneManager : MonoBehaviour
         Globals.CurrentLevel = 0;
         Globals.CurrentLives = 3;
         spawnInterval = 0;
+        wavesThisLevel = 0;
         SpawnWave();
         HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
     }

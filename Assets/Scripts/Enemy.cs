@@ -37,6 +37,8 @@ public class Enemy : MonoBehaviour
         Mollusk,
         GunMollusk,
         GunFish,
+        GunFishBounce,
+        GunFishHard,
         None
     }
     public EnemyType enemyType = EnemyType.Fish;
@@ -69,10 +71,22 @@ public class Enemy : MonoBehaviour
         }
         else if (enemyType == EnemyType.GunFish)
         {
+            points = 150;
+            extraXmovement = 2f;
+        }
+        else if (enemyType == EnemyType.GunFishBounce)
+        {
             points = 200;
             extraXmovement = 2f;
             maxYMovementPos = this.transform.position.y + .5f;
             minYMovementPos = this.transform.position.y - .5f;
+        }
+        else if (enemyType == EnemyType.GunFishHard)
+        {
+            points = 250;
+            extraXmovement = 2f;
+            maxYMovementPos = this.transform.position.y + 1f;
+            minYMovementPos = this.transform.position.y - 1f;
         }
         else if (enemyType == EnemyType.GunMollusk)
         {
@@ -104,13 +118,13 @@ public class Enemy : MonoBehaviour
         if (this.transform.position.x <= minX || this.transform.position.y <= minY)
             Destroy(this.gameObject);
 
-        if (isLastInWave && this.transform.position.x <= 0)
+        if (isLastInWave && this.transform.position.x <= -8f)
         {
             isLastInWave = false;
             sceneManager.SpawnWave();
         }
 
-        if (isLastInLevel && this.transform.position.x <= 0)
+        if (isLastInLevel && this.transform.position.x <= -8f)
         {
             isLastInLevel = false;
             sceneManager.LevelComplete();
@@ -155,7 +169,6 @@ public class Enemy : MonoBehaviour
                     movementYDir = -1f;
                 extraYmovement = baseSpeed * movementYDir * .5f;
             }
-
 
             Vector2 movement = new Vector2 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x + extraXmovement * Globals.ScrollDirection.x, extraYmovement);
 
