@@ -75,9 +75,9 @@ public class SceneManager : MonoBehaviour
     TextMeshProUGUI HUDDialogBoxText;
     int dialogNum = 0;
     string[] dialog1 = {"What a beautiful day in Swim City!", "I have to meet my friends at Seaweed Burger.", "I hope I don't run into any nasties!"};
-    string[] dialog2 = {"2What a beautiful day in Swim City!", "I have to meet my friends at Seaweed Burger.", "I hope I don't run into any nasties!"};
-    string[] dialog3 = {"3What a beautiful day in Swim City!", "I have to meet my friends at Seaweed Burger.", "I hope I don't run into any nasties!"};
-    string[] dialog4 = {"4What a beautiful day in Swim City!", "I have to meet my friends at Seaweed Burger.", "I hope I don't run into any nasties!"};
+    string[] dialog2 = {"It's still a long swim to Seaweed Burger.", "I can't wait to get a Saltwater Shake!"};
+    string[] dialog3 = {"My tentacles are tired from all this action!", "I should have just taken a Tuna Taxi."};
+    string[] dialog4 = {"Just a little farther and I'll be at Seaweed Burger.", "All my friends are waiting for me. I better hurry!"};
     [SerializeField]
     Sprite[] HUDPlayerSprites;
     [SerializeField]
@@ -515,6 +515,7 @@ public class SceneManager : MonoBehaviour
                     extraXmovement = 1f;
             }
         }
+        // make the wave or level end
         if (wavesThisLevel == (wavesPerLevel - 1))
         {
             GameObject levelEnd = (GameObject)Instantiate(LevelEndPrefab, new Vector3(xPosition + 1f, 0, 0), Quaternion.identity, EnemyContainer.transform);
