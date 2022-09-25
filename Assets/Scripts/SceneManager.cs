@@ -112,6 +112,7 @@ public class SceneManager : MonoBehaviour
     int spawnInterval = 0;
     int wavesPerLevel = 10;
     int wavesThisLevel = 0;
+    int spawnsUntilPowerup = 2;
     List<EnemyWave> waves = new List<EnemyWave>();
 
     [SerializeField]
@@ -328,6 +329,7 @@ public class SceneManager : MonoBehaviour
             {
                 Globals.CurrentLevel++;
                 wavesThisLevel = 0;
+                spawnsUntilPowerup = 2;
                 distanceUntilCoinSpawn = coinSpawnDistance;
 
                 HUDWipeLeft.GetComponent<MoveNormal>().MoveLeft();
@@ -402,13 +404,15 @@ public class SceneManager : MonoBehaviour
         }
 
         // powerup
-        if (spawnInterval > 0 && (spawnInterval - 1) % 3 == 0)
+        spawnsUntilPowerup--;
+        if (spawnsUntilPowerup <= 0)
         {
             GameObject powerupGO = (GameObject)Instantiate(PowerUpPrefab, new Vector3(xPosition + 2f, Random.Range(-1f, 4.5f), 0), Quaternion.identity, CoinContainer.transform);
             int maxPowerupRange = 2;
             if (spawnInterval >= 15)
                 maxPowerupRange = 3;
             powerupGO.GetComponent<PowerUp>().SetType((PowerUp.PowerupType)Random.Range(0, maxPowerupRange));
+            spawnsUntilPowerup = 3;
         }
 
         spawnInterval++;
@@ -585,6 +589,7 @@ public class SceneManager : MonoBehaviour
         {
             spawnInterval = 0;
             wavesThisLevel = 0;
+            spawnsUntilPowerup = 2;
         }
         SpawnWave();
     }
