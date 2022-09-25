@@ -37,8 +37,6 @@ public class Enemy : MonoBehaviour
         Mollusk,
         GunMollusk,
         GunFish,
-        GunFishBounce,
-        GunFishHard,
         None
     }
     public EnemyType enemyType = EnemyType.Fish;
@@ -71,22 +69,10 @@ public class Enemy : MonoBehaviour
         }
         else if (enemyType == EnemyType.GunFish)
         {
-            points = 150;
-            extraXmovement = 2f;
-        }
-        else if (enemyType == EnemyType.GunFishBounce)
-        {
             points = 200;
             extraXmovement = 2f;
             maxYMovementPos = this.transform.position.y + .5f;
             minYMovementPos = this.transform.position.y - .5f;
-        }
-        else if (enemyType == EnemyType.GunFishHard)
-        {
-            points = 250;
-            extraXmovement = 2f;
-            maxYMovementPos = this.transform.position.y + 1f;
-            minYMovementPos = this.transform.position.y - 1f;
         }
         else if (enemyType == EnemyType.GunMollusk)
         {
