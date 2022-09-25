@@ -347,6 +347,7 @@ public class SceneManager : MonoBehaviour
                     currDialog = dialog4[dialogNum];
                 HUDDialogBoxText.text = Globals.GetPlayerName() + ": " + currDialog;
                 HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
+                Globals.CurrentGameState = Globals.GameState.IntroDialog;
             }
         }
     }
@@ -437,8 +438,9 @@ public class SceneManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Globals.CurrentGameState == Globals.GameState.Playing || Globals.CurrentGameState == Globals.GameState.ShowScore
-            || Globals.CurrentGameState == Globals.GameState.LevelComplete || Globals.CurrentGameState == Globals.GameState.NextLevel)
+        if (Globals.CurrentGameState == Globals.GameState.IntroDialog || Globals.CurrentGameState == Globals.GameState.Playing
+            || Globals.CurrentGameState == Globals.GameState.ShowScore || Globals.CurrentGameState == Globals.GameState.LevelComplete
+            || Globals.CurrentGameState == Globals.GameState.NextLevel)
         {
             Vector2 blockMovement = new Vector2 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x, 0);
             for (int i = 0; i < Blocks.Length; i++)
@@ -628,9 +630,8 @@ public class SceneManager : MonoBehaviour
         HUDLevelComplete.GetComponent<MoveNormal>().MoveDown();
         levelCompleteTimer = levelCompleteTimerMax;
         RemoveOldLevelContent();
+        Globals.ScrollSpeed = new Vector3(0, 0, 0);
         Globals.CurrentGameState = Globals.GameState.LevelComplete;
-
-        // WTD WTD WTD remove powerups
     }
 
     public void StartNextLevel()

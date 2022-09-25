@@ -25,7 +25,7 @@ public class Coin : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Globals.CurrentGameState == Globals.GameState.Ready || Globals.CurrentGameState == Globals.GameState.Playing || Globals.CurrentGameState == Globals.GameState.ShowScore)
+        if (Globals.CurrentGameState == Globals.GameState.Playing || Globals.CurrentGameState == Globals.GameState.ShowScore)
         {
             Vector3 movement = new Vector3 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x, 0, 0);
             this.GetComponent<Rigidbody2D>().velocity = movement;

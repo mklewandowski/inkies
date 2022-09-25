@@ -104,16 +104,19 @@ public class Enemy : MonoBehaviour
         if (this.transform.position.x <= minX || this.transform.position.y <= minY)
             Destroy(this.gameObject);
 
-        if (isLastInWave && this.transform.position.x <= -8f)
+        if (Globals.CurrentGameState == Globals.GameState.Playing)
         {
-            isLastInWave = false;
-            sceneManager.SpawnWave();
-        }
+            if (isLastInWave && this.transform.position.x <= -8f)
+            {
+                isLastInWave = false;
+                sceneManager.SpawnWave();
+            }
 
-        if (isLastInLevel && this.transform.position.x <= -8f)
-        {
-            isLastInLevel = false;
-            sceneManager.LevelComplete();
+            if (isLastInLevel && this.transform.position.x <= -8f)
+            {
+                isLastInLevel = false;
+                sceneManager.LevelComplete();
+            }
         }
 
         if ((enemyType == EnemyType.GunMollusk || enemyType == EnemyType.GunFish) && this.transform.position.x <= screenRightEdge && isActive)

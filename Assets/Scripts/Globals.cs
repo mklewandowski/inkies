@@ -14,7 +14,6 @@ public class Globals
         TitleScreen,
         Starting,
         IntroDialog,
-        Ready,
         Playing,
         ShowScore,
         Restart,
