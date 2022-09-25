@@ -41,7 +41,9 @@ public class SceneManager : MonoBehaviour
     GameObject HUDAboutButton;
 
     [SerializeField]
-    GameObject HUDLives;
+    GameObject HUDLivesContainer;
+    [SerializeField]
+    GameObject[] HUDLives;
     [SerializeField]
     GameObject HUDScore;
     [SerializeField]
@@ -227,9 +229,18 @@ public class SceneManager : MonoBehaviour
 
                 dialogNum = 0;
 
-                HUDLives.SetActive(true);
+                HUDLivesContainer.SetActive(true);
 
                 Globals.CurrentScore = 0;
+                Globals.CurrentLevel = 0;
+                Globals.CurrentLives = 3;
+                for (int x = 0; x < HUDLives.Length; x++)
+                {
+                    HUDLives[x].SetActive(x < Globals.CurrentLives);
+                }
+                spawnInterval = 0;
+                wavesThisLevel = 0;
+
                 HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
                 HUDScore.SetActive(true);
 
@@ -259,7 +270,7 @@ public class SceneManager : MonoBehaviour
                 HUDAboutButton.SetActive(true);
 
                 Level.SetActive(false);
-                HUDLives.SetActive(false);
+                HUDLivesContainer.SetActive(false);
                 HUDScore.SetActive(false);
                 Player.SetActive(false);
                 Controls.SetActive(false);
@@ -600,8 +611,27 @@ public class SceneManager : MonoBehaviour
         SpawnWave();
     }
 
+    public void EnemyHit()
+    {
+        bool gameOver = true;
+        Globals.CurrentLives--;
+        if (Globals.CurrentLives > 0)
+        {
+            gameOver = false;
+            Player.GetComponent<Player>().Hit();
+        }
+        for (int x = 0; x < HUDLives.Length; x++)
+        {
+            HUDLives[x].SetActive(x < Globals.CurrentLives);
+        }
+        if (gameOver)
+            GameOver();
+    }
+
     public void GameOver()
     {
+        audioManager.PlayGameOver();
+        Player.GetComponent<Player>().Die();
         Globals.SaveIntToPlayerPrefs(Globals.CoinsPlayerPrefsKey, Globals.Coins);
         if (Globals.CurrentScore > Globals.BestScore)
         {
@@ -628,6 +658,10 @@ public class SceneManager : MonoBehaviour
         Globals.CurrentScore = 0;
         Globals.CurrentLevel = 0;
         Globals.CurrentLives = 3;
+        for (int x = 0; x < HUDLives.Length; x++)
+        {
+            HUDLives[x].SetActive(x < Globals.CurrentLives);
+        }
         spawnInterval = 0;
         wavesThisLevel = 0;
         distanceUntilCoinSpawn = coinSpawnDistance;

@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
     float invincibleTimer = 0f;
     float disguiseTimer = 0f;
     float flashThreshold = 1.5f;
+    float hitInvincibleTimer = 0f;
 
     void Awake()
     {
@@ -100,6 +101,16 @@ public class Player : MonoBehaviour
         PlayerSprite.SetActive(true);
     }
 
+    public void Hit()
+    {
+        hitInvincibleTimer = 1.5f;
+    }
+
+    public void Die()
+    {
+        this.GetComponent<Collider2D>().enabled = false;
+    }
+
     public void GetPowerUp(PowerUp.PowerupType powerupType)
     {
         if (powerupType == PowerUp.PowerupType.Invincible)
@@ -130,6 +141,11 @@ public class Player : MonoBehaviour
     public bool IsInvincible()
     {
         return invincibleTimer > 0;
+    }
+
+    public bool IsHitInvincible()
+    {
+        return hitInvincibleTimer > 0;
     }
 
     public bool IsInDisguise()
@@ -213,6 +229,18 @@ public class Player : MonoBehaviour
             else if (invincibleTimer <= flashThreshold)
             {
                 FlashSprite(invincibleTimer, PlayerSprite);
+            }
+        }
+        if (hitInvincibleTimer > 0)
+        {
+            hitInvincibleTimer -= Time.deltaTime;
+            if (hitInvincibleTimer <= 0)
+            {
+                PlayerSprite.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+            else if (hitInvincibleTimer <= flashThreshold)
+            {
+                FlashSprite(hitInvincibleTimer, PlayerSprite);
             }
         }
         if (superInkTimer > 0)
@@ -364,13 +392,13 @@ public class Player : MonoBehaviour
             {
                 audioManager.PlayEnemyZappedSound();
             }
+            else if (IsHitInvincible())
+            {
+
+            }
             else
             {
-                audioManager.PlayGameOver();
-
-                this.GetComponent<Collider2D>().enabled = false;
-
-                sceneManager.GameOver();
+                sceneManager.EnemyHit();
             }
 
             Destroy(collider.gameObject);
@@ -381,13 +409,13 @@ public class Player : MonoBehaviour
             {
                 enemy.KillEnemy(collider);
             }
+            else if (IsHitInvincible())
+            {
+
+            }
             else
             {
-                audioManager.PlayGameOver();
-
-                this.GetComponent<Collider2D>().enabled = false;
-
-                sceneManager.GameOver();
+                sceneManager.EnemyHit();
             }
         }
     }
