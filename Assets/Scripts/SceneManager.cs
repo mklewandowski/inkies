@@ -112,13 +112,14 @@ public class SceneManager : MonoBehaviour
     int spawnInterval = 0;
     int wavesPerLevel = 10;
     int wavesThisLevel = 0;
-    //EnemyWave[] waves;
     List<EnemyWave> waves = new List<EnemyWave>();
 
     [SerializeField]
     GameObject CoinContainer;
     [SerializeField]
     GameObject CoinPrefab;
+    float coinSpawnDistance = 3f;
+    float distanceUntilCoinSpawn = 3f;
 
     [SerializeField]
     GameObject PowerUpPrefab;
@@ -280,6 +281,7 @@ public class SceneManager : MonoBehaviour
     void UpdatePlaying()
     {
         MoveBlocks();
+        SpawnCoins();
     }
 
     void MoveBlocks()
@@ -326,6 +328,7 @@ public class SceneManager : MonoBehaviour
             {
                 Globals.CurrentLevel++;
                 wavesThisLevel = 0;
+                distanceUntilCoinSpawn = coinSpawnDistance;
 
                 HUDWipeLeft.GetComponent<MoveNormal>().MoveLeft();
                 HUDWipeRight.GetComponent<MoveNormal>().MoveRight();
@@ -411,12 +414,19 @@ public class SceneManager : MonoBehaviour
             powerupGO.GetComponent<PowerUp>().SetType((PowerUp.PowerupType)Random.Range(0, maxPowerupRange));
         }
 
-        // coins
-        float[] coinYPositions = {4f, 2f, 0f, -2f};
-        int coinCols = (int)(waves[spawnInterval].Enemies.Length / numInCol) + 1;
-        xPosition = 12f;
-        for (int x = 0; x < coinCols; x++)
+        spawnInterval++;
+        wavesThisLevel++;
+    }
+
+    void SpawnCoins()
+    {
+        if (wavesThisLevel == wavesPerLevel)
+            return;
+        distanceUntilCoinSpawn = distanceUntilCoinSpawn - Globals.ScrollSpeed.x * Time.deltaTime;
+        if (distanceUntilCoinSpawn <= 0)
         {
+            float[] coinYPositions = {4f, 2f, 0f, -2f};
+            float xPosition = 12f;
             for (int y = 0; y < coinYPositions.Length; y++)
             {
                 float rand = Random.Range(0f, 100f);
@@ -425,11 +435,8 @@ public class SceneManager : MonoBehaviour
                     GameObject coinGO = (GameObject)Instantiate(CoinPrefab, new Vector3(xPosition, coinYPositions[y], 0), Quaternion.identity, CoinContainer.transform);
                 }
             }
-            xPosition = xPosition + xPositionDelta;
+            distanceUntilCoinSpawn = coinSpawnDistance;
         }
-
-        spawnInterval++;
-        wavesThisLevel++;
     }
 
     void FixedUpdate()
@@ -614,6 +621,7 @@ public class SceneManager : MonoBehaviour
         Globals.CurrentLives = 3;
         spawnInterval = 0;
         wavesThisLevel = 0;
+        distanceUntilCoinSpawn = coinSpawnDistance;
         SpawnWave();
         HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
     }
