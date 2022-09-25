@@ -41,6 +41,8 @@ public class SceneManager : MonoBehaviour
     GameObject HUDAboutButton;
 
     [SerializeField]
+    GameObject HUDLives;
+    [SerializeField]
     GameObject HUDScore;
     [SerializeField]
     TextMeshProUGUI HUDCoinsText;
@@ -225,6 +227,8 @@ public class SceneManager : MonoBehaviour
 
                 dialogNum = 0;
 
+                HUDLives.SetActive(true);
+
                 Globals.CurrentScore = 0;
                 HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
                 HUDScore.SetActive(true);
@@ -255,6 +259,7 @@ public class SceneManager : MonoBehaviour
                 HUDAboutButton.SetActive(true);
 
                 Level.SetActive(false);
+                HUDLives.SetActive(false);
                 HUDScore.SetActive(false);
                 Player.SetActive(false);
                 Controls.SetActive(false);
