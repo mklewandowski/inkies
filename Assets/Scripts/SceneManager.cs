@@ -458,6 +458,7 @@ public class SceneManager : MonoBehaviour
     {
         Globals.Coins++;
         HUDCoinsText.text = Globals.Coins.ToString();
+        IncrementScore(10);
     }
 
     public void GetPowerUp(PowerUp.PowerupType powerupType)
