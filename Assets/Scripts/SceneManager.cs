@@ -613,6 +613,7 @@ public class SceneManager : MonoBehaviour
 
     public void EnemyHit()
     {
+        Camera.main.GetComponent<CameraShake>().StartShake();
         bool gameOver = true;
         Globals.CurrentLives--;
         if (Globals.CurrentLives > 0)
@@ -626,11 +627,13 @@ public class SceneManager : MonoBehaviour
         }
         if (gameOver)
             GameOver();
+        else
+            audioManager.PlayHitSound();
     }
 
     public void GameOver()
     {
-        audioManager.PlayGameOver();
+        audioManager.PlayGameOverSound();
         Player.GetComponent<Player>().Die();
         Globals.SaveIntToPlayerPrefs(Globals.CoinsPlayerPrefsKey, Globals.Coins);
         if (Globals.CurrentScore > Globals.BestScore)

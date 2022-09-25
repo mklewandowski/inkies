@@ -15,6 +15,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     AudioClip GameOverSound;
     [SerializeField]
+    AudioClip HitSound;
+    [SerializeField]
     AudioClip CoinSound;
     [SerializeField]
     AudioClip PowerUpSound;
@@ -69,10 +71,16 @@ public class AudioManager : MonoBehaviour
             audioSource.PlayOneShot(ShootSound, 1f);
     }
 
-    public void PlayGameOver()
+    public void PlayGameOverSound()
     {
         if (Globals.AudioOn)
             audioSource.PlayOneShot(GameOverSound, 1f);
+    }
+
+    public void PlayHitSound()
+    {
+        if (Globals.AudioOn)
+            audioSource.PlayOneShot(HitSound, 1f);
     }
 
     public void PlayCoinSound()

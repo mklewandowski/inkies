@@ -4275,6 +4275,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4348,6 +4349,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de3d48b4d5350934585dcab440a31570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &522821413
 GameObject:
   m_ObjectHideFlags: 0
@@ -7379,7 +7392,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.13028002, y: 0.066411376}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7390,7 +7403,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.5280333, y: 3.4056098}
+  m_Size: {x: 2, y: 3}
   m_EdgeRadius: 0
 --- !u!1 &887682003
 GameObject:
@@ -11928,6 +11941,7 @@ MonoBehaviour:
   EnemyZappedSound: {fileID: 8300000, guid: 13a3c40aa6cfdf944a5e4aa2ff166097, type: 3}
   ShootSound: {fileID: 8300000, guid: 0dfa2cce045b5e649979b02d30536e21, type: 3}
   GameOverSound: {fileID: 8300000, guid: 9d3dcdde4c392cf4eba11615b9c45272, type: 3}
+  HitSound: {fileID: 8300000, guid: 992ec4e79dc032a4cb1c07bee7f366fc, type: 3}
   CoinSound: {fileID: 8300000, guid: fddf2a4c3a4a43a4b81f7d1e5a716340, type: 3}
   PowerUpSound: {fileID: 8300000, guid: 138ad064888a35045a77a231404fe2fa, type: 3}
   CantBuySound: {fileID: 8300000, guid: 57b311b2e0bcdbb4dac9ba95535accda, type: 3}
