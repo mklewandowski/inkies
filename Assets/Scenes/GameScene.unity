@@ -11297,7 +11297,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b3cc2eb6bf932449d332897fe8d8af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HUDWipeLeft: {fileID: 78907752}
+  HUDWipeRight: {fileID: 798804445}
+  HUDWipeTop: {fileID: 1267230186}
+  HUDWipeBottom: {fileID: 1065605735}
+  HUDPaper: {fileID: 366873159}
+  HUDTitle: {fileID: 1168832099}
+  HUDPlayer: {fileID: 2031877613}
+  HUDStartButton: {fileID: 1258570336}
+  HUDOptionsButton: {fileID: 1227020861}
+  HUDAboutButton: {fileID: 96207098}
+  HUDOptions: {fileID: 302259055}
+  HUDAudio: {fileID: 325815710}
+  HUDMusic: {fileID: 1911264142}
+  HUDControls: {fileID: 331617473}
+  HUDEasyMode: {fileID: 1256455704}
+  HUDAboutText: {fileID: 1140278185}
   Player: {fileID: 878249308}
+  Boss: {fileID: 0}
   Controls: {fileID: 731557368}
   Level: {fileID: 382124782}
   Blocks:
@@ -11316,49 +11333,7 @@ MonoBehaviour:
   - {fileID: 128028539}
   - {fileID: 1124580862}
   - {fileID: 858424409}
-  HUDWipeLeft: {fileID: 78907752}
-  HUDWipeRight: {fileID: 798804445}
-  HUDWipeTop: {fileID: 1267230186}
-  HUDWipeBottom: {fileID: 1065605735}
-  HUDPaper: {fileID: 366873159}
-  HUDTitle: {fileID: 1168832099}
-  HUDPlayer: {fileID: 2031877613}
-  HUDStartButton: {fileID: 1258570336}
-  HUDOptionsButton: {fileID: 1227020861}
-  HUDAboutButton: {fileID: 96207098}
-  HUDLivesContainer: {fileID: 86267692}
-  HUDLives:
-  - {fileID: 453254076}
-  - {fileID: 1115309649}
-  - {fileID: 1849299974}
-  HUDScore: {fileID: 1087817438}
-  HUDCoinsText: {fileID: 486755789}
-  HUDGameOver: {fileID: 689085309}
-  HUDPlayAgain: {fileID: 2033987279}
-  HUDScoreText: {fileID: 1661325526}
-  HUDBestScoreText: {fileID: 1644006380}
-  HUDOptions: {fileID: 302259055}
-  HUDAudio: {fileID: 325815710}
-  HUDMusic: {fileID: 1911264142}
-  HUDControls: {fileID: 331617473}
-  HUDEasyMode: {fileID: 1256455704}
-  HUDAboutText: {fileID: 1140278185}
-  HUDCharacterSelect: {fileID: 841657944}
-  HUDDialogBox: {fileID: 1520216865}
-  HUDDialogBoxText: {fileID: 230742094}
-  HUDPlayerSprites:
-  - {fileID: 21300000, guid: df81ad39b16f6c944a66adcb9f6d6461, type: 3}
-  - {fileID: 21300000, guid: b9825571a49a83845b71d533829e32eb, type: 3}
-  - {fileID: 21300000, guid: 3c28aa11f3244224ebfbdd6434040bed, type: 3}
-  - {fileID: 21300000, guid: 38d8da316dbe58d41997c08e91c5d497, type: 3}
-  - {fileID: 21300000, guid: f665dd1fb4412bb41bf6097d3c2a93cd, type: 3}
-  - {fileID: 21300000, guid: 3a31e62ead68b51498b32fbe8b35547b, type: 3}
-  - {fileID: 21300000, guid: f94782aa07a2fd44dbbcecd14499e236, type: 3}
-  - {fileID: 21300000, guid: 3b78e419abdd6af4280b8c738fac7c3b, type: 3}
-  - {fileID: 21300000, guid: 7361bc241122b8f48b8c2b238b1edb0b, type: 3}
-  HUDDialogPlayer: {fileID: 702122391}
-  HUDLevelComplete: {fileID: 12001486}
-  HUDNextLevel: {fileID: 1272392127}
+  EnemyContainer: {fileID: 892767859}
   DiverPrefab: {fileID: 1958008840846150010, guid: b30fbde050c8d004180126ea296b0691, type: 3}
   FishPrefab: {fileID: 954198675655058818, guid: 7e280118855d3a84d85acc63deff2fb0, type: 3}
   MolluskPrefab: {fileID: 5613334171290355452, guid: e1c24a9338df1ae469c999ad3f03d1db, type: 3}
@@ -11366,7 +11341,6 @@ MonoBehaviour:
   GunFishPrefab: {fileID: 954198675655058818, guid: 89b454036db34a244afe765890887193, type: 3}
   WaveEndPrefab: {fileID: 954198675655058818, guid: 0995cc44783341c4ebc5626688783d5c, type: 3}
   LevelEndPrefab: {fileID: 954198675655058818, guid: 81678294a51805f45a41cf1bcbdebdfc, type: 3}
-  EnemyContainer: {fileID: 892767859}
   CoinContainer: {fileID: 9786681}
   CoinPrefab: {fileID: 5752374331842902725, guid: 9c40bf08a36b3f241b7ae18652f07889, type: 3}
   PowerUpPrefab: {fileID: 5752374331842902725, guid: d1ca0672a8213ec4f9a74a3f834ae91e, type: 3}
@@ -11390,9 +11364,36 @@ MonoBehaviour:
   - {fileID: 168207802}
   - {fileID: 224906425}
   - {fileID: 1854679450}
+  HUDLivesContainer: {fileID: 86267692}
+  HUDLives:
+  - {fileID: 453254076}
+  - {fileID: 1115309649}
+  - {fileID: 1849299974}
+  HUDScore: {fileID: 1087817438}
+  HUDCoinsText: {fileID: 486755789}
   HUDPowerupInk: {fileID: 1333920468}
   HUDPowerupInvincible: {fileID: 1462885182}
   HUDPowerupDisguise: {fileID: 1440420585}
+  HUDGameOver: {fileID: 689085309}
+  HUDPlayAgain: {fileID: 2033987279}
+  HUDScoreText: {fileID: 1661325526}
+  HUDBestScoreText: {fileID: 1644006380}
+  HUDLevelComplete: {fileID: 12001486}
+  HUDNextLevel: {fileID: 1272392127}
+  HUDCharacterSelect: {fileID: 841657944}
+  HUDDialogBox: {fileID: 1520216865}
+  HUDDialogBoxText: {fileID: 230742094}
+  HUDPlayerSprites:
+  - {fileID: 21300000, guid: df81ad39b16f6c944a66adcb9f6d6461, type: 3}
+  - {fileID: 21300000, guid: b9825571a49a83845b71d533829e32eb, type: 3}
+  - {fileID: 21300000, guid: 3c28aa11f3244224ebfbdd6434040bed, type: 3}
+  - {fileID: 21300000, guid: 38d8da316dbe58d41997c08e91c5d497, type: 3}
+  - {fileID: 21300000, guid: f665dd1fb4412bb41bf6097d3c2a93cd, type: 3}
+  - {fileID: 21300000, guid: 3a31e62ead68b51498b32fbe8b35547b, type: 3}
+  - {fileID: 21300000, guid: f94782aa07a2fd44dbbcecd14499e236, type: 3}
+  - {fileID: 21300000, guid: 3b78e419abdd6af4280b8c738fac7c3b, type: 3}
+  - {fileID: 21300000, guid: 7361bc241122b8f48b8c2b238b1edb0b, type: 3}
+  HUDDialogPlayer: {fileID: 702122391}
 --- !u!114 &1310353877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11820,7 +11821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingUpEndPos: {x: 0, y: 1000}
-  movingDownEndPos: {x: 0, y: 430}
+  movingDownEndPos: {x: 0, y: 400}
   movingLeftEndPos: {x: 0, y: 0}
   movingRightEndPos: {x: 0, y: 0}
   movingUpVelocity: 1500
@@ -12521,7 +12522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingUpEndPos: {x: 0, y: 1000}
-  movingDownEndPos: {x: 0, y: 430}
+  movingDownEndPos: {x: 0, y: 400}
   movingLeftEndPos: {x: 0, y: 0}
   movingRightEndPos: {x: 0, y: 0}
   movingUpVelocity: 1500
@@ -12934,7 +12935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingUpEndPos: {x: 0, y: 1000}
-  movingDownEndPos: {x: 0, y: 430}
+  movingDownEndPos: {x: 0, y: 400}
   movingLeftEndPos: {x: 0, y: 0}
   movingRightEndPos: {x: 0, y: 0}
   movingUpVelocity: 1500
