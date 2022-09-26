@@ -5,10 +5,10 @@ using UnityEngine;
 public class EnemyBossHitArea : MonoBehaviour
 {
     [SerializeField]
-    EnemyBoss enemyBoss;
+    EnemyBoss EnemyBoss;
 
     [SerializeField]
-    bool isHead = false;
+    bool IsHead = false;
 
     void OnTriggerEnter2D(Collider2D collider)
     {

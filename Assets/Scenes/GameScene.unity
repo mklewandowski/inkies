@@ -11409,6 +11409,7 @@ MonoBehaviour:
   StartSound: {fileID: 8300000, guid: 8afac5f3b8ea13c49b5d8eda8681c1c1, type: 3}
   EnemyZappedSound: {fileID: 8300000, guid: 13a3c40aa6cfdf944a5e4aa2ff166097, type: 3}
   EnemyNoHurtSound: {fileID: 8300000, guid: dd16d10d887243f4d8ed608a5026556d, type: 3}
+  EnemyStompSound: {fileID: 8300000, guid: 992ec4e79dc032a4cb1c07bee7f366fc, type: 3}
   ShootSound: {fileID: 8300000, guid: 0dfa2cce045b5e649979b02d30536e21, type: 3}
   GameOverSound: {fileID: 8300000, guid: 9d3dcdde4c392cf4eba11615b9c45272, type: 3}
   HitSound: {fileID: 8300000, guid: 992ec4e79dc032a4cb1c07bee7f366fc, type: 3}

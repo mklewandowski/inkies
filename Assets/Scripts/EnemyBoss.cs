@@ -15,7 +15,6 @@ public class EnemyBoss : MonoBehaviour
 
     AudioManager audioManager;
     SceneManager sceneManager;
-    Player player;
 
     [SerializeField]
     GameObject EnemyContainer;
@@ -33,6 +32,8 @@ public class EnemyBoss : MonoBehaviour
     GameObject BulletPrefab;
     GameObject bulletContainer;
     float shootTimer = .5f;
+    float bounceShootTimerMax = .2f;
+    float bottomShootTimerMax = 2f;
 
     bool isActive = true;
     int hits = 50;
@@ -53,20 +54,19 @@ public class EnemyBoss : MonoBehaviour
     float rotateTimerMax = .025f;
     float bottomTimer = 0f;
     float bottomTimerMax = 3f;
-    float bounceShootTimerMax = .2f;
-    float bottomShootTimerMax = 2f;
 
     void Start()
     {
         bulletContainer = GameObject.Find("Bullets");
         audioManager = GameObject.Find("SceneManager").GetComponent<AudioManager>();
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
-        player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     public void Reset()
     {
         hits = maxHits;
+        BossState currentBossState = BossState.Bounce;
+        transform.localPosition = new Vector3(4.5f, 0, 0);
     }
 
     // Update is called once per frame
@@ -156,13 +156,14 @@ public class EnemyBoss : MonoBehaviour
             this.transform.localPosition = newpos;
             if (newpos.y == stompY)
             {
+                audioManager.PlayEnemyStompSound();
                 Camera.main.GetComponent<CameraShake>().StartShake();
                 currentBossState = BossState.Bounce;
                 movingDown = false;
 
                 for (int x = 0; x < molluskSpawnLocations.Length; x++)
                 {
-                    GameObject enemyGO = (GameObject)Instantiate(MolluskPrefab, new Vector3(molluskSpawnLocations[x], 12 + x, 0), MolluskPrefab.transform.rotation, EnemyContainer.transform);
+                    GameObject enemyGO = (GameObject)Instantiate(MolluskPrefab, new Vector3(molluskSpawnLocations[x], 12f + x, 0), MolluskPrefab.transform.rotation, EnemyContainer.transform);
                     enemyGO.GetComponent<Enemy>().Drop();
                 }
             }
@@ -198,6 +199,7 @@ public class EnemyBoss : MonoBehaviour
     {
         if (currentBossState == BossState.Dead)
             return;
+
         hits--;
         audioManager.PlayEnemyZappedSound();
         if (hits <= 0)
@@ -213,6 +215,7 @@ public class EnemyBoss : MonoBehaviour
     {
         if (currentBossState == BossState.Dead)
             return;
+
         audioManager.PlayEnemyNoHurtSound();
     }
 
