@@ -9,7 +9,8 @@ public class EnemyBoss : MonoBehaviour
         BottomShoot,
         Shake,
         Drop,
-        Dead
+        Dead,
+        Idle
     }
     BossState currentBossState = BossState.Bounce;
 
@@ -35,7 +36,6 @@ public class EnemyBoss : MonoBehaviour
     float bounceShootTimerMax = .2f;
     float bottomShootTimerMax = 2f;
 
-    bool isActive = true;
     int hits = 50;
     int maxHits = 50;
     float hitTimer = 0f;
@@ -65,8 +65,13 @@ public class EnemyBoss : MonoBehaviour
     public void Reset()
     {
         hits = maxHits;
-        BossState currentBossState = BossState.Bounce;
+        currentBossState = BossState.Bounce;
         transform.localPosition = new Vector3(4.5f, 0, 0);
+        hitTimer = 0;
+        this.GetComponent<SpriteRenderer>().color = Color.white;
+        this.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+        Head.GetComponent<Collider2D>().enabled = true;
+        Body.GetComponent<Collider2D>().enabled = true;
     }
 
     // Update is called once per frame
@@ -168,6 +173,11 @@ public class EnemyBoss : MonoBehaviour
                 }
             }
         }
+        if (this.transform.localPosition.y < -15f)
+        {
+            this.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+            currentBossState = BossState.Idle;
+        }
     }
 
     void FixedUpdate()
@@ -229,5 +239,6 @@ public class EnemyBoss : MonoBehaviour
         currentBossState = BossState.Dead;
 
         sceneManager.IncrementScore(1000);
+        sceneManager.WinGame();
     }
 }

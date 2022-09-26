@@ -110,6 +110,10 @@ public class SceneManager : MonoBehaviour
     GameObject HUDLevelComplete;
     [SerializeField]
     GameObject HUDNextLevel;
+    [SerializeField]
+    GameObject HUDGameWin;
+    [SerializeField]
+    GameObject Celebration;
 
     [SerializeField]
     GameObject HUDCharacterSelect;
@@ -147,6 +151,11 @@ public class SceneManager : MonoBehaviour
     int spawnInterval = 0;
     int wavesPerLevel = 10;
     int wavesThisLevel = 0;
+
+    float winGameTimer = 0;
+    float winGameTimerMax = 3f;
+    float celebrationTimer = 0;
+    float celebrationTimerMax = 4f;
 
     void Awake()
     {
@@ -291,6 +300,41 @@ public class SceneManager : MonoBehaviour
     {
         MoveBlocks();
         SpawnCoins();
+        if (winGameTimer > 0)
+        {
+            winGameTimer -= Time.deltaTime;
+            if (winGameTimer <= 0)
+            {
+                HUDWipeLeft.GetComponent<MoveNormal>().MoveRight();
+                HUDWipeRight.GetComponent<MoveNormal>().MoveLeft();
+                HUDWipeTop.GetComponent<MoveNormal>().MoveDown();
+                HUDWipeBottom.GetComponent<MoveNormal>().MoveUp();
+                wipeTimer = wipeTimerMax;
+            }
+        }
+        if (wipeTimer > 0)
+        {
+            wipeTimer -= Time.deltaTime;
+            if (wipeTimer <= 0)
+            {
+                Celebration.SetActive(true);
+                celebrationTimer = celebrationTimerMax;
+                Player.SetActive(false);
+                Globals.ScrollSpeed = new Vector3(0, 0, 0);
+                HUDWipeLeft.GetComponent<MoveNormal>().MoveLeft();
+                HUDWipeRight.GetComponent<MoveNormal>().MoveRight();
+                HUDWipeTop.GetComponent<MoveNormal>().MoveUp();
+                HUDWipeBottom.GetComponent<MoveNormal>().MoveDown();
+            }
+        }
+        if (celebrationTimer > 0)
+        {
+            celebrationTimer -= Time.deltaTime;
+            if (celebrationTimer <= 0)
+            {
+                GameOver(false);
+            }
+        }
     }
 
     private void UpdateLevelComplete()
@@ -298,12 +342,7 @@ public class SceneManager : MonoBehaviour
         levelCompleteTimer -= Time.deltaTime;
         if (levelCompleteTimer <= 0)
         {
-            if (Globals.CurrentLevel == Globals.MaxLevelNum)
-            {
-                // WTD WTD WTD end game
-            }
-            else
-                HUDNextLevel.GetComponent<MoveNormal>().MoveUp();
+            HUDNextLevel.GetComponent<MoveNormal>().MoveUp();
 
             Globals.CurrentGameState = Globals.GameState.NextLevel;
         }
@@ -523,7 +562,7 @@ public class SceneManager : MonoBehaviour
             HUDLives[x].SetActive(x < Globals.CurrentLives);
         }
         if (gameOver)
-            GameOver();
+            GameOver(true);
         else
             audioManager.PlayHitSound();
     }
@@ -551,8 +590,9 @@ public class SceneManager : MonoBehaviour
         {
             Destroy(pups[i].gameObject);
         }
-        Boss.SetActive(false);
         Boss.GetComponent<EnemyBoss>().Reset();
+        Boss.SetActive(false);
+        Celebration.SetActive(false);
     }
 
     public void StartGameIntro()
@@ -656,10 +696,13 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    public void GameOver()
+    public void GameOver(bool die)
     {
-        audioManager.PlayGameOverSound();
-        Player.GetComponent<Player>().Die();
+        if (die)
+        {
+            audioManager.PlayGameOverSound();
+            Player.GetComponent<Player>().Die();
+        }
         Globals.SaveIntToPlayerPrefs(Globals.CoinsPlayerPrefsKey, Globals.Coins);
         if (Globals.CurrentScore > Globals.BestScore)
         {
@@ -670,7 +713,10 @@ public class SceneManager : MonoBehaviour
         HUDBestScoreText.text = "Top Score: " + Globals.BestScore;
         Globals.ScrollSpeed = new Vector3(0, 0, 0);
         Globals.CurrentGameState = Globals.GameState.ShowScore;
-        HUDGameOver.GetComponent<MoveNormal>().MoveDown();
+        if (die)
+            HUDGameOver.GetComponent<MoveNormal>().MoveDown();
+        else
+            HUDGameWin.GetComponent<MoveNormal>().MoveDown();
         HUDPlayAgain.GetComponent<MoveNormal>().MoveUp();
     }
 
@@ -678,6 +724,7 @@ public class SceneManager : MonoBehaviour
     {
         audioManager.PlayStartSound();
         HUDGameOver.GetComponent<MoveNormal>().MoveUp();
+        HUDGameWin.GetComponent<MoveNormal>().MoveUp();
         HUDPlayAgain.GetComponent<MoveNormal>().MoveDown();
 
         PrepareNewGame();
@@ -713,6 +760,11 @@ public class SceneManager : MonoBehaviour
         wipeTimer = wipeTimerMax;
     }
 
+    public void WinGame()
+    {
+        winGameTimer = winGameTimerMax;
+    }
+
     public void ReturnHome()
     {
         audioManager.PlayMenuSound();
@@ -721,6 +773,7 @@ public class SceneManager : MonoBehaviour
         HUDWipeTop.GetComponent<MoveNormal>().MoveDown();
         HUDWipeBottom.GetComponent<MoveNormal>().MoveUp();
         HUDGameOver.GetComponent<MoveNormal>().MoveUp();
+        HUDGameWin.GetComponent<MoveNormal>().MoveUp();
         HUDPlayAgain.GetComponent<MoveNormal>().MoveDown();
         wipeTimer = wipeTimerMax;
         Globals.CurrentGameState = Globals.GameState.TitleScreen;
