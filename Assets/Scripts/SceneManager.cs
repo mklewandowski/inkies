@@ -90,6 +90,8 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject HUDScore;
     [SerializeField]
+    GameObject HUDLevel;
+    [SerializeField]
     TextMeshProUGUI HUDCoinsText;
     [SerializeField]
     GameObject HUDPowerupInk;
@@ -246,6 +248,7 @@ public class SceneManager : MonoBehaviour
                 Level.SetActive(false);
                 HUDLivesContainer.SetActive(false);
                 HUDScore.SetActive(false);
+                HUDLevel.SetActive(false);
                 Player.SetActive(false);
                 Controls.SetActive(false);
 
@@ -370,6 +373,8 @@ public class SceneManager : MonoBehaviour
         distanceUntilCoinSpawn = coinSpawnDistance;
 
         Player.SetActive(false);
+
+        HUDLevel.GetComponent<TextMeshProUGUI>().text = "Level " + (Globals.CurrentLevel + 1).ToString();
 
         dialogNum = 0;
         string currDialog = dialog1[dialogNum];
@@ -664,6 +669,8 @@ public class SceneManager : MonoBehaviour
         HUDLivesContainer.SetActive(true);
         HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
         HUDScore.SetActive(true);
+        HUDLevel.GetComponent<TextMeshProUGUI>().text = "Level " + (Globals.CurrentLevel + 1).ToString();
+        HUDLevel.SetActive(true);
     }
 
     public void StartGame()
