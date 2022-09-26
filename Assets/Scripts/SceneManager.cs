@@ -675,6 +675,7 @@ public class SceneManager : MonoBehaviour
         float speed = Globals.DifficultyMode == 0
             ? Globals.minSpeed
             : Globals.DifficultyMode == 1 ? Globals.minSpeed + 2f : Globals.minSpeed + 5f;
+        speed = speed + Globals.CurrentLevel * .5f;
         Globals.ScrollSpeed = new Vector3(speed, 0, 0);
         Globals.CurrentGameState = Globals.GameState.Playing;
         SpawnWave();
