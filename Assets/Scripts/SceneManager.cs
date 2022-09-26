@@ -595,7 +595,6 @@ public class SceneManager : MonoBehaviour
         spawnInterval = 0;
         wavesThisLevel = 0;
         dialogNum = 0;
-        coinSpawnDistance = distanceUntilCoinSpawn;
         spawnsUntilPowerup = 2;
         Globals.CurrentScore = 0;
         Globals.CurrentLevel = 0;
