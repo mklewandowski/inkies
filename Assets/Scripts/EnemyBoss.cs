@@ -77,7 +77,7 @@ public class EnemyBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (hitTimer > 0)
+        if (hitTimer > 0 && currentBossState != BossState.Dead)
         {
             hitTimer -= Time.deltaTime;
             if (hitTimer < 0)
