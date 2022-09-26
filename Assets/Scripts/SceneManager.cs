@@ -127,6 +127,13 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject HUDDialogPlayer;
 
+    [SerializeField]
+    GameObject HUDBossDialogBox;
+    [SerializeField]
+    TextMeshProUGUI HUDBossDialogBoxText;
+    int bossDialogNum = 0;
+    string[] bossDialog = {"Gorn: Bwa ha ha! You may have defeated my minions...", "Gorn: But I sent Seaweed Burger to another dimension!", "Gorn: You'll never have a tasty Saltwater Shake again!"};
+
     bool showOptions = false;
     bool showAbout = false;
 
@@ -365,6 +372,7 @@ public class SceneManager : MonoBehaviour
     {
         if (wavesThisLevel == wavesPerLevel)
             return;
+
         distanceUntilCoinSpawn = distanceUntilCoinSpawn - Globals.ScrollSpeed.x * Time.deltaTime;
         if (distanceUntilCoinSpawn <= 0)
         {
@@ -387,12 +395,17 @@ public class SceneManager : MonoBehaviour
         if (Globals.CurrentGameState != Globals.GameState.Playing)
             return;
 
-        if (spawnInterval >= waves.Count)
-        {
-            spawnInterval = 0;
-            float newSpeed = Mathf.Min(Globals.maxSpeed, Globals.ScrollSpeed.x + 2f);
-            Globals.ScrollSpeed = new Vector2(newSpeed, Globals.ScrollSpeed.y);
-        }
+        if (spawnInterval >= waves.Count) // we're at the boss battle
+            return;
+
+        // add for endless mode
+        // if (spawnInterval >= waves.Count)
+        // {
+        //     spawnInterval = 0;
+        //     float newSpeed = Mathf.Min(Globals.maxSpeed, Globals.ScrollSpeed.x + 2f);
+        //     Globals.ScrollSpeed = new Vector2(newSpeed, Globals.ScrollSpeed.y);
+        // }
+
         int numInCol = 5;
         float[] yPositions = {8f, 3f, .75f, -1.5f, -3.6f};
         float xPositionDelta = 3f;
@@ -538,6 +551,8 @@ public class SceneManager : MonoBehaviour
         {
             Destroy(pups[i].gameObject);
         }
+        Boss.SetActive(false);
+        Boss.GetComponent<EnemyBoss>().Reset();
     }
 
     public void StartGameIntro()
@@ -595,6 +610,8 @@ public class SceneManager : MonoBehaviour
         spawnInterval = 0;
         wavesThisLevel = 0;
         dialogNum = 0;
+        bossDialogNum = 0;
+        HUDBossDialogBoxText.text = bossDialog[bossDialogNum];
         spawnsUntilPowerup = 2;
         Globals.CurrentScore = 0;
         Globals.CurrentLevel = 0;
@@ -626,6 +643,17 @@ public class SceneManager : MonoBehaviour
     public void AdvanceBossDialog()
     {
         audioManager.PlayMenuSound();
+
+        bossDialogNum++;
+        if (bossDialogNum >= bossDialog.Length)
+        {
+            HUDBossDialogBox.GetComponent<MoveNormal>().MoveUp();
+            Boss.SetActive(true);
+        }
+        else
+        {
+            HUDBossDialogBoxText.text = bossDialog[bossDialogNum];
+        }
     }
 
     public void GameOver()
@@ -659,11 +687,18 @@ public class SceneManager : MonoBehaviour
     public void LevelComplete()
     {
         audioManager.PlayLevelCompleteSound();
-        HUDLevelComplete.GetComponent<MoveNormal>().MoveDown();
-        levelCompleteTimer = levelCompleteTimerMax;
-        RemoveOldLevelContent();
-        Globals.ScrollSpeed = new Vector3(0, 0, 0);
-        Globals.CurrentGameState = Globals.GameState.LevelComplete;
+        if (Globals.CurrentLevel < 3)
+        {
+            HUDLevelComplete.GetComponent<MoveNormal>().MoveDown();
+            levelCompleteTimer = levelCompleteTimerMax;
+            RemoveOldLevelContent();
+            Globals.ScrollSpeed = new Vector3(0, 0, 0);
+            Globals.CurrentGameState = Globals.GameState.LevelComplete;
+        }
+        else
+        {
+            HUDBossDialogBox.GetComponent<MoveNormal>().MoveDown();
+        }
     }
 
     public void StartNextLevel()

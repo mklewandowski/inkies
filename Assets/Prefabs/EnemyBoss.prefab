@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea5752474317204408190412e6ea5443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyBoss: {fileID: 3038712890126747556}
-  isHead: 1
+  EnemyBoss: {fileID: 3038712890126747556}
+  IsHead: 1
 --- !u!1 &3038712890126747557
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,5 +409,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea5752474317204408190412e6ea5443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyBoss: {fileID: 3038712890126747556}
-  isHead: 0
+  EnemyBoss: {fileID: 3038712890126747556}
+  IsHead: 0
