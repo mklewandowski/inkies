@@ -10099,6 +10099,11 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &1196736036 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3038712890126747557, guid: 5290ec59000899a4eb7ae0cafc308839, type: 3}
+  m_PrefabInstance: {fileID: 1525606106}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1220546271
 GameObject:
   m_ObjectHideFlags: 0
@@ -11311,10 +11316,10 @@ MonoBehaviour:
   HUDAudio: {fileID: 325815710}
   HUDMusic: {fileID: 1911264142}
   HUDControls: {fileID: 331617473}
-  HUDEasyMode: {fileID: 1256455704}
+  HUDDifficultyMode: {fileID: 1256455704}
   HUDAboutText: {fileID: 1140278185}
   Player: {fileID: 878249308}
-  Boss: {fileID: 0}
+  Boss: {fileID: 1196736036}
   Controls: {fileID: 731557368}
   Level: {fileID: 382124782}
   Blocks:

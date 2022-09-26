@@ -38,7 +38,7 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI HUDControls;
     [SerializeField]
-    TextMeshProUGUI HUDEasyMode;
+    TextMeshProUGUI HUDDifficultyMode;
     [SerializeField]
     GameObject HUDAboutText;
 
@@ -166,18 +166,20 @@ public class SceneManager : MonoBehaviour
         int audioOn = Globals.LoadIntFromPlayerPrefs(Globals.AudioPlayerPrefsKey, 1);
         int musicOn = Globals.LoadIntFromPlayerPrefs(Globals.MusicPlayerPrefsKey, 1);
         int controlsOn = Globals.LoadIntFromPlayerPrefs(Globals.ControlsPlayerPrefsKey, 0);
-        int easyMode = Globals.LoadIntFromPlayerPrefs(Globals.EasyModePlayerPrefsKey, 1);
+        int difficultyMode = Globals.LoadIntFromPlayerPrefs(Globals.DifficultyModePlayerPrefsKey, 1);
         Globals.AudioOn = audioOn == 1 ? true : false;
         Globals.MusicOn = musicOn == 1 ? true : false;
         Globals.ControlsOn = controlsOn == 1 ? true : false;
-        Globals.EasyMode = easyMode == 1 ? true : false;
+        Globals.DifficultyMode = difficultyMode;
         if (Globals.MusicOn)
             audioSource.Play();
 
         HUDMusic.text = Globals.MusicOn ? "Music: ON" : "Music: OFF";
         HUDAudio.text = Globals.AudioOn ? "Audio: ON" : "Audio: OFF";
         HUDControls.text = Globals.ControlsOn ? "D-pad: ON" : "D-pad: OFF";
-        HUDEasyMode.text = Globals.EasyMode ? "Mode: EASY" : "Mode: NORMAL";
+        HUDDifficultyMode.text = Globals.DifficultyMode == 0
+            ? "Mode: EASY"
+            : Globals.DifficultyMode == 1 ? "Mode: NORMAL" : "Mode: CRAZY";
 
         LevelBuilder.BuildLevels(waves);
     }
@@ -614,7 +616,10 @@ public class SceneManager : MonoBehaviour
         Player.GetComponent<Player>().Reset();
         Player.SetActive(true);
         Controls.SetActive(Globals.ControlsOn);
-        Globals.ScrollSpeed = new Vector3(Globals.EasyMode ? Globals.minSpeed : Globals.minSpeed + 2f, 0, 0);
+        float speed = Globals.DifficultyMode == 0
+            ? Globals.minSpeed
+            : Globals.DifficultyMode == 1 ? Globals.minSpeed + 2f : Globals.minSpeed + 5f;
+        Globals.ScrollSpeed = new Vector3(speed, 0, 0);
         Globals.CurrentGameState = Globals.GameState.Playing;
         SpawnWave();
     }
@@ -737,10 +742,14 @@ public class SceneManager : MonoBehaviour
 
     public void ToggleDifficulty()
     {
-        Globals.EasyMode = !Globals.EasyMode;
+        Globals.DifficultyMode++;
+        if (Globals.DifficultyMode > 2)
+            Globals.DifficultyMode = 0;
         audioManager.PlayMenuSound();
-        HUDEasyMode.text = Globals.EasyMode ? "Mode: EASY" : "Mode: NORMAL";
-        Globals.SaveIntToPlayerPrefs(Globals.EasyModePlayerPrefsKey, Globals.EasyMode ? 1 : 0);
+        HUDDifficultyMode.text = Globals.DifficultyMode == 0
+            ? "Mode: EASY"
+            : Globals.DifficultyMode == 1 ? "Mode: NORMAL" : "Mode: CRAZY";
+        Globals.SaveIntToPlayerPrefs(Globals.DifficultyModePlayerPrefsKey, Globals.DifficultyMode);
     }
 
     public void SelectPlayer(int player)

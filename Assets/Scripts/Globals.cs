@@ -62,9 +62,9 @@ public class Globals
 
     public const string ControlsPlayerPrefsKey = "Controls";
 
-    public static bool EasyMode;
+    public static int DifficultyMode;
 
-    public const string EasyModePlayerPrefsKey = "EasyMode";
+    public const string DifficultyModePlayerPrefsKey = "DifficultyMode";
 
     public static int MaxCharacters = 40;
     public static int[] CharacterUnlockStates = new int[MaxCharacters];
