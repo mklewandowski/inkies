@@ -47,6 +47,9 @@ public class Enemy : MonoBehaviour
 
     public float extraXmovement = 0f;
 
+    private bool isDropping;
+    private float minDropY = -3.6f;
+
     int points = 100;
 
     void Awake()
@@ -97,6 +100,11 @@ public class Enemy : MonoBehaviour
     public void SetExtraXMovement(float val)
     {
         extraXmovement = val;
+    }
+
+    public void Drop()
+    {
+        isDropping = true;
     }
 
     void Update()
@@ -159,12 +167,22 @@ public class Enemy : MonoBehaviour
                 extraYmovement = baseSpeed * movementYDir * .5f;
             }
 
-            Vector2 movement = new Vector2 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x + extraXmovement * Globals.ScrollDirection.x, extraYmovement);
-
-            if (!isAlive)
+            Vector2 movement = new Vector2(0, 0);
+            if (isDropping)
+            {
+                movement = new Vector2(0, -10f);
+                if (this.transform.localPosition.y <= minDropY)
+                {
+                    isDropping = false;
+                    this.transform.localPosition = new Vector2(this.transform.localPosition.x, minDropY);
+                }
+            }
+            else if (!isAlive)
             {
                 movement = new Vector2 (0, -15f);
             }
+            else
+                movement = new Vector2 (Globals.ScrollSpeed.x * Globals.ScrollDirection.x + extraXmovement * Globals.ScrollDirection.x, extraYmovement);
 
             this.GetComponent<Rigidbody2D>().velocity = movement;
         }

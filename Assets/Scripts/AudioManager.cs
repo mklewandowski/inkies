@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     AudioClip EnemyZappedSound;
     [SerializeField]
+    AudioClip EnemyNoHurtSound;
+    [SerializeField]
     AudioClip ShootSound;
     [SerializeField]
     AudioClip GameOverSound;
@@ -63,6 +65,12 @@ public class AudioManager : MonoBehaviour
     {
         if (Globals.AudioOn)
             audioSource.PlayOneShot(EnemyZappedSound, 1f);
+    }
+
+    public void PlayEnemyNoHurtSound()
+    {
+        if (Globals.AudioOn)
+            audioSource.PlayOneShot(EnemyNoHurtSound, 1f);
     }
 
     public void PlayShootSound()
