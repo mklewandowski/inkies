@@ -15,10 +15,10 @@ public class EnemyBossHitArea : MonoBehaviour
         Bullet bullet = collider.gameObject.GetComponent<Bullet>();
         if (bullet != null && !bullet.GetComponent<Bullet>().enemyBullet && Globals.CurrentGameState == Globals.GameState.Playing)
         {
-            if (isHead)
-                enemyBoss.HitHead();
+            if (IsHead)
+                EnemyBoss.HitHead();
             else
-                enemyBoss.HitBody();
+                EnemyBoss.HitBody();
 
             Destroy(collider.gameObject);
         }

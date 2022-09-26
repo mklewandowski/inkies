@@ -9,16 +9,6 @@ public class SceneManager : MonoBehaviour
     AudioManager audioManager;
 
     [SerializeField]
-    GameObject Player;
-    [SerializeField]
-    GameObject Controls;
-    [SerializeField]
-    GameObject Level;
-
-    [SerializeField]
-    GameObject[] Blocks;
-
-    [SerializeField]
     GameObject HUDWipeLeft;
     [SerializeField]
     GameObject HUDWipeRight;
@@ -39,23 +29,6 @@ public class SceneManager : MonoBehaviour
     GameObject HUDOptionsButton;
     [SerializeField]
     GameObject HUDAboutButton;
-
-    [SerializeField]
-    GameObject HUDLivesContainer;
-    [SerializeField]
-    GameObject[] HUDLives;
-    [SerializeField]
-    GameObject HUDScore;
-    [SerializeField]
-    TextMeshProUGUI HUDCoinsText;
-    [SerializeField]
-    GameObject HUDGameOver;
-    [SerializeField]
-    GameObject HUDPlayAgain;
-    [SerializeField]
-    TextMeshProUGUI HUDScoreText;
-    [SerializeField]
-    TextMeshProUGUI HUDBestScoreText;
     [SerializeField]
     GameObject HUDOptions;
     [SerializeField]
@@ -68,8 +41,75 @@ public class SceneManager : MonoBehaviour
     TextMeshProUGUI HUDEasyMode;
     [SerializeField]
     GameObject HUDAboutText;
-    bool showOptions = false;
-    bool showAbout = false;
+
+    [SerializeField]
+    GameObject Player;
+    [SerializeField]
+    GameObject Boss;
+    [SerializeField]
+    GameObject Controls;
+    [SerializeField]
+    GameObject Level;
+    [SerializeField]
+    GameObject[] Blocks;
+    [SerializeField]
+    GameObject EnemyContainer;
+    [SerializeField]
+    GameObject DiverPrefab;
+    [SerializeField]
+    GameObject FishPrefab;
+    [SerializeField]
+    GameObject MolluskPrefab;
+    [SerializeField]
+    GameObject GunMolluskPrefab;
+    [SerializeField]
+    GameObject GunFishPrefab;
+    [SerializeField]
+    GameObject WaveEndPrefab;
+    [SerializeField]
+    GameObject LevelEndPrefab;
+    [SerializeField]
+    GameObject CoinContainer;
+    [SerializeField]
+    GameObject CoinPrefab;
+    float coinSpawnDistance = 3f;
+    float distanceUntilCoinSpawn = 3f;
+    [SerializeField]
+    GameObject PowerUpPrefab;
+    int spawnsUntilPowerup = 2;
+
+    [SerializeField]
+    GameObject[] HUDUnlockBanners;
+    [SerializeField]
+    GameObject[] HUDCharacterSelectImages;
+
+    [SerializeField]
+    GameObject HUDLivesContainer;
+    [SerializeField]
+    GameObject[] HUDLives;
+    [SerializeField]
+    GameObject HUDScore;
+    [SerializeField]
+    TextMeshProUGUI HUDCoinsText;
+    [SerializeField]
+    GameObject HUDPowerupInk;
+    [SerializeField]
+    GameObject HUDPowerupInvincible;
+    [SerializeField]
+    GameObject HUDPowerupDisguise;
+
+    [SerializeField]
+    GameObject HUDGameOver;
+    [SerializeField]
+    GameObject HUDPlayAgain;
+    [SerializeField]
+    TextMeshProUGUI HUDScoreText;
+    [SerializeField]
+    TextMeshProUGUI HUDBestScoreText;
+    [SerializeField]
+    GameObject HUDLevelComplete;
+    [SerializeField]
+    GameObject HUDNextLevel;
 
     [SerializeField]
     GameObject HUDCharacterSelect;
@@ -86,10 +126,9 @@ public class SceneManager : MonoBehaviour
     Sprite[] HUDPlayerSprites;
     [SerializeField]
     GameObject HUDDialogPlayer;
-    [SerializeField]
-    GameObject HUDLevelComplete;
-    [SerializeField]
-    GameObject HUDNextLevel;
+
+    bool showOptions = false;
+    bool showAbout = false;
 
     float levelCompleteTimer = 0f;
     float levelCompleteTimerMax = 3f;
@@ -97,49 +136,10 @@ public class SceneManager : MonoBehaviour
     float wipeTimer = 0f;
     float wipeTimerMax = .8f;
 
-    [SerializeField]
-    GameObject DiverPrefab;
-    [SerializeField]
-    GameObject FishPrefab;
-    [SerializeField]
-    GameObject MolluskPrefab;
-    [SerializeField]
-    GameObject GunMolluskPrefab;
-    [SerializeField]
-    GameObject GunFishPrefab;
-    [SerializeField]
-    GameObject WaveEndPrefab;
-    [SerializeField]
-    GameObject LevelEndPrefab;
-    [SerializeField]
-    GameObject EnemyContainer;
+    List<EnemyWave> waves = new List<EnemyWave>();
     int spawnInterval = 0;
     int wavesPerLevel = 10;
     int wavesThisLevel = 0;
-    int spawnsUntilPowerup = 2;
-    List<EnemyWave> waves = new List<EnemyWave>();
-
-    [SerializeField]
-    GameObject CoinContainer;
-    [SerializeField]
-    GameObject CoinPrefab;
-    float coinSpawnDistance = 3f;
-    float distanceUntilCoinSpawn = 3f;
-
-    [SerializeField]
-    GameObject PowerUpPrefab;
-
-    [SerializeField]
-    GameObject[] HUDUnlockBanners;
-    [SerializeField]
-    GameObject[] HUDCharacterSelectImages;
-
-    [SerializeField]
-    GameObject HUDPowerupInk;
-    [SerializeField]
-    GameObject HUDPowerupInvincible;
-    [SerializeField]
-    GameObject HUDPowerupDisguise;
 
     void Awake()
     {
@@ -211,50 +211,6 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    void UpdateStarting()
-    {
-        if (wipeTimer > 0)
-        {
-            wipeTimer -= Time.deltaTime;
-            if (wipeTimer <= 0)
-            {
-                HUDPaper.SetActive(false);
-                HUDTitle.SetActive(false);
-                HUDPlayer.SetActive(false);
-                HUDStartButton.SetActive(false);
-                HUDOptionsButton.SetActive(false);
-                HUDAboutButton.SetActive(false);
-
-                Level.SetActive(true);
-
-                dialogNum = 0;
-
-                HUDLivesContainer.SetActive(true);
-
-                Globals.CurrentScore = 0;
-                Globals.CurrentLevel = 0;
-                Globals.CurrentLives = 3;
-                for (int x = 0; x < HUDLives.Length; x++)
-                {
-                    HUDLives[x].SetActive(x < Globals.CurrentLives);
-                }
-                spawnInterval = 0;
-                wavesThisLevel = 0;
-
-                HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
-                HUDScore.SetActive(true);
-
-                HUDWipeLeft.GetComponent<MoveNormal>().MoveLeft();
-                HUDWipeRight.GetComponent<MoveNormal>().MoveRight();
-                HUDWipeTop.GetComponent<MoveNormal>().MoveUp();
-                HUDWipeBottom.GetComponent<MoveNormal>().MoveDown();
-
-                wipeTimer = wipeTimerMax;
-                Globals.CurrentGameState = Globals.GameState.IntroDialog;
-            }
-        }
-    }
-
     void UpdateTitle()
     {
         if (wipeTimer > 0)
@@ -283,6 +239,33 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    void UpdateStarting()
+    {
+        if (wipeTimer > 0)
+        {
+            wipeTimer -= Time.deltaTime;
+            if (wipeTimer <= 0)
+            {
+                HUDPaper.SetActive(false);
+                HUDTitle.SetActive(false);
+                HUDPlayer.SetActive(false);
+                HUDStartButton.SetActive(false);
+                HUDOptionsButton.SetActive(false);
+                HUDAboutButton.SetActive(false);
+
+                PrepareNewGame();
+
+                HUDWipeLeft.GetComponent<MoveNormal>().MoveLeft();
+                HUDWipeRight.GetComponent<MoveNormal>().MoveRight();
+                HUDWipeTop.GetComponent<MoveNormal>().MoveUp();
+                HUDWipeBottom.GetComponent<MoveNormal>().MoveDown();
+                wipeTimer = wipeTimerMax;
+
+                Globals.CurrentGameState = Globals.GameState.IntroDialog;
+            }
+        }
+    }
+
     void UpdateIntroDialog()
     {
         if (wipeTimer > 0)
@@ -299,23 +282,6 @@ public class SceneManager : MonoBehaviour
     {
         MoveBlocks();
         SpawnCoins();
-    }
-
-    void MoveBlocks()
-    {
-        float blockMinX = -12f;
-        for (int i = 0; i < Blocks.Length; i++)
-        {
-            if (Blocks[i].transform.localPosition.x < blockMinX)
-            {
-                int abutIndex = i == 0 ? Blocks.Length - 1 : i - 1;
-                Blocks[i].transform.localPosition = new Vector3(
-                        Blocks[abutIndex].transform.localPosition.x + 1.7f,
-                        Blocks[i].transform.localPosition.y,
-                        Blocks[i].transform.localPosition.z
-                    );
-            }
-        }
     }
 
     private void UpdateLevelComplete()
@@ -343,30 +309,74 @@ public class SceneManager : MonoBehaviour
             wipeTimer -= Time.deltaTime;
             if (wipeTimer <= 0)
             {
-                Globals.CurrentLevel++;
-                wavesThisLevel = 0;
-                spawnsUntilPowerup = 2;
-                distanceUntilCoinSpawn = coinSpawnDistance;
-
-                HUDWipeLeft.GetComponent<MoveNormal>().MoveLeft();
-                HUDWipeRight.GetComponent<MoveNormal>().MoveRight();
-                HUDWipeTop.GetComponent<MoveNormal>().MoveUp();
-                HUDWipeBottom.GetComponent<MoveNormal>().MoveDown();
-
-                Player.SetActive(false);
-
-                dialogNum = 0;
-                string currDialog = dialog1[dialogNum];
-                if (Globals.CurrentLevel == 1)
-                    currDialog = dialog2[dialogNum];
-                else if (Globals.CurrentLevel == 2)
-                    currDialog = dialog3[dialogNum];
-                else if (Globals.CurrentLevel == 3)
-                    currDialog = dialog4[dialogNum];
-                HUDDialogBoxText.text = Globals.GetPlayerName() + ": " + currDialog;
-                HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
-                Globals.CurrentGameState = Globals.GameState.IntroDialog;
+                PrepareNextLevel();
             }
+        }
+    }
+
+    void PrepareNextLevel()
+    {
+        Globals.CurrentLevel++;
+        wavesThisLevel = 0;
+        spawnsUntilPowerup = 2;
+        distanceUntilCoinSpawn = coinSpawnDistance;
+
+        Player.SetActive(false);
+
+        dialogNum = 0;
+        string currDialog = dialog1[dialogNum];
+        if (Globals.CurrentLevel == 1)
+            currDialog = dialog2[dialogNum];
+        else if (Globals.CurrentLevel == 2)
+            currDialog = dialog3[dialogNum];
+        else if (Globals.CurrentLevel == 3)
+            currDialog = dialog4[dialogNum];
+        HUDDialogBoxText.text = Globals.GetPlayerName() + ": " + currDialog;
+        HUDDialogBox.GetComponent<MoveNormal>().MoveDown();
+
+        HUDWipeLeft.GetComponent<MoveNormal>().MoveLeft();
+        HUDWipeRight.GetComponent<MoveNormal>().MoveRight();
+        HUDWipeTop.GetComponent<MoveNormal>().MoveUp();
+        HUDWipeBottom.GetComponent<MoveNormal>().MoveDown();
+
+        Globals.CurrentGameState = Globals.GameState.IntroDialog;
+    }
+
+    void MoveBlocks()
+    {
+        float blockMinX = -12f;
+        for (int i = 0; i < Blocks.Length; i++)
+        {
+            if (Blocks[i].transform.localPosition.x < blockMinX)
+            {
+                int abutIndex = i == 0 ? Blocks.Length - 1 : i - 1;
+                Blocks[i].transform.localPosition = new Vector3(
+                        Blocks[abutIndex].transform.localPosition.x + 1.7f,
+                        Blocks[i].transform.localPosition.y,
+                        Blocks[i].transform.localPosition.z
+                    );
+            }
+        }
+    }
+
+    void SpawnCoins()
+    {
+        if (wavesThisLevel == wavesPerLevel)
+            return;
+        distanceUntilCoinSpawn = distanceUntilCoinSpawn - Globals.ScrollSpeed.x * Time.deltaTime;
+        if (distanceUntilCoinSpawn <= 0)
+        {
+            float[] coinYPositions = {4f, 2f, 0f, -2f};
+            float xPosition = 12f;
+            for (int y = 0; y < coinYPositions.Length; y++)
+            {
+                float rand = Random.Range(0f, 100f);
+                if (rand < 10f)
+                {
+                    GameObject coinGO = (GameObject)Instantiate(CoinPrefab, new Vector3(xPosition, coinYPositions[y], 0), Quaternion.identity, CoinContainer.transform);
+                }
+            }
+            distanceUntilCoinSpawn = coinSpawnDistance;
         }
     }
 
@@ -435,27 +445,6 @@ public class SceneManager : MonoBehaviour
         wavesThisLevel++;
     }
 
-    void SpawnCoins()
-    {
-        if (wavesThisLevel == wavesPerLevel)
-            return;
-        distanceUntilCoinSpawn = distanceUntilCoinSpawn - Globals.ScrollSpeed.x * Time.deltaTime;
-        if (distanceUntilCoinSpawn <= 0)
-        {
-            float[] coinYPositions = {4f, 2f, 0f, -2f};
-            float xPosition = 12f;
-            for (int y = 0; y < coinYPositions.Length; y++)
-            {
-                float rand = Random.Range(0f, 100f);
-                if (rand < 10f)
-                {
-                    GameObject coinGO = (GameObject)Instantiate(CoinPrefab, new Vector3(xPosition, coinYPositions[y], 0), Quaternion.identity, CoinContainer.transform);
-                }
-            }
-            distanceUntilCoinSpawn = coinSpawnDistance;
-        }
-    }
-
     void FixedUpdate()
     {
         if (Globals.CurrentGameState == Globals.GameState.IntroDialog || Globals.CurrentGameState == Globals.GameState.Playing
@@ -504,6 +493,32 @@ public class SceneManager : MonoBehaviour
         HUDCoinsText.text = Globals.Coins.ToString();
     }
 
+    public void EnemyHit()
+    {
+        Camera.main.GetComponent<CameraShake>().StartShake();
+        bool gameOver = true;
+        Globals.CurrentLives--;
+        if (Globals.CurrentLives > 0)
+        {
+            gameOver = false;
+            Player.GetComponent<Player>().Hit();
+        }
+        for (int x = 0; x < HUDLives.Length; x++)
+        {
+            HUDLives[x].SetActive(x < Globals.CurrentLives);
+        }
+        if (gameOver)
+            GameOver();
+        else
+            audioManager.PlayHitSound();
+    }
+
+    public void IncrementScore(int points)
+    {
+        Globals.CurrentScore = Globals.CurrentScore + points;
+        HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
+    }
+
     public void RemoveOldLevelContent()
     {
         Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>(true);
@@ -530,9 +545,6 @@ public class SceneManager : MonoBehaviour
 
         audioManager.PlayStartSound();
 
-        Player.GetComponent<Player>().Reset();
-        RemoveOldLevelContent();
-
         HUDWipeLeft.GetComponent<MoveNormal>().MoveRight();
         HUDWipeRight.GetComponent<MoveNormal>().MoveLeft();
         HUDWipeTop.GetComponent<MoveNormal>().MoveDown();
@@ -542,26 +554,6 @@ public class SceneManager : MonoBehaviour
 
         wipeTimer = wipeTimerMax;
         Globals.CurrentGameState = Globals.GameState.Starting;
-    }
-
-    public void ReturnHome()
-    {
-        audioManager.PlayMenuSound();
-
-        HUDWipeLeft.GetComponent<MoveNormal>().MoveRight();
-        HUDWipeRight.GetComponent<MoveNormal>().MoveLeft();
-        HUDWipeTop.GetComponent<MoveNormal>().MoveDown();
-        HUDWipeBottom.GetComponent<MoveNormal>().MoveUp();
-        HUDGameOver.GetComponent<MoveNormal>().MoveUp();
-        HUDPlayAgain.GetComponent<MoveNormal>().MoveDown();
-        wipeTimer = wipeTimerMax;
-        Globals.CurrentGameState = Globals.GameState.TitleScreen;
-    }
-
-    public void IncrementScore(int points)
-    {
-        Globals.CurrentScore = Globals.CurrentScore + points;
-        HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
     }
 
     public void AdvanceDialog()
@@ -594,41 +586,42 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    public void StartGame()
+    void PrepareNewGame()
     {
-        Player.GetComponent<Player>().Reset();
         RemoveOldLevelContent();
-        Player.SetActive(true);
-        Controls.SetActive(Globals.ControlsOn);
-        Globals.CurrentGameState = Globals.GameState.Playing;
-        Globals.ScrollSpeed = new Vector3(Globals.EasyMode ? Globals.minSpeed : Globals.minSpeed + 2f, 0, 0);
-        if (Globals.CurrentLevel == 0)
-        {
-            spawnInterval = 0;
-            wavesThisLevel = 0;
-            spawnsUntilPowerup = 2;
-        }
-        SpawnWave();
-    }
-
-    public void EnemyHit()
-    {
-        Camera.main.GetComponent<CameraShake>().StartShake();
-        bool gameOver = true;
-        Globals.CurrentLives--;
-        if (Globals.CurrentLives > 0)
-        {
-            gameOver = false;
-            Player.GetComponent<Player>().Hit();
-        }
+        Level.SetActive(true);
+        spawnInterval = 0;
+        wavesThisLevel = 0;
+        dialogNum = 0;
+        coinSpawnDistance = distanceUntilCoinSpawn;
+        spawnsUntilPowerup = 2;
+        Globals.CurrentScore = 0;
+        Globals.CurrentLevel = 0;
+        Globals.CurrentLives = 3;
+        distanceUntilCoinSpawn = coinSpawnDistance;
         for (int x = 0; x < HUDLives.Length; x++)
         {
             HUDLives[x].SetActive(x < Globals.CurrentLives);
         }
-        if (gameOver)
-            GameOver();
-        else
-            audioManager.PlayHitSound();
+        HUDLivesContainer.SetActive(true);
+        HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
+        HUDScore.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        RemoveOldLevelContent();
+        Player.GetComponent<Player>().Reset();
+        Player.SetActive(true);
+        Controls.SetActive(Globals.ControlsOn);
+        Globals.ScrollSpeed = new Vector3(Globals.EasyMode ? Globals.minSpeed : Globals.minSpeed + 2f, 0, 0);
+        Globals.CurrentGameState = Globals.GameState.Playing;
+        SpawnWave();
+    }
+
+    public void AdvanceBossDialog()
+    {
+        audioManager.PlayMenuSound();
     }
 
     public void GameOver()
@@ -652,24 +645,11 @@ public class SceneManager : MonoBehaviour
     public void RestartGame()
     {
         audioManager.PlayStartSound();
-        Player.GetComponent<Player>().Reset();
-        RemoveOldLevelContent();
-        Globals.CurrentGameState = Globals.GameState.Playing;
-        Globals.ScrollSpeed = new Vector3(Globals.EasyMode ? Globals.minSpeed : Globals.minSpeed + 2f, 0, 0);
         HUDGameOver.GetComponent<MoveNormal>().MoveUp();
         HUDPlayAgain.GetComponent<MoveNormal>().MoveDown();
-        Globals.CurrentScore = 0;
-        Globals.CurrentLevel = 0;
-        Globals.CurrentLives = 3;
-        for (int x = 0; x < HUDLives.Length; x++)
-        {
-            HUDLives[x].SetActive(x < Globals.CurrentLives);
-        }
-        spawnInterval = 0;
-        wavesThisLevel = 0;
-        distanceUntilCoinSpawn = coinSpawnDistance;
-        SpawnWave();
-        HUDScore.GetComponent<TextMeshProUGUI>().text = Globals.CurrentScore.ToString();
+
+        PrepareNewGame();
+        StartGame();
     }
 
     public void LevelComplete()
@@ -692,6 +672,19 @@ public class SceneManager : MonoBehaviour
         HUDWipeTop.GetComponent<MoveNormal>().MoveDown();
         HUDWipeBottom.GetComponent<MoveNormal>().MoveUp();
         wipeTimer = wipeTimerMax;
+    }
+
+    public void ReturnHome()
+    {
+        audioManager.PlayMenuSound();
+        HUDWipeLeft.GetComponent<MoveNormal>().MoveRight();
+        HUDWipeRight.GetComponent<MoveNormal>().MoveLeft();
+        HUDWipeTop.GetComponent<MoveNormal>().MoveDown();
+        HUDWipeBottom.GetComponent<MoveNormal>().MoveUp();
+        HUDGameOver.GetComponent<MoveNormal>().MoveUp();
+        HUDPlayAgain.GetComponent<MoveNormal>().MoveDown();
+        wipeTimer = wipeTimerMax;
+        Globals.CurrentGameState = Globals.GameState.TitleScreen;
     }
 
     public void ToggleOptions()
