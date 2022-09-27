@@ -151,7 +151,7 @@ public class SceneManager : MonoBehaviour
 
     List<EnemyWave> waves = new List<EnemyWave>();
     int spawnInterval = 0;
-    int wavesPerLevel = 1;
+    int wavesPerLevel = 10;
     int wavesThisLevel = 0;
 
     float winGameTimer = 0;
@@ -354,6 +354,7 @@ public class SceneManager : MonoBehaviour
     private void UpdateLevelComplete()
     {
         levelCompleteTimer -= Time.deltaTime;
+        Player.transform.localPosition = new Vector3(Player.transform.localPosition.x + 30f * Time.deltaTime, Player.transform.localPosition.y, Player.transform.localPosition.z);
         if (levelCompleteTimer <= 0)
         {
             HUDNextLevel.GetComponent<MoveNormal>().MoveUp();
