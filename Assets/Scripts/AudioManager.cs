@@ -60,14 +60,20 @@ public class AudioManager : MonoBehaviour
 
     public void PlayGameMusic()
     {
-        audioSource.clip = InkiesMusic;
-        audioSource.Play();
+        if (Globals.MusicOn)
+        {
+            audioSource.clip = InkiesMusic;
+            audioSource.Play();
+        }
     }
 
     public void PlayWinMusic()
     {
-        audioSource.clip = WinMusic;
-        audioSource.Play();
+        if (Globals.MusicOn)
+        {
+            audioSource.clip = WinMusic;
+            audioSource.Play();
+        }
     }
 
     public void PlayMenuSound()
