@@ -22,9 +22,13 @@ public class Enemy : MonoBehaviour
     float minX = -20f;
     float minY = -20f;
 
-    float maxYMovementPos = 0f;
-    float minYMovementPos = 0f;
-    float movementYDir = 1f;
+    float[] yPositions = {8f, 3.3f, 1.575f, -0.15f, -1.875f, -3.6f};
+    float yMovementThreshold = 5f;
+    bool yMovementComplete = false;
+    float yFinal = 0;
+    int yDir = 0;
+    float bounceTimer = 0;
+    float bounceTimerMax = 1f;
 
     float shootTimer = .5f;
     float shootTimerMax = 2f;
@@ -33,10 +37,18 @@ public class Enemy : MonoBehaviour
 
     public enum EnemyType {
         Fish,
+        FishDown,
+        FishUp,
+        FishMiddle,
+        FishBounce,
         Diver,
         Mollusk,
         GunMollusk,
         GunFish,
+        GunFishDown,
+        GunFishUp,
+        GunFishMiddle,
+        GunFishBounce,
         None
     }
     public EnemyType enemyType = EnemyType.Fish;
@@ -67,33 +79,100 @@ public class Enemy : MonoBehaviour
         if (enemyType == EnemyType.Fish)
         {
             extraXmovement = 2f;
-            maxYMovementPos = this.transform.position.y + .5f;
-            minYMovementPos = this.transform.position.y - .5f;
+            yMovementComplete = true;
+        }
+        else if (enemyType == EnemyType.FishDown)
+        {
+            extraXmovement = 2f;
+            yFinal = yPositions[yPositions.Length - 1];
+            yDir = -1;
+        }
+        else if (enemyType == EnemyType.FishUp)
+        {
+            extraXmovement = 2f;
+            yFinal = yPositions[1];
+            yDir = 1;
+        }
+        else if (enemyType == EnemyType.FishMiddle)
+        {
+            extraXmovement = 2f;
+            yFinal = yPositions[3];
+        }
+        else if (enemyType == EnemyType.FishBounce)
+        {
+            extraXmovement = 2f;
+            yFinal = yPositions[1];
+            yDir = 1;
+            yMovementThreshold = 8f;
         }
         else if (enemyType == EnemyType.GunFish)
         {
             points = 200;
             extraXmovement = 2f;
-            maxYMovementPos = this.transform.position.y + .5f;
-            minYMovementPos = this.transform.position.y - .5f;
+            yMovementComplete = true;
+        }
+        else if (enemyType == EnemyType.GunFishDown)
+        {
+            points = 200;
+            extraXmovement = 2f;
+            yFinal = yPositions[yPositions.Length - 1];
+            yDir = -1;
+        }
+        else if (enemyType == EnemyType.GunFishUp)
+        {
+            points = 200;
+            extraXmovement = 2f;
+            yFinal = yPositions[1];
+            yDir = 1;
+        }
+        else if (enemyType == EnemyType.GunFishMiddle)
+        {
+            points = 200;
+            extraXmovement = 2f;
+            yFinal = yPositions[3];
+        }
+        else if (enemyType == EnemyType.GunFishBounce)
+        {
+            points = 200;
+            extraXmovement = 2f;
+            yFinal = yPositions[1];
+            yDir = 1;
+            yMovementThreshold = 8f;
         }
         else if (enemyType == EnemyType.GunMollusk)
         {
-            points = 200;
+            points = 150;
             extraXmovement = 1f;
+            yMovementComplete = true;
         }
         else if (enemyType == EnemyType.Mollusk)
         {
             extraXmovement = 1f;
+            yMovementComplete = true;
         }
         else if (enemyType == EnemyType.Diver)
         {
-            points = 200;
+            points = 150;
             extraXmovement = 1f;
+            yMovementThreshold = 8f;
+            yFinal = minY;
+            yDir = -1;
         }
         else if (enemyType == EnemyType.None)
         {
             extraXmovement = 1f;
+            yMovementComplete = true;
+        }
+    }
+
+    void Start()
+    {
+        if (enemyType == EnemyType.GunFishMiddle || enemyType == EnemyType.FishMiddle)
+        {
+            if (this.transform.localPosition.y > yPositions[3])
+                yDir = -1;
+            else
+                yDir = 1;
         }
     }
 
@@ -127,13 +206,48 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if ((enemyType == EnemyType.GunMollusk || enemyType == EnemyType.GunFish) && this.transform.position.x <= screenRightEdge && isActive)
+        if ((enemyType == EnemyType.GunMollusk || enemyType == EnemyType.GunFish
+             || enemyType == EnemyType.GunFishDown || enemyType == EnemyType.GunFishUp
+             || enemyType == EnemyType.GunFishMiddle || enemyType == EnemyType.GunFishBounce)
+             && this.transform.position.x <= screenRightEdge && isActive)
         {
             shootTimer -= Time.deltaTime;
             if (shootTimer <= 0)
             {
                 ShootBullet();
                 shootTimer = Mathf.Max(.5f, shootTimerMax - (Globals.ScrollSpeed.x - 1f) / 2f);
+            }
+        }
+
+        if (!yMovementComplete && this.transform.localPosition.x < yMovementThreshold && yDir == -1 && this.transform.localPosition.y <= yFinal)
+        {
+            this.transform.localPosition = new Vector3(this.transform.localPosition.x, yFinal, this.transform.localPosition.z);
+            yMovementComplete = true;
+            if (enemyType == EnemyType.GunFishBounce || enemyType == EnemyType.FishBounce)
+            {
+                bounceTimer = bounceTimerMax;
+                yFinal = yPositions[1];
+                yDir = 1;
+            }
+        }
+        else if (!yMovementComplete && this.transform.localPosition.x < yMovementThreshold && yDir == 1 && this.transform.localPosition.y >= yFinal)
+        {
+            this.transform.localPosition = new Vector3(this.transform.localPosition.x, yFinal, this.transform.localPosition.z);
+            yMovementComplete = true;
+            if (enemyType == EnemyType.GunFishBounce || enemyType == EnemyType.FishBounce)
+            {
+                bounceTimer = bounceTimerMax;
+                yFinal = yPositions[yPositions.Length - 1];
+                yDir = -1;
+            }
+        }
+
+        if (bounceTimer > 0)
+        {
+            bounceTimer -= Time.deltaTime;
+            if (bounceTimer < 0)
+            {
+                yMovementComplete = false;
             }
         }
     }
@@ -144,9 +258,9 @@ public class Enemy : MonoBehaviour
         {
             float baseSpeed = Globals.ScrollSpeed.x * Globals.ScrollDirection.x;
             GameObject bulletGameObject = (GameObject)Instantiate(BulletPrefab, Muzzle.transform.position, Quaternion.identity, bulletContainer.transform);
-            bulletGameObject.GetComponent<Rigidbody2D>().velocity = enemyType == EnemyType.GunFish
-                ? new Vector2(baseSpeed - 6f, 0)
-                : new Vector2(baseSpeed - 4f, baseSpeed * -1f + 4f);
+            bulletGameObject.GetComponent<Rigidbody2D>().velocity = enemyType == EnemyType.GunMollusk
+                ? new Vector2(baseSpeed - 4f, baseSpeed * -1f + 4f)
+                : new Vector2(baseSpeed - 6f, 0);
         }
     }
 
@@ -156,16 +270,14 @@ public class Enemy : MonoBehaviour
         {
             float extraYmovement = 0f;
             float baseSpeed = Globals.ScrollSpeed.x * Globals.ScrollDirection.x;
-            if (enemyType == EnemyType.Diver && this.transform.localPosition.x < 8f)
+            if (enemyType == EnemyType.Diver && this.transform.localPosition.x < yMovementThreshold)
                 extraYmovement = baseSpeed - 1f;
-            else if ((enemyType == EnemyType.Fish || enemyType == EnemyType.GunFish) && isAlive)
-            {
-                if (this.transform.position.y >= maxYMovementPos)
-                    movementYDir = 1f;
-                else if (this.transform.position.y <= minYMovementPos)
-                    movementYDir = -1f;
-                extraYmovement = baseSpeed * movementYDir * .5f;
-            }
+            else if (this.transform.localPosition.y > yFinal && this.transform.localPosition.x < yMovementThreshold && !yMovementComplete)
+                extraYmovement = -4f + baseSpeed;
+            else if (this.transform.localPosition.y < yFinal && this.transform.localPosition.x < yMovementThreshold && !yMovementComplete)
+                extraYmovement = 4f - baseSpeed;
+            if (enemyType == EnemyType.GunFishBounce || enemyType == EnemyType.FishBounce)
+                extraYmovement = extraYmovement * 3f;
 
             Vector2 movement = new Vector2(0, 0);
             if (isDropping)

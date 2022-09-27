@@ -101,8 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Muzzle: {fileID: 0}
   BulletPrefab: {fileID: 0}
-  enemyType: 2
+  enemyType: 6
   isLastInWave: 0
+  isLastInLevel: 0
   extraXmovement: 0
 --- !u!50 &5613334171290355448
 Rigidbody2D:

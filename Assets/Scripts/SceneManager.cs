@@ -59,11 +59,27 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject FishPrefab;
     [SerializeField]
+    GameObject FishUpPrefab;
+    [SerializeField]
+    GameObject FishDownPrefab;
+    [SerializeField]
+    GameObject FishMiddlePrefab;
+    [SerializeField]
+    GameObject FishBouncePrefab;
+    [SerializeField]
     GameObject MolluskPrefab;
     [SerializeField]
     GameObject GunMolluskPrefab;
     [SerializeField]
     GameObject GunFishPrefab;
+    [SerializeField]
+    GameObject GunFishUpPrefab;
+    [SerializeField]
+    GameObject GunFishDownPrefab;
+    [SerializeField]
+    GameObject GunFishMiddlePrefab;
+    [SerializeField]
+    GameObject GunFishBouncePrefab;
     [SerializeField]
     GameObject WaveEndPrefab;
     [SerializeField]
@@ -454,16 +470,8 @@ public class SceneManager : MonoBehaviour
         if (spawnInterval >= waves.Count) // we're at the boss battle
             return;
 
-        // add for endless mode
-        // if (spawnInterval >= waves.Count)
-        // {
-        //     spawnInterval = 0;
-        //     float newSpeed = Mathf.Min(Globals.maxSpeed, Globals.ScrollSpeed.x + 2f);
-        //     Globals.ScrollSpeed = new Vector2(newSpeed, Globals.ScrollSpeed.y);
-        // }
-
-        int numInCol = 5;
-        float[] yPositions = {8f, 3f, .75f, -1.5f, -3.6f};
+        int numInCol = 6;
+        float[] yPositions = {8f, 3.3f, 1.575f, -0.15f, -1.875f, -3.6f};
         float xPositionDelta = 3f;
         float xPosition = 14f;
         float extraXmovement = 2f;
@@ -483,6 +491,22 @@ public class SceneManager : MonoBehaviour
                     enemyPrefab = GunMolluskPrefab;
                 else if (type == Enemy.EnemyType.GunFish)
                     enemyPrefab = GunFishPrefab;
+                else if (type == Enemy.EnemyType.GunFishDown)
+                    enemyPrefab = GunFishDownPrefab;
+                else if (type == Enemy.EnemyType.GunFishUp)
+                    enemyPrefab = GunFishUpPrefab;
+                else if (type == Enemy.EnemyType.GunFishMiddle)
+                    enemyPrefab = GunFishMiddlePrefab;
+                else if (type == Enemy.EnemyType.GunFishBounce)
+                    enemyPrefab = GunFishBouncePrefab;
+                else if (type == Enemy.EnemyType.FishDown)
+                    enemyPrefab = FishDownPrefab;
+                else if (type == Enemy.EnemyType.FishUp)
+                    enemyPrefab = FishUpPrefab;
+                else if (type == Enemy.EnemyType.FishMiddle)
+                    enemyPrefab = FishMiddlePrefab;
+                else if (type == Enemy.EnemyType.FishBounce)
+                    enemyPrefab = FishBouncePrefab;
                 GameObject enemyGO = (GameObject)Instantiate(enemyPrefab, new Vector3(xPosition, yPositions[x % numInCol], 0), enemyPrefab.transform.rotation, EnemyContainer.transform);
                 if (type == Enemy.EnemyType.Diver || type == Enemy.EnemyType.Mollusk ||  type == Enemy.EnemyType.GunMollusk)
                     extraXmovement = 1f;

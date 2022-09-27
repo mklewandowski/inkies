@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 954198675655058847}
   - component: {fileID: 954198675655058846}
   - component: {fileID: 954198675655058845}
+  - component: {fileID: -5248791448663911394}
   m_Layer: 0
   m_Name: EnemyFishGun
   m_TagString: Untagged
@@ -102,8 +103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Muzzle: {fileID: 6185259416520869459}
   BulletPrefab: {fileID: 3423652173057975466, guid: edee4961c967fb542a6e891ca17d2cfb, type: 3}
-  enemyType: 4
+  enemyType: 8
   isLastInWave: 0
+  isLastInLevel: 0
   extraXmovement: 0
 --- !u!50 &954198675655058846
 Rigidbody2D:
@@ -152,6 +154,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.7333465, y: 2.3174953}
   m_EdgeRadius: 0
+--- !u!95 &-5248791448663911394
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954198675655058818}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 352b5f5d076a71d44b81ad5c1a44eb26, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6185259416520869459
 GameObject:
   m_ObjectHideFlags: 0
