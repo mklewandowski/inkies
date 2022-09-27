@@ -142,6 +142,11 @@ public class EnemyBoss : MonoBehaviour
                 ShootBullet(0);
                 ShootBullet(1f);
                 ShootBullet(-1f);
+                if (Globals.DifficultyMode == 2)
+                {
+                    ShootBullet(2f);
+                    ShootBullet(-2f);
+                }
                 shootTimer = bottomShootTimerMax * timerMultiplier;
             }
             bottomTimer -= Time.deltaTime;
