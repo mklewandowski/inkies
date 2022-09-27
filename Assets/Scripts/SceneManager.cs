@@ -539,7 +539,7 @@ public class SceneManager : MonoBehaviour
         }
 
         // bonus life
-        if ((Globals.CurrentLevel == 1 || Globals.CurrentLevel == 3) && wavesThisLevel == 5)
+        if ((Globals.CurrentLevel > 0) && wavesThisLevel == 5)
         {
             GameObject powerupGO = (GameObject)Instantiate(PowerUpPrefab, new Vector3(xPosition + 2f, Random.Range(-1f, 3.5f), 0), Quaternion.identity, CoinContainer.transform);
             powerupGO.GetComponent<PowerUp>().SetType(PowerUp.PowerupType.BonusLife);
