@@ -30,6 +30,13 @@ public class AudioManager : MonoBehaviour
     AudioClip BuySound;
     [SerializeField]
     AudioClip LevelCompleteSound;
+    [SerializeField]
+    AudioClip BossAppearsSound;
+
+    [SerializeField]
+    AudioClip WinMusic;
+    [SerializeField]
+    AudioClip InkiesMusic;
 
     void Awake()
     {
@@ -49,6 +56,18 @@ public class AudioManager : MonoBehaviour
     public void StopMusic()
     {
         audioSource.Stop();
+    }
+
+    public void PlayGameMusic()
+    {
+        audioSource.clip = InkiesMusic;
+        audioSource.Play();
+    }
+
+    public void PlayWinMusic()
+    {
+        audioSource.clip = WinMusic;
+        audioSource.Play();
     }
 
     public void PlayMenuSound()
@@ -127,5 +146,11 @@ public class AudioManager : MonoBehaviour
     {
         if (Globals.AudioOn)
             audioSource.PlayOneShot(LevelCompleteSound, 1f);
+    }
+
+    public void PlayBossAppearsSound()
+    {
+        if (Globals.AudioOn)
+            audioSource.PlayOneShot(BossAppearsSound, 1f);
     }
 }

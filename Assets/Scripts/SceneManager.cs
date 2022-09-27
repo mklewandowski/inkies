@@ -731,6 +731,7 @@ public class SceneManager : MonoBehaviour
     public void RestartGame()
     {
         audioManager.PlayStartSound();
+        audioManager.PlayGameMusic();
         HUDGameOver.GetComponent<MoveNormal>().MoveUp();
         HUDGameWin.GetComponent<MoveNormal>().MoveUp();
         HUDPlayAgain.GetComponent<MoveNormal>().MoveDown();
@@ -741,9 +742,9 @@ public class SceneManager : MonoBehaviour
 
     public void LevelComplete()
     {
-        audioManager.PlayLevelCompleteSound();
         if (Globals.CurrentLevel < 3)
         {
+            audioManager.PlayLevelCompleteSound();
             HUDLevelComplete.GetComponent<MoveNormal>().MoveDown();
             levelCompleteTimer = levelCompleteTimerMax;
             RemoveOldLevelContent();
@@ -752,6 +753,7 @@ public class SceneManager : MonoBehaviour
         }
         else
         {
+            audioManager.PlayBossAppearsSound();
             HUDBossDialogBox.GetComponent<MoveNormal>().MoveDown();
         }
     }
@@ -770,12 +772,15 @@ public class SceneManager : MonoBehaviour
 
     public void WinGame()
     {
+        audioManager.PlayLevelCompleteSound();
+        audioManager.PlayWinMusic();
         winGameTimer = winGameTimerMax;
     }
 
     public void ReturnHome()
     {
         audioManager.PlayMenuSound();
+        audioManager.PlayGameMusic();
         HUDWipeLeft.GetComponent<MoveNormal>().MoveRight();
         HUDWipeRight.GetComponent<MoveNormal>().MoveLeft();
         HUDWipeTop.GetComponent<MoveNormal>().MoveDown();

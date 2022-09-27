@@ -12625,7 +12625,7 @@ MonoBehaviour:
   StartSound: {fileID: 8300000, guid: 8afac5f3b8ea13c49b5d8eda8681c1c1, type: 3}
   EnemyZappedSound: {fileID: 8300000, guid: 13a3c40aa6cfdf944a5e4aa2ff166097, type: 3}
   EnemyNoHurtSound: {fileID: 8300000, guid: dd16d10d887243f4d8ed608a5026556d, type: 3}
-  EnemyStompSound: {fileID: 8300000, guid: 992ec4e79dc032a4cb1c07bee7f366fc, type: 3}
+  EnemyStompSound: {fileID: 8300000, guid: e6217d37d6d125148b146b19d74751be, type: 3}
   ShootSound: {fileID: 8300000, guid: 0dfa2cce045b5e649979b02d30536e21, type: 3}
   GameOverSound: {fileID: 8300000, guid: 9d3dcdde4c392cf4eba11615b9c45272, type: 3}
   HitSound: {fileID: 8300000, guid: 992ec4e79dc032a4cb1c07bee7f366fc, type: 3}
@@ -12633,7 +12633,10 @@ MonoBehaviour:
   PowerUpSound: {fileID: 8300000, guid: 138ad064888a35045a77a231404fe2fa, type: 3}
   CantBuySound: {fileID: 8300000, guid: 57b311b2e0bcdbb4dac9ba95535accda, type: 3}
   BuySound: {fileID: 8300000, guid: e7d82389407c59048a1dabecd76496e3, type: 3}
-  LevelCompleteSound: {fileID: 8300000, guid: e7d82389407c59048a1dabecd76496e3, type: 3}
+  LevelCompleteSound: {fileID: 8300000, guid: 54f192c8280c8d1449129b2ad2ba200a, type: 3}
+  BossAppearsSound: {fileID: 8300000, guid: 95e5e8bdababc4042ba2aca2ea0c978d, type: 3}
+  WinMusic: {fileID: 8300000, guid: 1b050a02a4fe7044eb1834e37344ab79, type: 3}
+  InkiesMusic: {fileID: 8300000, guid: 2235fadca5c73404791c4283f5ed73a6, type: 3}
 --- !u!82 &1310353878
 AudioSource:
   m_ObjectHideFlags: 0
