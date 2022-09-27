@@ -151,13 +151,15 @@ public class SceneManager : MonoBehaviour
 
     List<EnemyWave> waves = new List<EnemyWave>();
     int spawnInterval = 0;
-    int wavesPerLevel = 10;
+    int wavesPerLevel = 1;
     int wavesThisLevel = 0;
 
     float winGameTimer = 0;
     float winGameTimerMax = 3f;
     float celebrationTimer = 0;
-    float celebrationTimerMax = 4f;
+    float celebrationTimerMax = 6f;
+    float finalTextTimer = 0;
+    float finalTextTimerMax = 3f;
 
     void Awake()
     {
@@ -334,6 +336,15 @@ public class SceneManager : MonoBehaviour
         {
             celebrationTimer -= Time.deltaTime;
             if (celebrationTimer <= 0)
+            {
+                finalTextTimer = finalTextTimerMax;
+                HUDGameWin.GetComponent<MoveNormal>().MoveDown();
+            }
+        }
+        if (finalTextTimer > 0)
+        {
+            finalTextTimer -= Time.deltaTime;
+            if (finalTextTimer <= 0)
             {
                 GameOver(false);
             }
@@ -710,6 +721,7 @@ public class SceneManager : MonoBehaviour
         {
             audioManager.PlayGameOverSound();
             Player.GetComponent<Player>().Die();
+            HUDGameOver.GetComponent<MoveNormal>().MoveDown();
         }
         Globals.SaveIntToPlayerPrefs(Globals.CoinsPlayerPrefsKey, Globals.Coins);
         if (Globals.CurrentScore > Globals.BestScore)
@@ -721,10 +733,6 @@ public class SceneManager : MonoBehaviour
         HUDBestScoreText.text = "Top Score: " + Globals.BestScore;
         Globals.ScrollSpeed = new Vector3(0, 0, 0);
         Globals.CurrentGameState = Globals.GameState.ShowScore;
-        if (die)
-            HUDGameOver.GetComponent<MoveNormal>().MoveDown();
-        else
-            HUDGameWin.GetComponent<MoveNormal>().MoveDown();
         HUDPlayAgain.GetComponent<MoveNormal>().MoveUp();
     }
 
