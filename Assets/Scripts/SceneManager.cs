@@ -115,6 +115,8 @@ public class SceneManager : MonoBehaviour
     GameObject HUDPowerupInvincible;
     [SerializeField]
     GameObject HUDPowerupDisguise;
+    [SerializeField]
+    GameObject HUDPowerupBonusLife;
 
     [SerializeField]
     GameObject HUDGameOver;
@@ -536,6 +538,13 @@ public class SceneManager : MonoBehaviour
             spawnsUntilPowerup = 3;
         }
 
+        // bonus life
+        if ((Globals.CurrentLevel == 1 || Globals.CurrentLevel == 3) && wavesThisLevel == 5)
+        {
+            GameObject powerupGO = (GameObject)Instantiate(PowerUpPrefab, new Vector3(xPosition + 2f, Random.Range(-1f, 3.5f), 0), Quaternion.identity, CoinContainer.transform);
+            powerupGO.GetComponent<PowerUp>().SetType(PowerUp.PowerupType.BonusLife);
+        }
+
         spawnInterval++;
         wavesThisLevel++;
     }
@@ -569,18 +578,36 @@ public class SceneManager : MonoBehaviour
             HUDPowerupInvincible.GetComponent<HUDPowerUp>().Show();
             HUDPowerupInk.GetComponent<HUDPowerUp>().Hide();
             HUDPowerupDisguise.GetComponent<HUDPowerUp>().Hide();
+            HUDPowerupBonusLife.GetComponent<HUDPowerUp>().Hide();
         }
         else if (powerupType == PowerUp.PowerupType.SuperInk)
         {
             HUDPowerupInk.GetComponent<HUDPowerUp>().Show();
             HUDPowerupInvincible.GetComponent<HUDPowerUp>().Hide();
             HUDPowerupDisguise.GetComponent<HUDPowerUp>().Hide();
+            HUDPowerupBonusLife.GetComponent<HUDPowerUp>().Hide();
         }
         else if (powerupType == PowerUp.PowerupType.Disguise)
         {
             HUDPowerupDisguise.GetComponent<HUDPowerUp>().Show();
             HUDPowerupInk.GetComponent<HUDPowerUp>().Hide();
             HUDPowerupInvincible.GetComponent<HUDPowerUp>().Hide();
+            HUDPowerupBonusLife.GetComponent<HUDPowerUp>().Hide();
+        }
+        else if (powerupType == PowerUp.PowerupType.BonusLife)
+        {
+            HUDPowerupBonusLife.GetComponent<HUDPowerUp>().Show();
+            HUDPowerupInk.GetComponent<HUDPowerUp>().Hide();
+            HUDPowerupInvincible.GetComponent<HUDPowerUp>().Hide();
+            HUDPowerupDisguise.GetComponent<HUDPowerUp>().Hide();
+            if (Globals.CurrentLives < 3)
+            {
+                Globals.CurrentLives++;
+                for (int x = 0; x < HUDLives.Length; x++)
+                {
+                    HUDLives[x].SetActive(x < Globals.CurrentLives);
+                }
+            }
         }
     }
 

@@ -7,7 +7,8 @@ public class PowerUp : MonoBehaviour
     public enum PowerupType {
         Invincible,
         SuperInk,
-        Disguise
+        Disguise,
+        BonusLife
     }
     public PowerupType powerupType = PowerupType.SuperInk;
 
@@ -22,6 +23,8 @@ public class PowerUp : MonoBehaviour
     Sprite SuperInkSprite;
     [SerializeField]
     Sprite DisguiseSprite;
+    [SerializeField]
+    Sprite BonusLifeSprite;
 
     void Awake()
     {
@@ -51,6 +54,10 @@ public class PowerUp : MonoBehaviour
         else if (powerupType == PowerupType.Disguise)
         {
             this.GetComponent<SpriteRenderer>().sprite = DisguiseSprite;
+        }
+        else if (powerupType == PowerupType.BonusLife)
+        {
+            this.GetComponent<SpriteRenderer>().sprite = BonusLifeSprite;
         }
     }
 

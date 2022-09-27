@@ -150,3 +150,4 @@ MonoBehaviour:
   InvincibleSprite: {fileID: 21300000, guid: 68d27c4027cd6f2409ec2a8741093e86, type: 3}
   SuperInkSprite: {fileID: 21300000, guid: 86a306aa943c9a347b776cfa9aefa310, type: 3}
   DisguiseSprite: {fileID: 21300000, guid: 9c5b7ddd203cfdb42a6f3f0b7fff0689, type: 3}
+  BonusLifeSprite: {fileID: 21300000, guid: e5d796c7ac8a9784888c6336da8d128d, type: 3}
