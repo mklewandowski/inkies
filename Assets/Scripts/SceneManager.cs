@@ -563,6 +563,7 @@ public class SceneManager : MonoBehaviour
 
     public void GetPowerUp(PowerUp.PowerupType powerupType)
     {
+        IncrementScore(50);
         if (powerupType == PowerUp.PowerupType.Invincible)
         {
             HUDPowerupInvincible.GetComponent<HUDPowerUp>().Show();
