@@ -54,6 +54,8 @@ public class EnemyBoss : MonoBehaviour
     float rotateTimerMax = .025f;
     float bottomTimer = 0f;
     float bottomTimerMax = 3f;
+    float speedMultiplier = 1f;
+    float timerMultiplier = 1f;
 
     void Start()
     {
@@ -72,6 +74,16 @@ public class EnemyBoss : MonoBehaviour
         this.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         Head.GetComponent<Collider2D>().enabled = true;
         Body.GetComponent<Collider2D>().enabled = true;
+        if (Globals.DifficultyMode == 2)
+        {
+            speedMultiplier = 1.5f;
+            timerMultiplier = .75f;
+        }
+        else
+        {
+            speedMultiplier = 1f;
+            timerMultiplier = 1f;
+        }
     }
 
     // Update is called once per frame
@@ -89,25 +101,25 @@ public class EnemyBoss : MonoBehaviour
             if (shootTimer <= 0)
             {
                 ShootBullet(0);
-                shootTimer = bounceShootTimerMax;
+                shootTimer = bounceShootTimerMax * timerMultiplier;
             }
             if (movingDown)
             {
                 Vector3 newpos = this.transform.localPosition;
-                newpos.y = Mathf.Max (minY, newpos.y - moveSpeed * Time.deltaTime);
+                newpos.y = Mathf.Max (minY, newpos.y - moveSpeed * speedMultiplier * Time.deltaTime);
                 this.transform.localPosition = newpos;
                 if (newpos.y == minY)
                 {
                     movingDown = false;
                     currentBossState = BossState.BottomShoot;
-                    shootTimer = bottomShootTimerMax;
+                    shootTimer = bottomShootTimerMax * timerMultiplier;
                     bottomTimer = bottomTimerMax;
                 }
             }
             else
             {
                 Vector3 newpos = this.transform.localPosition;
-                newpos.y = Mathf.Min (maxY, newpos.y + moveSpeed * Time.deltaTime);
+                newpos.y = Mathf.Min (maxY, newpos.y + moveSpeed * speedMultiplier * Time.deltaTime);
                 this.transform.localPosition = newpos;
                 if (newpos.y == maxY)
                 {
@@ -116,7 +128,7 @@ public class EnemyBoss : MonoBehaviour
                     {
                         bounceCount = 0;
                         currentBossState = BossState.Shake;
-                        shakeTimer = shakeTimerMax;
+                        shakeTimer = shakeTimerMax * timerMultiplier;
                     }
                     movingDown = true;
                 }
@@ -130,12 +142,12 @@ public class EnemyBoss : MonoBehaviour
                 ShootBullet(0);
                 ShootBullet(1f);
                 ShootBullet(-1f);
-                shootTimer = bottomShootTimerMax;
+                shootTimer = bottomShootTimerMax * timerMultiplier;
             }
             bottomTimer -= Time.deltaTime;
             if (bottomTimer < 0)
             {
-                shootTimer = bounceShootTimerMax;
+                shootTimer = bounceShootTimerMax * timerMultiplier;
                 currentBossState = BossState.Bounce;
             }
         }
@@ -157,7 +169,7 @@ public class EnemyBoss : MonoBehaviour
         else if (currentBossState == BossState.Drop)
         {
             Vector3 newpos = this.transform.localPosition;
-            newpos.y = Mathf.Max (stompY, newpos.y - dropSpeed * Time.deltaTime);
+            newpos.y = Mathf.Max (stompY, newpos.y - dropSpeed * speedMultiplier * Time.deltaTime);
             this.transform.localPosition = newpos;
             if (newpos.y == stompY)
             {
