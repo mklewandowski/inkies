@@ -161,7 +161,7 @@ PlayerSettings:
     iPhone: com.team2bit.inkies
   buildNumber:
     Standalone: 0
-    iPhone: 0
+    iPhone: 1
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
