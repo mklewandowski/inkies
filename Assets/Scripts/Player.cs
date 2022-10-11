@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     bool moveRightButton;
     bool moveUpButton;
     bool moveDownButton;
+    bool shootInkButton;
     float moveSpeed = 6f;
 
     Vector3 mousePositionOffset;
@@ -173,6 +174,14 @@ public class Player : MonoBehaviour
                 movementVector.y = moveSpeed;
             else if (moveDown)
                 movementVector.y = moveSpeed * -1f;
+            if (moveLeft || moveRight || moveUp || moveDown || shootInkButton)
+            {
+                if (inkCoolDownTimer == 0)
+                {
+                    ShootInk();
+                    inkCoolDownTimer = inkCoolDownTimerMax;
+                }
+            }
             playerRigidbody.velocity = movementVector;
 
             if (inkCoolDownTimer > 0)
@@ -365,6 +374,11 @@ public class Player : MonoBehaviour
     {
         moveRightButton = true;
     }
+    public void ShootInkButtonDown()
+    {
+        shootInkButton = true;
+        ShootInk();
+    }
     public void MoveUpButtonUp()
     {
         moveUpButton = false;
@@ -380,6 +394,10 @@ public class Player : MonoBehaviour
     public void MoveRightButtonUp()
     {
         moveRightButton = false;
+    }
+    public void ShootInkButtonUp()
+    {
+        shootInkButton = false;
     }
 
     void OnTriggerEnter2D(Collider2D collider)
