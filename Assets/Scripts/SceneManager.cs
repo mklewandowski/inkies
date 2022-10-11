@@ -51,6 +51,8 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject Level;
     [SerializeField]
+    GameObject[] Backgrounds;
+    [SerializeField]
     GameObject[] Blocks;
     [SerializeField]
     GameObject EnemyContainer;
@@ -321,6 +323,7 @@ public class SceneManager : MonoBehaviour
 
     void UpdatePlaying()
     {
+        MoveBackgrounds();
         MoveBlocks();
         SpawnCoins();
         if (winGameTimer > 0)
@@ -379,11 +382,13 @@ public class SceneManager : MonoBehaviour
 
             Globals.CurrentGameState = Globals.GameState.NextLevel;
         }
+        MoveBackgrounds();
         MoveBlocks();
     }
 
     private void UpdateNextLevel()
     {
+        MoveBackgrounds();
         MoveBlocks();
         if (wipeTimer > 0)
         {
@@ -423,6 +428,23 @@ public class SceneManager : MonoBehaviour
         HUDWipeBottom.GetComponent<MoveNormal>().MoveDown();
 
         Globals.CurrentGameState = Globals.GameState.IntroDialog;
+    }
+
+    void MoveBackgrounds()
+    {
+        float bgMinX = -30f;
+        for (int i = 0; i < Backgrounds.Length; i++)
+        {
+            if (Backgrounds[i].transform.localPosition.x < bgMinX)
+            {
+                int abutIndex = i == 0 ? Backgrounds.Length - 1 : i - 1;
+                Backgrounds[i].transform.localPosition = new Vector3(
+                        Backgrounds[abutIndex].transform.localPosition.x + 18.9f,
+                        Backgrounds[i].transform.localPosition.y,
+                        Backgrounds[i].transform.localPosition.z
+                    );
+            }
+        }
     }
 
     void MoveBlocks()
@@ -559,6 +581,10 @@ public class SceneManager : MonoBehaviour
             for (int i = 0; i < Blocks.Length; i++)
             {
                 Blocks[i].GetComponent<Rigidbody2D>().velocity = blockMovement;
+            }
+            for (int i = 0; i < Backgrounds.Length; i++)
+            {
+                Backgrounds[i].GetComponent<Rigidbody2D>().velocity = blockMovement;
             }
         }
     }
