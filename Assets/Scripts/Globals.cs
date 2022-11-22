@@ -33,7 +33,8 @@ public class Globals
         Mario,
         Luigi,
         Zombie,
-        Santa
+        Santa,
+        Johnny
     }
     public static PlayerTypes CurrentPlayerType = PlayerTypes.Sally;
 
@@ -120,6 +121,8 @@ public class Globals
             return "MR. BRAINS";
         else if (CurrentPlayerType == PlayerTypes.Santa)
             return "INKY CLAUS";
+        else if (CurrentPlayerType == PlayerTypes.Johnny)
+            return "JONNY INKY";
         else
             return "SALLY";
     }
