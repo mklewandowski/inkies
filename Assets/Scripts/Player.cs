@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     GameObject InkBulletPrefab;
+    [SerializeField]
+    GameObject PresentBulletPrefab;
 
     [SerializeField]
     GameObject Muzzle;
@@ -345,14 +347,15 @@ public class Player : MonoBehaviour
         if (Globals.CurrentGameState == Globals.GameState.Playing)
         {
             audioManager.PlayShootSound();
-            GameObject bulletGameObject = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
+            GameObject BullerPrefab = Globals.CurrentPlayerType == Globals.PlayerTypes.Santa ? PresentBulletPrefab : InkBulletPrefab;
+            GameObject bulletGameObject = (GameObject)Instantiate(BullerPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
             bulletGameObject.GetComponent<Rigidbody2D>().velocity = bulletMovementVector;
 
             if (superInkTimer > 0)
             {
-                GameObject bulletGameObject2 = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
+                GameObject bulletGameObject2 = (GameObject)Instantiate(BullerPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
                 bulletGameObject2.GetComponent<Rigidbody2D>().velocity = new Vector2(10f, 4f);
-                GameObject bulletGameObject3 = (GameObject)Instantiate(InkBulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
+                GameObject bulletGameObject3 = (GameObject)Instantiate(BullerPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
                 bulletGameObject3.GetComponent<Rigidbody2D>().velocity = new Vector2(10f, -4f);
             }
         }
