@@ -53,6 +53,8 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     GameObject[] Backgrounds;
     [SerializeField]
+    Sprite[] LevelBackgrounds;
+    [SerializeField]
     GameObject[] Blocks;
     [SerializeField]
     GameObject EnemyContainer;
@@ -410,6 +412,11 @@ public class SceneManager : MonoBehaviour
         Player.SetActive(false);
 
         HUDLevel.GetComponent<TextMeshProUGUI>().text = "Level " + (Globals.CurrentLevel + 1).ToString();
+
+        for (int x = 0; x < Backgrounds.Length; x++)
+        {
+            Backgrounds[x].GetComponent<SpriteRenderer>().sprite = LevelBackgrounds[Globals.CurrentLevel];
+        }
 
         dialogNum = 0;
         string currDialog = dialog1[dialogNum];

@@ -14251,6 +14251,11 @@ MonoBehaviour:
   - {fileID: 1594103854}
   - {fileID: 207535435}
   - {fileID: 1755836890}
+  LevelBackgrounds:
+  - {fileID: 21300000, guid: 4cb7df8551eb4424ca054f584e05b295, type: 3}
+  - {fileID: 21300000, guid: 6d9d5dfa4194ad848b536808e0cc9c75, type: 3}
+  - {fileID: 21300000, guid: 4cb7df8551eb4424ca054f584e05b295, type: 3}
+  - {fileID: 21300000, guid: 6d9d5dfa4194ad848b536808e0cc9c75, type: 3}
   Blocks:
   - {fileID: 306217711}
   - {fileID: 1300259780}
