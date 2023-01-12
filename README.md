@@ -1,5 +1,5 @@
 # Inkies
-Inkies is an underwater action game featuring design and art by my 7-year-old cousin.
+Inkies is an underwater action game featuring design and art by my school-aged cousin.
 
 ## Gameplay
 Inkies supports multiple input mechanisms:
