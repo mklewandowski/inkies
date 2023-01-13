@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     GameObject PresentBulletPrefab;
     [SerializeField]
     GameObject SlimeBulletPrefab;
+    [SerializeField]
+    GameObject NoteBulletPrefab;
 
     [SerializeField]
     GameObject Muzzle;
@@ -354,6 +356,8 @@ public class Player : MonoBehaviour
                 BullerPrefab = PresentBulletPrefab;
             else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Zombie)
                 BullerPrefab = SlimeBulletPrefab;
+            else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Johnny)
+                BullerPrefab = NoteBulletPrefab;
             GameObject bulletGameObject = (GameObject)Instantiate(BullerPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
             bulletGameObject.GetComponent<Rigidbody2D>().velocity = bulletMovementVector;
 
