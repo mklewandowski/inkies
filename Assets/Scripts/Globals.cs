@@ -34,7 +34,8 @@ public class Globals
         Luigi,
         Zombie,
         Santa,
-        Johnny
+        Johnny,
+        Violet
     }
     public static PlayerTypes CurrentPlayerType = PlayerTypes.Sally;
 
@@ -123,6 +124,8 @@ public class Globals
             return "INKY CLAUS";
         else if (CurrentPlayerType == PlayerTypes.Johnny)
             return "JONNY INKY";
+        else if (CurrentPlayerType == PlayerTypes.Violet)
+            return "VIOLET";
         else
             return "SALLY";
     }
