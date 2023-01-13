@@ -35,7 +35,8 @@ public class Globals
         Zombie,
         Santa,
         Johnny,
-        Violet
+        Violet,
+        Bo
     }
     public static PlayerTypes CurrentPlayerType = PlayerTypes.Sally;
 
@@ -126,6 +127,8 @@ public class Globals
             return "JONNY INKY";
         else if (CurrentPlayerType == PlayerTypes.Violet)
             return "VIOLET";
+        else if (CurrentPlayerType == PlayerTypes.Bo)
+            return "BO";
         else
             return "SALLY";
     }
