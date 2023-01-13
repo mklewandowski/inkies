@@ -36,7 +36,8 @@ public class Globals
         Santa,
         Johnny,
         Violet,
-        Bo
+        Bo,
+        Matt
     }
     public static PlayerTypes CurrentPlayerType = PlayerTypes.Sally;
 
@@ -129,6 +130,8 @@ public class Globals
             return "VIOLET";
         else if (CurrentPlayerType == PlayerTypes.Bo)
             return "BO";
+        else if (CurrentPlayerType == PlayerTypes.Matt)
+            return "MATT";
         else
             return "SALLY";
     }
