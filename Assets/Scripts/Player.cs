@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
     GameObject NoteBulletPrefab;
     [SerializeField]
     GameObject BasketballBulletPrefab;
+    [SerializeField]
+    GameObject MattBulletPrefab;
+    [SerializeField]
+    GameObject MattBullet2Prefab;
 
     [SerializeField]
     GameObject Muzzle;
@@ -65,6 +69,8 @@ public class Player : MonoBehaviour
     float disguiseTimer = 0f;
     float flashThreshold = 1.5f;
     float hitInvincibleTimer = 0f;
+
+    int bulletType = 0;
 
     void Awake()
     {
@@ -352,24 +358,27 @@ public class Player : MonoBehaviour
     {
         if (Globals.CurrentGameState == Globals.GameState.Playing)
         {
+            bulletType = bulletType == 0 ? 1 : 0;
             audioManager.PlayShootSound();
-            GameObject BullerPrefab = InkBulletPrefab;
+            GameObject BulletPrefab = InkBulletPrefab;
             if (Globals.CurrentPlayerType == Globals.PlayerTypes.Santa)
-                BullerPrefab = PresentBulletPrefab;
+                BulletPrefab = PresentBulletPrefab;
             else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Zombie)
-                BullerPrefab = SlimeBulletPrefab;
+                BulletPrefab = SlimeBulletPrefab;
             else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Johnny)
-                BullerPrefab = NoteBulletPrefab;
+                BulletPrefab = NoteBulletPrefab;
             else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Bo)
-                BullerPrefab = BasketballBulletPrefab;
-            GameObject bulletGameObject = (GameObject)Instantiate(BullerPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
+                BulletPrefab = BasketballBulletPrefab;
+            else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Matt)
+                BulletPrefab = bulletType == 0 ? MattBulletPrefab : MattBullet2Prefab;
+            GameObject bulletGameObject = (GameObject)Instantiate(BulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
             bulletGameObject.GetComponent<Rigidbody2D>().velocity = bulletMovementVector;
 
             if (superInkTimer > 0)
             {
-                GameObject bulletGameObject2 = (GameObject)Instantiate(BullerPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
+                GameObject bulletGameObject2 = (GameObject)Instantiate(BulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
                 bulletGameObject2.GetComponent<Rigidbody2D>().velocity = new Vector2(10f, 4f);
-                GameObject bulletGameObject3 = (GameObject)Instantiate(BullerPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
+                GameObject bulletGameObject3 = (GameObject)Instantiate(BulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
                 bulletGameObject3.GetComponent<Rigidbody2D>().velocity = new Vector2(10f, -4f);
             }
         }

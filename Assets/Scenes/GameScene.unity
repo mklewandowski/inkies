@@ -9528,6 +9528,8 @@ MonoBehaviour:
   SlimeBulletPrefab: {fileID: 3423652173057975466, guid: 28b21e93e7d657b409afdd3cfa00971f, type: 3}
   NoteBulletPrefab: {fileID: 3423652173057975466, guid: d3c41a711d0fc51449b6f0623003b62a, type: 3}
   BasketballBulletPrefab: {fileID: 3423652173057975466, guid: 346da18e24d732f4ba119c481fe3ac62, type: 3}
+  MattBulletPrefab: {fileID: 3423652173057975466, guid: 0037eb92f45b7eb438674c4d98936558, type: 3}
+  MattBullet2Prefab: {fileID: 3423652173057975466, guid: f9ab75de9fb7d2d48afc4591e57270c7, type: 3}
   Muzzle: {fileID: 1220546271}
   BulletContainer: {fileID: 296987646}
   PlayerSprite: {fileID: 5779999}
