@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     GameObject InkBulletPrefab;
     [SerializeField]
     GameObject PresentBulletPrefab;
+    [SerializeField]
+    GameObject SlimeBulletPrefab;
 
     [SerializeField]
     GameObject Muzzle;
@@ -347,7 +349,11 @@ public class Player : MonoBehaviour
         if (Globals.CurrentGameState == Globals.GameState.Playing)
         {
             audioManager.PlayShootSound();
-            GameObject BullerPrefab = Globals.CurrentPlayerType == Globals.PlayerTypes.Santa ? PresentBulletPrefab : InkBulletPrefab;
+            GameObject BullerPrefab = InkBulletPrefab;
+            if (Globals.CurrentPlayerType == Globals.PlayerTypes.Santa)
+                BullerPrefab = PresentBulletPrefab;
+            else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Zombie)
+                BullerPrefab = SlimeBulletPrefab;
             GameObject bulletGameObject = (GameObject)Instantiate(BullerPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
             bulletGameObject.GetComponent<Rigidbody2D>().velocity = bulletMovementVector;
 

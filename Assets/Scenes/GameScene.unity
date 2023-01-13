@@ -8771,6 +8771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InkBulletPrefab: {fileID: 3423652173057975466, guid: f1c29369776d3fc4cb80ae0603a18483, type: 3}
   PresentBulletPrefab: {fileID: 3423652173057975466, guid: c76deaca0e1569b4196b26847354f6f3, type: 3}
+  SlimeBulletPrefab: {fileID: 3423652173057975466, guid: 28b21e93e7d657b409afdd3cfa00971f, type: 3}
   Muzzle: {fileID: 1220546271}
   BulletContainer: {fileID: 296987646}
   PlayerSprite: {fileID: 5779999}
