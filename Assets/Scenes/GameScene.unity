@@ -9530,6 +9530,7 @@ MonoBehaviour:
   BasketballBulletPrefab: {fileID: 3423652173057975466, guid: 346da18e24d732f4ba119c481fe3ac62, type: 3}
   MattBulletPrefab: {fileID: 3423652173057975466, guid: 0037eb92f45b7eb438674c4d98936558, type: 3}
   MattBullet2Prefab: {fileID: 3423652173057975466, guid: f9ab75de9fb7d2d48afc4591e57270c7, type: 3}
+  VioletBulletPrefab: {fileID: 3423652173057975466, guid: 773b0d852d505c44eacba652f4ee2526, type: 3}
   Muzzle: {fileID: 1220546271}
   BulletContainer: {fileID: 296987646}
   PlayerSprite: {fileID: 5779999}

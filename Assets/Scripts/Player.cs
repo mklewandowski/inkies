@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     GameObject MattBulletPrefab;
     [SerializeField]
     GameObject MattBullet2Prefab;
+    [SerializeField]
+    GameObject VioletBulletPrefab;
 
     [SerializeField]
     GameObject Muzzle;
@@ -369,6 +371,8 @@ public class Player : MonoBehaviour
                 BulletPrefab = NoteBulletPrefab;
             else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Bo)
                 BulletPrefab = BasketballBulletPrefab;
+            else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Violet)
+                BulletPrefab = VioletBulletPrefab;
             else if (Globals.CurrentPlayerType == Globals.PlayerTypes.Matt)
                 BulletPrefab = bulletType == 0 ? MattBulletPrefab : MattBullet2Prefab;
             GameObject bulletGameObject = (GameObject)Instantiate(BulletPrefab, Muzzle.transform.position, Quaternion.identity, BulletContainer.transform);
