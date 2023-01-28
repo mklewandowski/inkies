@@ -446,7 +446,7 @@ public class SceneManager : MonoBehaviour
             {
                 int abutIndex = i == 0 ? Backgrounds.Length - 1 : i - 1;
                 Backgrounds[i].transform.localPosition = new Vector3(
-                        Backgrounds[abutIndex].transform.localPosition.x + 18.9f,
+                        Backgrounds[abutIndex].transform.localPosition.x + 22.6f,
                         Backgrounds[i].transform.localPosition.y,
                         Backgrounds[i].transform.localPosition.z
                     );
